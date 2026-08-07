@@ -1,1 +1,270 @@
 @import "tailwindcss";
+
+@theme {
+  --color-delvara-ink: #102a2b;
+  --color-delvara-ink-soft: #1a3a3b;
+  --color-delvara-charcoal: #1c2423;
+  --color-delvara-muted-text: #5c6764;
+  --color-delvara-bg: #f7f5ef;
+  --color-delvara-white: #ffffff;
+  --color-delvara-surface: #eef2ed;
+  --color-delvara-sage: #6f8f76;
+  --color-delvara-sage-deep: #4f6d56;
+  --color-delvara-sage-soft: #d9e4da;
+  --color-delvara-border: #d5ddd4;
+  --color-delvara-border-strong: #b8c4b7;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --ease-delvara: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-delvara-bg);
+    color: var(--color-delvara-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-delvara-sage-soft);
+    color: var(--color-delvara-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-delvara-sage);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-delvara {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-delvara {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-delvara {
+      max-width: 76rem;
+    }
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-delvara-sage-deep);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.875rem;
+    padding: 0.75rem 1.35rem;
+    border-radius: 0.375rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 200ms var(--ease-delvara),
+      color 200ms var(--ease-delvara),
+      border-color 200ms var(--ease-delvara),
+      transform 200ms var(--ease-delvara),
+      box-shadow 200ms var(--ease-delvara);
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background-color: var(--color-delvara-ink);
+    color: var(--color-delvara-white);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-delvara-ink-soft);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-delvara-ink);
+    border-color: var(--color-delvara-border-strong);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-delvara-surface);
+    border-color: var(--color-delvara-sage);
+  }
+
+  .btn-on-dark {
+    background-color: var(--color-delvara-white);
+    color: var(--color-delvara-ink);
+  }
+
+  .btn-on-dark:hover:not(:disabled) {
+    background-color: var(--color-delvara-bg);
+  }
+
+  .btn-ghost-on-dark {
+    background-color: transparent;
+    color: var(--color-delvara-white);
+    border-color: rgb(255 255 255 / 0.28);
+  }
+
+  .btn-ghost-on-dark:hover:not(:disabled) {
+    background-color: rgb(255 255 255 / 0.08);
+    border-color: rgb(255 255 255 / 0.45);
+  }
+
+  .section-pad {
+    padding-block: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-block: 6.5rem;
+    }
+  }
+
+  .reveal {
+    animation: delvara-reveal 700ms var(--ease-delvara) both;
+  }
+
+  .input-field {
+    width: 100%;
+    min-height: 2.875rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--color-delvara-border);
+    background-color: var(--color-delvara-white);
+    padding: 0.7rem 0.9rem;
+    color: var(--color-delvara-charcoal);
+    font-size: 0.975rem;
+    transition:
+      border-color 180ms var(--ease-delvara),
+      box-shadow 180ms var(--ease-delvara);
+  }
+
+  .input-field::placeholder {
+    color: #8a9490;
+  }
+
+  .input-field:hover {
+    border-color: var(--color-delvara-border-strong);
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: var(--color-delvara-sage);
+    box-shadow: 0 0 0 3px rgb(111 143 118 / 0.18);
+  }
+
+  .choice-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--color-delvara-border);
+    background-color: var(--color-delvara-white);
+    color: var(--color-delvara-charcoal);
+    font-size: 0.9375rem;
+    font-weight: 450;
+    text-align: left;
+    transition:
+      border-color 180ms var(--ease-delvara),
+      background-color 180ms var(--ease-delvara),
+      color 180ms var(--ease-delvara),
+      transform 180ms var(--ease-delvara);
+    cursor: pointer;
+  }
+
+  .choice-chip:hover {
+    border-color: var(--color-delvara-sage);
+    background-color: var(--color-delvara-surface);
+  }
+
+  .choice-chip[aria-pressed="true"],
+  .choice-chip[data-selected="true"] {
+    border-color: var(--color-delvara-ink);
+    background-color: var(--color-delvara-ink);
+    color: var(--color-delvara-white);
+  }
+}
+
+@keyframes delvara-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes delvara-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes delvara-scale-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-backdrop {
+  animation: delvara-fade-in 180ms var(--ease-delvara) both;
+}
+
+.modal-panel {
+  animation: delvara-scale-in 220ms var(--ease-delvara) both;
+}
