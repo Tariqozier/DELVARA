@@ -25,7 +25,7 @@ export function Benefits() {
             >
               <span
                 aria-hidden="true"
-                className="absolute top-0 left-7 h-0.5 w-12 bg-delvara-sage"
+                className="absolute top-0 left-7 h-0.5 w-12 bg-delvara-ink"
               />
               <p className="text-xs font-medium tracking-[0.14em] text-delvara-muted-text uppercase">
                 {String(index + 1).padStart(2, "0")}

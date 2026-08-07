@@ -4,7 +4,7 @@ import { PlaceholderPage } from "@/components/PlaceholderPage";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about DELVARA — a treatment discovery and clinic matching service for private care.",
+    "Learn about DELVARA — a London-focused treatment enquiry service for private dental and aesthetic care.",
 };
 
 export default function AboutPage() {
@@ -13,7 +13,7 @@ export default function AboutPage() {
       <PlaceholderPage
         eyebrow="About"
         title="Built for clearer private treatment decisions."
-        description="DELVARA sits between people considering private treatment and selected clinics looking for qualified enquiries. The full about story is coming next."
+        description="DELVARA sits between people considering private dental or aesthetic treatment in London and participating clinics looking for relevant enquiries. The full about story is coming next."
       />
     </main>
   );

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "For Clinics",
   description:
-    "Partner with DELVARA to connect with people already considering private treatment.",
+    "Partner with DELVARA to connect with people across London actively considering private dental or aesthetic treatment.",
 };
 
 export default function ForClinicsPage() {
@@ -18,27 +18,41 @@ export default function ForClinicsPage() {
               Partner with DELVARA.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA helps selected clinics connect with prospective patients
-              who have actively expressed an interest in private treatment. A
-              full clinic partnership page is coming next.
+              DELVARA helps dental and aesthetic clinics connect with
+              prospective patients across London who have actively expressed
+              interest in private treatment. Full partnership pages are coming
+              next.
             </p>
 
-            <div className="mt-12 rounded-2xl border border-dashed border-delvara-border-strong bg-delvara-white px-6 py-12 text-center sm:px-10">
-              <p className="text-xs font-medium tracking-[0.16em] text-delvara-sage-deep uppercase">
-                Phase 1
-              </p>
-              <h2 className="mt-3 text-2xl font-medium text-delvara-ink">
-                Full page coming next
-              </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-delvara-muted-text sm:text-base">
-                Clinic onboarding, enquiry handling and partnership details will
-                be designed here in a later phase.
-              </p>
-              <div className="mt-8 flex justify-center">
-                <Link href="/" className="btn btn-secondary">
-                  Back to homepage
-                </Link>
-              </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/for-clinics/dental"
+                className="rounded-xl border border-dental/35 bg-dental-soft/50 p-6 transition-colors hover:bg-dental-soft"
+              >
+                <h2 className="text-xl font-medium text-delvara-ink">
+                  Dental clinics
+                </h2>
+                <p className="mt-2 text-sm text-delvara-muted-text">
+                  I&apos;m a Dental Clinic
+                </p>
+              </Link>
+              <Link
+                href="/for-clinics/aesthetics"
+                className="rounded-xl border border-aesthetics/35 bg-aesthetics-soft p-6 transition-colors hover:bg-aesthetics-soft/80"
+              >
+                <h2 className="text-xl font-medium text-delvara-ink">
+                  Aesthetic clinics
+                </h2>
+                <p className="mt-2 text-sm text-delvara-muted-text">
+                  I&apos;m an Aesthetic Clinic
+                </p>
+              </Link>
+            </div>
+
+            <div className="mt-10">
+              <Link href="/" className="btn btn-secondary">
+                Back to homepage
+              </Link>
             </div>
           </div>
         </div>

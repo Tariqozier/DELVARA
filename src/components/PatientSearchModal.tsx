@@ -12,13 +12,16 @@ import Link from "next/link";
 import { useSearch } from "@/components/SearchProvider";
 import { IconArrowRight, IconCheck, IconClose } from "@/components/icons";
 import {
+  enquiryAestheticsTreatments,
+  enquiryDentalTreatments,
   priorityOptions,
-  searchTreatments,
   timingOptions,
   travelOptions,
+  type TreatmentCategory,
 } from "@/lib/content";
 
 type FormState = {
+  category: TreatmentCategory | "";
   treatment: string;
   location: string;
   travel: string;
@@ -32,6 +35,7 @@ type FormState = {
 };
 
 const initialForm: FormState = {
+  category: "",
   treatment: "",
   location: "",
   travel: "",
@@ -68,6 +72,13 @@ export function PatientSearchModal() {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+
+  const treatmentOptions =
+    form.category === "dental"
+      ? enquiryDentalTreatments
+      : form.category === "aesthetics"
+        ? enquiryAestheticsTreatments
+        : [];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -116,7 +127,7 @@ export function PatientSearchModal() {
   if (!isOpen) return null;
 
   function canContinue() {
-    if (step === 1) return Boolean(form.treatment);
+    if (step === 1) return Boolean(form.category && form.treatment);
     if (step === 2) return form.location.trim().length >= 2;
     if (step === 3) return Boolean(form.timing);
     if (step === 4) return form.priorities.length > 0;
@@ -125,7 +136,11 @@ export function PatientSearchModal() {
 
   function goNext() {
     if (!canContinue()) {
-      setError("Please complete this step to continue.");
+      setError(
+        step === 1
+          ? "Please choose a category and treatment to continue."
+          : "Please complete this step to continue.",
+      );
       return;
     }
     setError(null);
@@ -189,7 +204,7 @@ export function PatientSearchModal() {
 
   return (
     <div
-      className="modal-backdrop fixed inset-0 z-[80] flex items-end justify-center bg-[rgb(16_42_43/0.55)] p-0 sm:items-center sm:p-6"
+      className="modal-backdrop fixed inset-0 z-[80] flex items-end justify-center bg-[rgb(23_45_46/0.55)] p-0 sm:items-center sm:p-6"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) closeSearch();
@@ -201,22 +216,22 @@ export function PatientSearchModal() {
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
-        className="modal-panel flex max-h-[min(92vh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(16_42_43/0.28)] sm:rounded-xl"
+        className="modal-panel flex max-h-[min(92vh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(23_45_46/0.28)] sm:rounded-xl"
         onKeyDown={onPanelKeyDown}
       >
         <div className="flex items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
           <div>
-            <p className="eyebrow">Your search</p>
+            <p className="eyebrow">Your enquiry</p>
             <h2
               id={titleId}
               className="mt-2 text-xl font-medium tracking-tight text-delvara-ink sm:text-2xl"
             >
-              {submittedDemo ? "Enquiry ready" : "Start your search"}
+              {submittedDemo ? "Enquiry ready" : "Start your enquiry"}
             </h2>
             <p id={descriptionId} className="mt-1 text-sm text-delvara-muted-text">
               {submittedDemo
                 ? "Frontend demo complete — not yet connected to a live database."
-                : "A few short steps. No pressure. No obligation."}
+                : "Dental or aesthetics. Across London. No pressure."}
             </p>
           </div>
           <button
@@ -224,7 +239,7 @@ export function PatientSearchModal() {
             type="button"
             onClick={closeSearch}
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-colors hover:bg-delvara-surface"
-            aria-label="Close search"
+            aria-label="Close enquiry"
           >
             <IconClose className="h-5 w-5" />
           </button>
@@ -259,51 +274,106 @@ export function PatientSearchModal() {
             >
               <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-7 sm:py-6">
                 {step === 1 && (
-                  <fieldset>
+                  <fieldset className="space-y-5">
                     <legend className="text-lg font-medium text-delvara-ink">
-                      What treatment are you considering?
+                      What type of treatment are you considering?
                     </legend>
-                    <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
-                      {searchTreatments.map((option) => (
-                        <button
-                          key={option}
-                          type="button"
-                          className="choice-chip w-full justify-start"
-                          aria-pressed={form.treatment === option}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              treatment: option,
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          {option}
-                        </button>
-                      ))}
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <button
+                        type="button"
+                        className="category-tab"
+                        data-category="dental"
+                        aria-pressed={form.category === "dental"}
+                        onClick={() => {
+                          setForm((current) => ({
+                            ...current,
+                            category: "dental",
+                            treatment: "",
+                          }));
+                          setError(null);
+                        }}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="h-2 w-2 rounded-full accent-dot-dental"
+                        />
+                        Dental
+                      </button>
+                      <button
+                        type="button"
+                        className="category-tab"
+                        data-category="aesthetics"
+                        aria-pressed={form.category === "aesthetics"}
+                        onClick={() => {
+                          setForm((current) => ({
+                            ...current,
+                            category: "aesthetics",
+                            treatment: "",
+                          }));
+                          setError(null);
+                        }}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="h-2 w-2 rounded-full accent-dot-aesthetics"
+                        />
+                        Aesthetics
+                      </button>
                     </div>
+
+                    {form.category ? (
+                      <div>
+                        <p className="mb-3 text-sm font-medium text-delvara-ink">
+                          Which treatment are you interested in?
+                        </p>
+                        <div className="grid gap-2.5 sm:grid-cols-2">
+                          {treatmentOptions.map((option) => (
+                            <button
+                              key={option}
+                              type="button"
+                              className="choice-chip w-full justify-start"
+                              aria-pressed={form.treatment === option}
+                              onClick={() => {
+                                setForm((current) => ({
+                                  ...current,
+                                  treatment: option,
+                                }));
+                                setError(null);
+                              }}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="rounded-lg border border-dashed border-delvara-border bg-delvara-white px-4 py-4 text-sm text-delvara-muted-text">
+                        Choose Dental or Aesthetics to continue. Both are
+                        equally supported.
+                      </p>
+                    )}
                   </fieldset>
                 )}
 
                 {step === 2 && (
                   <fieldset className="space-y-5">
                     <legend className="text-lg font-medium text-delvara-ink">
-                      Where are you looking for treatment?
+                      Where in London are you looking for treatment?
                     </legend>
                     <div>
                       <label
                         htmlFor="search-location"
                         className="mb-2 block text-sm font-medium text-delvara-charcoal"
                       >
-                        Town / city or postcode
+                        Postcode or area
                       </label>
                       <input
                         id="search-location"
                         name="location"
                         type="text"
-                        autoComplete="address-level2"
+                        autoComplete="postal-code"
                         className="input-field"
-                        placeholder="e.g. Manchester or M1"
+                        placeholder="e.g. N12 or Finchley"
                         value={form.location}
                         onChange={(event) => {
                           setForm((current) => ({
@@ -409,8 +479,8 @@ export function PatientSearchModal() {
                       Your details
                     </legend>
                     <p className="text-sm text-delvara-muted-text">
-                      We only need enough information to help connect you with
-                      relevant clinics.
+                      We only need enough information to help connect you with a
+                      relevant participating clinic.
                     </p>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
@@ -521,8 +591,8 @@ export function PatientSearchModal() {
                         />
                         <span>
                           I agree to be contacted about my enquiry and
-                          understand that my details may be shared with relevant
-                          clinics as described in the{" "}
+                          understand that my details may be shared with a
+                          relevant participating clinic as described in the{" "}
                           <Link
                             href="/privacy"
                             className="underline underline-offset-2 hover:text-delvara-ink"
@@ -573,7 +643,10 @@ export function PatientSearchModal() {
                     <IconArrowRight className="h-4 w-4" />
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-primary w-full sm:w-auto">
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full sm:w-auto"
+                  >
                     Submit enquiry
                   </button>
                 )}
@@ -583,7 +656,7 @@ export function PatientSearchModal() {
         ) : (
           <div className="overflow-y-auto px-5 py-8 sm:px-7 sm:py-10">
             <div className="mx-auto max-w-md text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-delvara-sage-soft text-delvara-ink">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-delvara-surface text-delvara-ink">
                 <IconCheck className="h-7 w-7" />
               </div>
               <h3 className="mt-5 text-2xl font-medium tracking-tight text-delvara-ink">
@@ -592,12 +665,8 @@ export function PatientSearchModal() {
               <p className="mt-3 text-delvara-muted-text leading-relaxed">
                 This is a frontend demonstration. Your details have not been
                 stored remotely yet. When the lead intake service is connected,
-                we&apos;ll use the information you provide to help identify
-                relevant options.
-              </p>
-              <p className="mt-4 text-sm text-delvara-muted-text">
-                Thanks — we&apos;ve captured your details in this session for
-                review.
+                DELVARA may use the information you provide to help connect you
+                with a relevant participating clinic.
               </p>
               <button
                 type="button"

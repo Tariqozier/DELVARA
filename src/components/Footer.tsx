@@ -2,14 +2,16 @@ import Link from "next/link";
 import { brand } from "@/lib/content";
 
 const exploreLinks = [
-  { href: "/treatments", label: "Treatments" },
+  { href: "/treatments/dental", label: "Dental treatments" },
+  { href: "/treatments/aesthetics", label: "Aesthetic treatments" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
 ] as const;
 
 const clinicLinks = [
   { href: "/for-clinics", label: "Partner with DELVARA" },
-  { href: "/for-clinics", label: "Clinic enquiries" },
+  { href: "/for-clinics/dental", label: "Dental clinics" },
+  { href: "/for-clinics/aesthetics", label: "Aesthetic clinics" },
 ] as const;
 
 const legalLinks = [
@@ -31,9 +33,9 @@ export function Footer() {
               {brand.tagline}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-delvara-muted-text">
-              Helping people make better-informed choices about private
-              treatment, while connecting selected clinics with people actively
-              considering care.
+              A London-focused treatment enquiry service for private dental and
+              aesthetic care — helping people make clearer choices and helping
+              participating clinics connect with relevant enquiries.
             </p>
           </div>
 
@@ -95,7 +97,8 @@ export function Footer() {
         <div className="mt-14 border-t border-delvara-border pt-8">
           <p className="max-w-3xl text-sm leading-relaxed text-delvara-muted-text">
             DELVARA is a treatment discovery and clinic matching service and
-            does not provide medical advice, diagnosis or treatment.
+            does not provide medical advice, diagnosis or treatment. Enquiries
+            accepted from across London.
           </p>
           <p className="mt-5 text-sm text-delvara-muted-text">
             © 2026 DELVARA. All rights reserved.

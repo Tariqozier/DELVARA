@@ -11,25 +11,27 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "DELVARA | Find the Right Treatment & Clinic",
+    default: "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
     template: "%s | DELVARA",
   },
   description:
-    "Explore private treatment options and connect with clinics that match your needs, location and preferences with DELVARA.",
+    "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics. Free to enquire. No obligation.",
   applicationName: "DELVARA",
   openGraph: {
-    title: "DELVARA | Find the Right Treatment & Clinic",
+    title:
+      "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
     description:
-      "Explore private treatment options and connect with clinics that match your needs, location and preferences with DELVARA.",
+      "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics.",
     siteName: "DELVARA",
     type: "website",
     locale: "en_GB",
   },
   twitter: {
     card: "summary",
-    title: "DELVARA | Find the Right Treatment & Clinic",
+    title:
+      "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
     description:
-      "Explore private treatment options and connect with clinics that match your needs, location and preferences with DELVARA.",
+      "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics.",
   },
 };
 

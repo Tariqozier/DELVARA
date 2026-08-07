@@ -15,12 +15,13 @@ export function FinalCTA() {
             Start with DELVARA.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            Tell us what you&apos;re considering and take the first step towards
-            finding the right clinic.
+            Tell us what you&apos;re considering — dental or aesthetics — and
+            take the first step towards finding a relevant participating clinic
+            in London.
           </p>
           <div className="mt-8 flex justify-center">
             <StartSearchButton variant="primary">
-              Start your search
+              Start your enquiry
             </StartSearchButton>
           </div>
         </div>

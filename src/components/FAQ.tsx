@@ -24,8 +24,8 @@ export function FAQ() {
               Questions, answered clearly.
             </h2>
             <p className="mt-4 max-w-md text-base leading-relaxed text-delvara-muted-text">
-              Straightforward information about how DELVARA works — without
-              overclaiming.
+              Straightforward information about how DELVARA works for dental and
+              aesthetic treatment enquiries across London.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export function FAQ() {
                     <button
                       id={buttonId}
                       type="button"
-                      className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-delvara-sage-deep"
+                      className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-delvara-ink"
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                       onClick={() =>

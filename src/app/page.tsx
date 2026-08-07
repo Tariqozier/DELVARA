@@ -5,17 +5,19 @@ import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
+import { LondonSection } from "@/components/LondonSection";
 import { PatientCTA } from "@/components/PatientCTA";
-import { TreatmentGrid } from "@/components/TreatmentGrid";
+import { TreatmentDiscovery } from "@/components/TreatmentDiscovery";
 
 export default function HomePage() {
   return (
     <main>
       <Hero />
-      <TreatmentGrid />
+      <TreatmentDiscovery />
       <HowItWorks />
       <Benefits />
       <PatientCTA />
+      <LondonSection />
       <ClinicsSection />
       <BrandStatement />
       <FAQ />

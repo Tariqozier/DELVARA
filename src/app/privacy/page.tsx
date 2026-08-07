@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <PlaceholderPage
         eyebrow="Legal"
         title="Privacy Policy"
-        description="A complete privacy policy will be published here. DELVARA will explain how enquiry details are handled and when information may be shared with relevant clinics."
+        description="A complete privacy policy will be published here. DELVARA will explain how enquiry details for dental and aesthetic treatment are handled, and when information may be shared with a relevant participating clinic."
       />
     </main>
   );

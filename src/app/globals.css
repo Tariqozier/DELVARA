@@ -1,18 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-delvara-ink: #102a2b;
-  --color-delvara-ink-soft: #1a3a3b;
-  --color-delvara-charcoal: #1c2423;
-  --color-delvara-muted-text: #5c6764;
-  --color-delvara-bg: #f7f5ef;
+  --color-delvara-ink: #172d2e;
+  --color-delvara-ink-soft: #243c3d;
+  --color-delvara-charcoal: #202525;
+  --color-delvara-muted-text: #68706e;
+  --color-delvara-bg: #f8f5f0;
   --color-delvara-white: #ffffff;
-  --color-delvara-surface: #eef2ed;
-  --color-delvara-sage: #6f8f76;
-  --color-delvara-sage-deep: #4f6d56;
-  --color-delvara-sage-soft: #d9e4da;
-  --color-delvara-border: #d5ddd4;
-  --color-delvara-border-strong: #b8c4b7;
+  --color-delvara-surface: #f1eee8;
+  --color-delvara-border: #dddcd7;
+  --color-delvara-border-strong: #c8c6bf;
+
+  --color-dental: #789585;
+  --color-dental-deep: #4f6a5c;
+  --color-dental-soft: #e4ede8;
+
+  --color-aesthetics: #a98598;
+  --color-aesthetics-deep: #7a5f6e;
+  --color-aesthetics-soft: #f5edeb;
+  --color-aesthetics-peach: #d9a994;
+
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --ease-delvara: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -45,12 +52,12 @@
   }
 
   ::selection {
-    background-color: var(--color-delvara-sage-soft);
+    background-color: rgb(23 45 46 / 0.12);
     color: var(--color-delvara-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-delvara-sage);
+    outline: 2px solid var(--color-delvara-ink);
     outline-offset: 3px;
   }
 }
@@ -80,7 +87,7 @@
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-delvara-sage-deep);
+    color: var(--color-delvara-muted-text);
   }
 
   .btn {
@@ -131,7 +138,7 @@
 
   .btn-secondary:hover:not(:disabled) {
     background-color: var(--color-delvara-surface);
-    border-color: var(--color-delvara-sage);
+    border-color: var(--color-delvara-ink);
   }
 
   .btn-on-dark {
@@ -183,7 +190,7 @@
   }
 
   .input-field::placeholder {
-    color: #8a9490;
+    color: #8a8f8d;
   }
 
   .input-field:hover {
@@ -192,8 +199,8 @@
 
   .input-field:focus {
     outline: none;
-    border-color: var(--color-delvara-sage);
-    box-shadow: 0 0 0 3px rgb(111 143 118 / 0.18);
+    border-color: var(--color-delvara-ink);
+    box-shadow: 0 0 0 3px rgb(23 45 46 / 0.12);
   }
 
   .choice-chip {
@@ -218,7 +225,7 @@
   }
 
   .choice-chip:hover {
-    border-color: var(--color-delvara-sage);
+    border-color: var(--color-delvara-border-strong);
     background-color: var(--color-delvara-surface);
   }
 
@@ -227,6 +234,56 @@
     border-color: var(--color-delvara-ink);
     background-color: var(--color-delvara-ink);
     color: var(--color-delvara-white);
+  }
+
+  .category-tab {
+    display: flex;
+    width: 100%;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-delvara-border);
+    background-color: var(--color-delvara-white);
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-delvara-charcoal);
+    transition:
+      border-color 180ms var(--ease-delvara),
+      background-color 180ms var(--ease-delvara),
+      color 180ms var(--ease-delvara),
+      box-shadow 180ms var(--ease-delvara);
+    cursor: pointer;
+  }
+
+  .category-tab:hover {
+    background-color: var(--color-delvara-surface);
+  }
+
+  .category-tab[data-category="dental"][aria-pressed="true"],
+  .category-tab[data-category="dental"][aria-selected="true"] {
+    border-color: var(--color-dental);
+    background-color: var(--color-dental-soft);
+    color: var(--color-dental-deep);
+    box-shadow: inset 0 0 0 1px rgb(120 149 133 / 0.2);
+  }
+
+  .category-tab[data-category="aesthetics"][aria-pressed="true"],
+  .category-tab[data-category="aesthetics"][aria-selected="true"] {
+    border-color: var(--color-aesthetics);
+    background-color: var(--color-aesthetics-soft);
+    color: var(--color-aesthetics-deep);
+    box-shadow: inset 0 0 0 1px rgb(169 133 152 / 0.22);
+  }
+
+  .accent-dot-dental {
+    background-color: var(--color-dental);
+  }
+
+  .accent-dot-aesthetics {
+    background-color: var(--color-aesthetics);
   }
 }
 

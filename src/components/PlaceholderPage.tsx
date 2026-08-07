@@ -5,12 +5,18 @@ type PlaceholderPageProps = {
   eyebrow: string;
   title: string;
   description: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  showEnquiryCta?: boolean;
 };
 
 export function PlaceholderPage({
   eyebrow,
   title,
   description,
+  primaryHref,
+  primaryLabel,
+  showEnquiryCta = true,
 }: PlaceholderPageProps) {
   return (
     <section className="section-pad">
@@ -25,8 +31,8 @@ export function PlaceholderPage({
           </p>
 
           <div className="mt-12 rounded-2xl border border-dashed border-delvara-border-strong bg-delvara-white px-6 py-12 text-center sm:px-10">
-            <p className="text-xs font-medium tracking-[0.16em] text-delvara-sage-deep uppercase">
-              Phase 1
+            <p className="text-xs font-medium tracking-[0.16em] text-delvara-muted-text uppercase">
+              Coming next
             </p>
             <h2 className="mt-3 text-2xl font-medium text-delvara-ink">
               Full page coming next
@@ -36,9 +42,16 @@ export function PlaceholderPage({
               branded page will follow in a later phase.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <StartSearchButton variant="primary">
-                Start your search
-              </StartSearchButton>
+              {primaryHref && primaryLabel ? (
+                <Link href={primaryHref} className="btn btn-primary">
+                  {primaryLabel}
+                </Link>
+              ) : null}
+              {showEnquiryCta ? (
+                <StartSearchButton variant="primary">
+                  Start your enquiry
+                </StartSearchButton>
+              ) : null}
               <Link href="/" className="btn btn-secondary">
                 Back to homepage
               </Link>
