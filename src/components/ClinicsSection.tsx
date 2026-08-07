@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ClinicChoiceCard } from "@/components/ClinicChoiceCard";
+import { IconArrowRight } from "@/components/icons";
 import { clinicBenefits, clinicPaths } from "@/lib/content";
 
 export function ClinicsSection() {
@@ -19,55 +21,31 @@ export function ClinicsSection() {
             Turn treatment interest into patient enquiries.
           </h2>
           <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-lg">
-            DELVARA helps dental and aesthetic clinics connect with prospective
-            patients across London who have actively expressed interest in
-            private treatment.
+            DELVARA helps dental and aesthetic clinics acquire
+            treatment-specific prospective patient enquiries across London —
+            with useful context captured before the first conversation.
           </p>
         </div>
 
-        <ul className="mt-10 grid gap-4 lg:grid-cols-2">
-          {clinicPaths.map((path) => {
-            const isDental = path.accent === "dental";
-            return (
-              <li key={path.id}>
-                <article
-                  className={`flex h-full flex-col rounded-xl border p-7 ${
-                    isDental
-                      ? "border-dental/35 bg-white/[0.04]"
-                      : "border-aesthetics/40 bg-white/[0.04]"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        isDental ? "bg-dental" : "bg-aesthetics-peach"
-                      }`}
-                    />
-                    <h3 className="text-xl font-medium text-white">
-                      {path.title}
-                    </h3>
-                  </div>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-white/68 sm:text-base">
-                    {path.description}
-                  </p>
-                  <Link
-                    href={path.href}
-                    className="btn btn-on-dark mt-7 w-full sm:w-auto"
-                  >
-                    {path.cta}
-                  </Link>
-                </article>
-              </li>
-            );
-          })}
+        <ul className="mt-10 grid gap-5 lg:grid-cols-2">
+          {clinicPaths.map((path) => (
+            <li key={path.id}>
+              <ClinicChoiceCard
+                title={path.title}
+                description={path.description}
+                cta={path.cta}
+                href={path.href}
+                accent={path.accent}
+              />
+            </li>
+          ))}
         </ul>
 
         <ul className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {clinicBenefits.map((benefit) => (
             <li
               key={benefit.title}
-              className="rounded-xl border border-white/12 bg-white/5 p-5"
+              className="rounded-xl border border-white/12 bg-white/5 p-5 transition-colors duration-200 hover:bg-white/[0.08]"
             >
               <h3 className="text-base font-medium text-white">
                 {benefit.title}
@@ -78,6 +56,23 @@ export function ClinicsSection() {
             </li>
           ))}
         </ul>
+
+        <div className="mt-12 rounded-2xl border border-white/12 bg-white/[0.04] px-6 py-8 sm:px-8">
+          <p className="text-lg font-medium text-white">
+            Need more than patient enquiries?
+          </p>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/68 sm:text-base">
+            DELVARA can also build the funnels, websites, content, automation
+            and custom digital infrastructure around your acquisition strategy.
+          </p>
+          <Link
+            href="/for-clinics"
+            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white underline-offset-4 transition-all duration-200 hover:underline"
+          >
+            Explore clinic growth services
+            <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </section>
   );

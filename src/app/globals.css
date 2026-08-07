@@ -27,6 +27,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -103,17 +104,29 @@
     line-height: 1.2;
     text-decoration: none;
     transition:
-      background-color 200ms var(--ease-delvara),
-      color 200ms var(--ease-delvara),
-      border-color 200ms var(--ease-delvara),
-      transform 200ms var(--ease-delvara),
-      box-shadow 200ms var(--ease-delvara);
+      background-color 180ms var(--ease-delvara),
+      color 180ms var(--ease-delvara),
+      border-color 180ms var(--ease-delvara),
+      transform 180ms var(--ease-delvara),
+      box-shadow 180ms var(--ease-delvara);
     cursor: pointer;
     border: 1px solid transparent;
   }
 
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
   .btn:active:not(:disabled) {
-    transform: translateY(1px);
+    transform: scale(0.98);
+  }
+
+  .btn .icon-arrow {
+    transition: transform 180ms var(--ease-delvara);
+  }
+
+  .btn:hover:not(:disabled) .icon-arrow {
+    transform: translateX(3px);
   }
 
   .btn:disabled {
@@ -128,6 +141,7 @@
 
   .btn-primary:hover:not(:disabled) {
     background-color: var(--color-delvara-ink-soft);
+    box-shadow: 0 8px 20px rgb(23 45 46 / 0.14);
   }
 
   .btn-secondary {
@@ -217,16 +231,22 @@
     font-weight: 450;
     text-align: left;
     transition:
-      border-color 180ms var(--ease-delvara),
-      background-color 180ms var(--ease-delvara),
-      color 180ms var(--ease-delvara),
-      transform 180ms var(--ease-delvara);
+      border-color 200ms var(--ease-delvara),
+      background-color 200ms var(--ease-delvara),
+      color 200ms var(--ease-delvara),
+      transform 160ms var(--ease-delvara),
+      box-shadow 200ms var(--ease-delvara);
     cursor: pointer;
   }
 
   .choice-chip:hover {
     border-color: var(--color-delvara-border-strong);
     background-color: var(--color-delvara-surface);
+    transform: translateY(-1px);
+  }
+
+  .choice-chip:active {
+    transform: scale(0.98);
   }
 
   .choice-chip[aria-pressed="true"],
@@ -234,6 +254,7 @@
     border-color: var(--color-delvara-ink);
     background-color: var(--color-delvara-ink);
     color: var(--color-delvara-white);
+    box-shadow: 0 6px 16px rgb(23 45 46 / 0.12);
   }
 
   .category-tab {
@@ -319,9 +340,81 @@
 }
 
 .modal-backdrop {
-  animation: delvara-fade-in 180ms var(--ease-delvara) both;
+  animation: delvara-fade-in 200ms var(--ease-delvara) both;
 }
 
 .modal-panel {
   animation: delvara-scale-in 220ms var(--ease-delvara) both;
+}
+
+.page-transition {
+  animation: delvara-page-enter 220ms var(--ease-delvara) both;
+}
+
+.modal-step-forward {
+  animation: delvara-step-forward 220ms var(--ease-delvara) both;
+}
+
+.modal-step-back {
+  animation: delvara-step-back 220ms var(--ease-delvara) both;
+}
+
+.category-panel-enter {
+  animation: delvara-category-enter 260ms var(--ease-delvara) both;
+}
+
+@keyframes delvara-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes delvara-step-forward {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes delvara-step-back {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes delvara-category-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition,
+  .modal-step-forward,
+  .modal-step-back,
+  .category-panel-enter,
+  .modal-backdrop,
+  .modal-panel,
+  .reveal {
+    animation: none !important;
+  }
 }

@@ -12,6 +12,8 @@ import Link from "next/link";
 import { useSearch } from "@/components/SearchProvider";
 import { IconArrowRight, IconCheck, IconClose } from "@/components/icons";
 import {
+  aestheticsBudgetOptions,
+  dentalBudgetOptions,
   enquiryAestheticsTreatments,
   enquiryDentalTreatments,
   priorityOptions,
@@ -26,6 +28,7 @@ type FormState = {
   location: string;
   travel: string;
   timing: string;
+  budget: string;
   priorities: string[];
   firstName: string;
   lastName: string;
@@ -40,6 +43,7 @@ const initialForm: FormState = {
   location: "",
   travel: "",
   timing: "",
+  budget: "",
   priorities: [],
   firstName: "",
   lastName: "",
@@ -64,6 +68,7 @@ function togglePriority(current: string[], value: string) {
 export function PatientSearchModal() {
   const { isOpen, closeSearch } = useSearch();
   const [step, setStep] = useState(1);
+  const [direction, setDirection] = useState<"forward" | "back">("forward");
   const [form, setForm] = useState<FormState>(initialForm);
   const [submittedDemo, setSubmittedDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +84,11 @@ export function PatientSearchModal() {
       : form.category === "aesthetics"
         ? enquiryAestheticsTreatments
         : [];
+
+  const budgetOptions =
+    form.category === "aesthetics"
+      ? aestheticsBudgetOptions
+      : dentalBudgetOptions;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -116,6 +126,7 @@ export function PatientSearchModal() {
     if (!isOpen) {
       const resetTimer = window.setTimeout(() => {
         setStep(1);
+        setDirection("forward");
         setForm(initialForm);
         setSubmittedDemo(false);
         setError(null);
@@ -129,7 +140,7 @@ export function PatientSearchModal() {
   function canContinue() {
     if (step === 1) return Boolean(form.category && form.treatment);
     if (step === 2) return form.location.trim().length >= 2;
-    if (step === 3) return Boolean(form.timing);
+    if (step === 3) return Boolean(form.timing && form.budget);
     if (step === 4) return form.priorities.length > 0;
     return true;
   }
@@ -139,16 +150,20 @@ export function PatientSearchModal() {
       setError(
         step === 1
           ? "Please choose a category and treatment to continue."
-          : "Please complete this step to continue.",
+          : step === 3
+            ? "Please choose a timeframe and approximate budget range."
+            : "Please complete this step to continue.",
       );
       return;
     }
     setError(null);
+    setDirection("forward");
     setStep((current) => Math.min(current + 1, TOTAL_STEPS));
   }
 
   function goBack() {
     setError(null);
+    setDirection("back");
     setStep((current) => Math.max(current - 1, 1));
   }
 
@@ -170,8 +185,8 @@ export function PatientSearchModal() {
       return;
     }
 
-    // FRONTEND DEMO ONLY — not persisted to a backend/API/database yet.
-    // Connect this handler to the lead intake API when available.
+    // FRONTEND DEMO ONLY — not persisted remotely yet.
+    // Connect this handler to the enquiry intake API when available.
     console.info("[DELVARA] Demo enquiry payload (not submitted remotely)", {
       ...form,
       demo: true,
@@ -201,6 +216,9 @@ export function PatientSearchModal() {
       first.focus();
     }
   }
+
+  const stepMotionClass =
+    direction === "forward" ? "modal-step-forward" : "modal-step-back";
 
   return (
     <div
@@ -238,7 +256,7 @@ export function PatientSearchModal() {
             ref={closeButtonRef}
             type="button"
             onClick={closeSearch}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-colors hover:bg-delvara-surface"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-all duration-200 hover:-translate-y-px hover:bg-delvara-surface active:scale-[0.98]"
             aria-label="Close enquiry"
           >
             <IconClose className="h-5 w-5" />
@@ -256,7 +274,7 @@ export function PatientSearchModal() {
                   {Array.from({ length: TOTAL_STEPS }, (_, index) => (
                     <li
                       key={index}
-                      className={`h-1.5 w-7 rounded-full ${
+                      className={`h-1.5 w-7 rounded-full transition-colors duration-200 ${
                         index + 1 <= step
                           ? "bg-delvara-ink"
                           : "bg-delvara-border"
@@ -273,70 +291,163 @@ export function PatientSearchModal() {
               noValidate
             >
               <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-7 sm:py-6">
-                {step === 1 && (
-                  <fieldset className="space-y-5">
-                    <legend className="text-lg font-medium text-delvara-ink">
-                      What type of treatment are you considering?
-                    </legend>
-                    <div className="grid grid-cols-2 gap-2.5">
-                      <button
-                        type="button"
-                        className="category-tab"
-                        data-category="dental"
-                        aria-pressed={form.category === "dental"}
-                        onClick={() => {
-                          setForm((current) => ({
-                            ...current,
-                            category: "dental",
-                            treatment: "",
-                          }));
-                          setError(null);
-                        }}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="h-2 w-2 rounded-full accent-dot-dental"
-                        />
-                        Dental
-                      </button>
-                      <button
-                        type="button"
-                        className="category-tab"
-                        data-category="aesthetics"
-                        aria-pressed={form.category === "aesthetics"}
-                        onClick={() => {
-                          setForm((current) => ({
-                            ...current,
-                            category: "aesthetics",
-                            treatment: "",
-                          }));
-                          setError(null);
-                        }}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="h-2 w-2 rounded-full accent-dot-aesthetics"
-                        />
-                        Aesthetics
-                      </button>
-                    </div>
+                <div key={step} className={stepMotionClass}>
+                  {step === 1 && (
+                    <fieldset className="space-y-5">
+                      <legend className="text-lg font-medium text-delvara-ink">
+                        What are you considering?
+                      </legend>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <button
+                          type="button"
+                          className="category-tab"
+                          data-category="dental"
+                          aria-pressed={form.category === "dental"}
+                          onClick={() => {
+                            setForm((current) => ({
+                              ...current,
+                              category: "dental",
+                              treatment: "",
+                              budget: "",
+                            }));
+                            setError(null);
+                          }}
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="h-2 w-2 rounded-full accent-dot-dental"
+                          />
+                          Dental
+                        </button>
+                        <button
+                          type="button"
+                          className="category-tab"
+                          data-category="aesthetics"
+                          aria-pressed={form.category === "aesthetics"}
+                          onClick={() => {
+                            setForm((current) => ({
+                              ...current,
+                              category: "aesthetics",
+                              treatment: "",
+                              budget: "",
+                            }));
+                            setError(null);
+                          }}
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="h-2 w-2 rounded-full accent-dot-aesthetics"
+                          />
+                          Aesthetics
+                        </button>
+                      </div>
 
-                    {form.category ? (
+                      {form.category ? (
+                        <div>
+                          <p className="mb-3 text-sm font-medium text-delvara-ink">
+                            Which service are you interested in?
+                          </p>
+                          <div className="grid gap-2.5 sm:grid-cols-2">
+                            {treatmentOptions.map((option) => (
+                              <button
+                                key={option}
+                                type="button"
+                                className="choice-chip w-full justify-start"
+                                aria-pressed={form.treatment === option}
+                                onClick={() => {
+                                  setForm((current) => ({
+                                    ...current,
+                                    treatment: option,
+                                  }));
+                                  setError(null);
+                                }}
+                              >
+                                {option}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="rounded-lg border border-dashed border-delvara-border bg-delvara-white px-4 py-4 text-sm text-delvara-muted-text">
+                          Choose Dental or Aesthetics to continue. Both are
+                          equally supported.
+                        </p>
+                      )}
+                    </fieldset>
+                  )}
+
+                  {step === 2 && (
+                    <fieldset className="space-y-5">
+                      <legend className="text-lg font-medium text-delvara-ink">
+                        Where are you looking for treatment?
+                      </legend>
                       <div>
-                        <p className="mb-3 text-sm font-medium text-delvara-ink">
-                          Which treatment are you interested in?
+                        <label
+                          htmlFor="search-location"
+                          className="mb-2 block text-sm font-medium text-delvara-charcoal"
+                        >
+                          London postcode or area
+                        </label>
+                        <input
+                          id="search-location"
+                          name="location"
+                          type="text"
+                          autoComplete="postal-code"
+                          className="input-field"
+                          placeholder="e.g. N12 or Finchley"
+                          value={form.location}
+                          onChange={(event) => {
+                            setForm((current) => ({
+                              ...current,
+                              location: event.target.value,
+                            }));
+                            setError(null);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <p className="mb-2 text-sm font-medium text-delvara-charcoal">
+                          How far would you be willing to travel?
                         </p>
                         <div className="grid gap-2.5 sm:grid-cols-2">
-                          {treatmentOptions.map((option) => (
+                          {travelOptions.map((option) => (
                             <button
                               key={option}
                               type="button"
                               className="choice-chip w-full justify-start"
-                              aria-pressed={form.treatment === option}
+                              aria-pressed={form.travel === option}
+                              onClick={() =>
+                                setForm((current) => ({
+                                  ...current,
+                                  travel: option,
+                                }))
+                              }
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </fieldset>
+                  )}
+
+                  {step === 3 && (
+                    <fieldset className="space-y-6">
+                      <div>
+                        <legend className="text-lg font-medium text-delvara-ink">
+                          When are you hoping to get started?
+                        </legend>
+                        <div className="mt-4 grid gap-2.5">
+                          {timingOptions.map((option) => (
+                            <button
+                              key={option}
+                              type="button"
+                              className="choice-chip w-full justify-start"
+                              aria-pressed={form.timing === option}
                               onClick={() => {
                                 setForm((current) => ({
                                   ...current,
-                                  treatment: option,
+                                  timing: option,
                                 }));
                                 setError(null);
                               }}
@@ -346,266 +457,208 @@ export function PatientSearchModal() {
                           ))}
                         </div>
                       </div>
-                    ) : (
-                      <p className="rounded-lg border border-dashed border-delvara-border bg-delvara-white px-4 py-4 text-sm text-delvara-muted-text">
-                        Choose Dental or Aesthetics to continue. Both are
-                        equally supported.
-                      </p>
-                    )}
-                  </fieldset>
-                )}
 
-                {step === 2 && (
-                  <fieldset className="space-y-5">
-                    <legend className="text-lg font-medium text-delvara-ink">
-                      Where in London are you looking for treatment?
-                    </legend>
-                    <div>
-                      <label
-                        htmlFor="search-location"
-                        className="mb-2 block text-sm font-medium text-delvara-charcoal"
-                      >
-                        Postcode or area
-                      </label>
-                      <input
-                        id="search-location"
-                        name="location"
-                        type="text"
-                        autoComplete="postal-code"
-                        className="input-field"
-                        placeholder="e.g. N12 or Finchley"
-                        value={form.location}
-                        onChange={(event) => {
-                          setForm((current) => ({
-                            ...current,
-                            location: event.target.value,
-                          }));
-                          setError(null);
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <p className="mb-2 text-sm font-medium text-delvara-charcoal">
-                        How far would you be willing to travel?{" "}
-                        <span className="font-normal text-delvara-muted-text">
-                          Optional
-                        </span>
+                      <div>
+                        <p className="text-lg font-medium text-delvara-ink">
+                          What budget range are you considering?
+                        </p>
+                        <p className="mt-2 text-sm text-delvara-muted-text">
+                          A rough range is enough. This simply helps us
+                          understand your enquiry.
+                        </p>
+                        <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                          {budgetOptions.map((option) => (
+                            <button
+                              key={option}
+                              type="button"
+                              className="choice-chip w-full justify-start"
+                              aria-pressed={form.budget === option}
+                              onClick={() => {
+                                setForm((current) => ({
+                                  ...current,
+                                  budget: option,
+                                }));
+                                setError(null);
+                              }}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </fieldset>
+                  )}
+
+                  {step === 4 && (
+                    <fieldset>
+                      <legend className="text-lg font-medium text-delvara-ink">
+                        What matters most to you?
+                      </legend>
+                      <p className="mt-2 text-sm text-delvara-muted-text">
+                        Select all that apply.
                       </p>
-                      <div className="grid gap-2.5 sm:grid-cols-2">
-                        {travelOptions.map((option) => (
+                      <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                        {priorityOptions.map((option) => (
                           <button
                             key={option}
                             type="button"
                             className="choice-chip w-full justify-start"
-                            aria-pressed={form.travel === option}
-                            onClick={() =>
+                            aria-pressed={form.priorities.includes(option)}
+                            onClick={() => {
                               setForm((current) => ({
                                 ...current,
-                                travel: option,
-                              }))
-                            }
+                                priorities: togglePriority(
+                                  current.priorities,
+                                  option,
+                                ),
+                              }));
+                              setError(null);
+                            }}
                           >
                             {option}
                           </button>
                         ))}
                       </div>
-                    </div>
-                  </fieldset>
-                )}
+                    </fieldset>
+                  )}
 
-                {step === 3 && (
-                  <fieldset>
-                    <legend className="text-lg font-medium text-delvara-ink">
-                      When are you hoping to have treatment?
-                    </legend>
-                    <div className="mt-4 grid gap-2.5">
-                      {timingOptions.map((option) => (
-                        <button
-                          key={option}
-                          type="button"
-                          className="choice-chip w-full justify-start"
-                          aria-pressed={form.timing === option}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              timing: option,
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
-                )}
-
-                {step === 4 && (
-                  <fieldset>
-                    <legend className="text-lg font-medium text-delvara-ink">
-                      What matters most to you?
-                    </legend>
-                    <p className="mt-2 text-sm text-delvara-muted-text">
-                      Select all that apply.
-                    </p>
-                    <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
-                      {priorityOptions.map((option) => (
-                        <button
-                          key={option}
-                          type="button"
-                          className="choice-chip w-full justify-start"
-                          aria-pressed={form.priorities.includes(option)}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              priorities: togglePriority(
-                                current.priorities,
-                                option,
-                              ),
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
-                )}
-
-                {step === 5 && (
-                  <fieldset className="space-y-4">
-                    <legend className="text-lg font-medium text-delvara-ink">
-                      Your details
-                    </legend>
-                    <p className="text-sm text-delvara-muted-text">
-                      We only need enough information to help connect you with a
-                      relevant participating clinic.
-                    </p>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div>
-                        <label
-                          htmlFor="search-first-name"
-                          className="mb-2 block text-sm font-medium"
-                        >
-                          First name
-                        </label>
-                        <input
-                          id="search-first-name"
-                          name="firstName"
-                          type="text"
-                          autoComplete="given-name"
-                          required
-                          className="input-field"
-                          value={form.firstName}
-                          onChange={(event) =>
-                            setForm((current) => ({
-                              ...current,
-                              firstName: event.target.value,
-                            }))
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="search-last-name"
-                          className="mb-2 block text-sm font-medium"
-                        >
-                          Last name
-                        </label>
-                        <input
-                          id="search-last-name"
-                          name="lastName"
-                          type="text"
-                          autoComplete="family-name"
-                          required
-                          className="input-field"
-                          value={form.lastName}
-                          onChange={(event) =>
-                            setForm((current) => ({
-                              ...current,
-                              lastName: event.target.value,
-                            }))
-                          }
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="search-email"
-                        className="mb-2 block text-sm font-medium"
-                      >
-                        Email
-                      </label>
-                      <input
-                        id="search-email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        className="input-field"
-                        value={form.email}
-                        onChange={(event) =>
-                          setForm((current) => ({
-                            ...current,
-                            email: event.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="search-phone"
-                        className="mb-2 block text-sm font-medium"
-                      >
-                        Phone
-                      </label>
-                      <input
-                        id="search-phone"
-                        name="phone"
-                        type="tel"
-                        autoComplete="tel"
-                        required
-                        className="input-field"
-                        value={form.phone}
-                        onChange={(event) =>
-                          setForm((current) => ({
-                            ...current,
-                            phone: event.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-                    <div className="rounded-lg border border-delvara-border bg-delvara-white p-4">
-                      <label className="flex gap-3 text-sm leading-relaxed text-delvara-charcoal">
-                        <input
-                          type="checkbox"
-                          className="mt-1 h-4 w-4 shrink-0 accent-delvara-ink"
-                          checked={form.consent}
-                          onChange={(event) =>
-                            setForm((current) => ({
-                              ...current,
-                              consent: event.target.checked,
-                            }))
-                          }
-                        />
-                        <span>
-                          I agree to be contacted about my enquiry and
-                          understand that my details may be shared with a
-                          relevant participating clinic as described in the{" "}
-                          <Link
-                            href="/privacy"
-                            className="underline underline-offset-2 hover:text-delvara-ink"
-                            onClick={closeSearch}
+                  {step === 5 && (
+                    <fieldset className="space-y-4">
+                      <legend className="text-lg font-medium text-delvara-ink">
+                        Your details
+                      </legend>
+                      <p className="text-sm text-delvara-muted-text">
+                        We only need enough information to help connect you with
+                        a relevant participating clinic.
+                      </p>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div>
+                          <label
+                            htmlFor="search-first-name"
+                            className="mb-2 block text-sm font-medium"
                           >
-                            Privacy Policy
-                          </Link>
-                          .
-                        </span>
-                      </label>
-                    </div>
-                  </fieldset>
-                )}
+                            First name
+                          </label>
+                          <input
+                            id="search-first-name"
+                            name="firstName"
+                            type="text"
+                            autoComplete="given-name"
+                            required
+                            className="input-field"
+                            value={form.firstName}
+                            onChange={(event) =>
+                              setForm((current) => ({
+                                ...current,
+                                firstName: event.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label
+                            htmlFor="search-last-name"
+                            className="mb-2 block text-sm font-medium"
+                          >
+                            Last name
+                          </label>
+                          <input
+                            id="search-last-name"
+                            name="lastName"
+                            type="text"
+                            autoComplete="family-name"
+                            required
+                            className="input-field"
+                            value={form.lastName}
+                            onChange={(event) =>
+                              setForm((current) => ({
+                                ...current,
+                                lastName: event.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="search-email"
+                          className="mb-2 block text-sm font-medium"
+                        >
+                          Email
+                        </label>
+                        <input
+                          id="search-email"
+                          name="email"
+                          type="email"
+                          autoComplete="email"
+                          required
+                          className="input-field"
+                          value={form.email}
+                          onChange={(event) =>
+                            setForm((current) => ({
+                              ...current,
+                              email: event.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="search-phone"
+                          className="mb-2 block text-sm font-medium"
+                        >
+                          Phone
+                        </label>
+                        <input
+                          id="search-phone"
+                          name="phone"
+                          type="tel"
+                          autoComplete="tel"
+                          required
+                          className="input-field"
+                          value={form.phone}
+                          onChange={(event) =>
+                            setForm((current) => ({
+                              ...current,
+                              phone: event.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div className="rounded-lg border border-delvara-border bg-delvara-white p-4">
+                        <label className="flex gap-3 text-sm leading-relaxed text-delvara-charcoal">
+                          <input
+                            type="checkbox"
+                            className="mt-1 h-4 w-4 shrink-0 accent-delvara-ink"
+                            checked={form.consent}
+                            onChange={(event) =>
+                              setForm((current) => ({
+                                ...current,
+                                consent: event.target.checked,
+                              }))
+                            }
+                          />
+                          <span>
+                            I agree that DELVARA may contact me about my enquiry
+                            and share the information I&apos;ve provided with a
+                            relevant participating clinic so they may contact me
+                            about the service I&apos;ve expressed interest in. I
+                            understand that submitting an enquiry does not
+                            commit me to consultation or treatment. See the{" "}
+                            <Link
+                              href="/privacy"
+                              className="underline underline-offset-2 hover:text-delvara-ink"
+                              onClick={closeSearch}
+                            >
+                              Privacy Policy
+                            </Link>
+                            .
+                          </span>
+                        </label>
+                      </div>
+                    </fieldset>
+                  )}
+                </div>
 
                 {error ? (
                   <p className="mt-4 text-sm text-red-800" role="alert">
@@ -664,9 +717,9 @@ export function PatientSearchModal() {
               </h3>
               <p className="mt-3 text-delvara-muted-text leading-relaxed">
                 This is a frontend demonstration. Your details have not been
-                stored remotely yet. When the lead intake service is connected,
-                DELVARA may use the information you provide to help connect you
-                with a relevant participating clinic.
+                stored remotely yet. When the enquiry intake service is
+                connected, DELVARA may use the information you provide to help
+                connect you with a relevant participating clinic.
               </p>
               <button
                 type="button"

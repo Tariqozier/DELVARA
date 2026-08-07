@@ -99,12 +99,15 @@ export function TreatmentDiscovery() {
           aria-labelledby={`${tablistId}-${category}`}
           className="mt-8"
         >
-          <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <ul
+            key={category}
+            className="category-panel-enter grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+          >
             {treatments.map((treatment) => (
               <li key={treatment.id}>
                 <Link
                   href={exploreHref}
-                  className="group flex h-full flex-col rounded-xl border border-delvara-border bg-delvara-bg p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-delvara-border-strong hover:bg-delvara-white hover:shadow-[0_12px_30px_rgb(23_45_46/0.06)] focus-visible:outline-offset-4"
+                  className="group flex h-full flex-col rounded-xl border border-delvara-border bg-delvara-bg p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-delvara-border-strong hover:bg-delvara-white hover:shadow-[0_12px_30px_rgb(23_45_46/0.06)] focus-visible:outline-offset-4"
                 >
                   <span
                     className={`inline-flex h-11 w-11 items-center justify-center rounded-lg border ${iconSurface}`}

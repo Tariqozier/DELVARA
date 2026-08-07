@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     template: "%s | DELVARA",
   },
   description:
-    "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics. Free to enquire. No obligation.",
+    "DELVARA helps people across London explore private dental or aesthetic services, clarify what matters to them, and submit an informed enquiry to participating clinics. Free to enquire. No obligation.",
   applicationName: "DELVARA",
   openGraph: {
     title:
       "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
     description:
-      "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics.",
+      "Explore private dental and aesthetic services in London with more clarity — then submit an informed enquiry to participating clinics.",
     siteName: "DELVARA",
     type: "website",
     locale: "en_GB",

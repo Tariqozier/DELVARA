@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { howItWorksSteps } from "@/lib/content";
 
 export function HowItWorks() {
@@ -7,20 +8,28 @@ export function HowItWorks() {
       aria-labelledby="how-heading"
     >
       <div className="container-delvara">
-        <div className="max-w-2xl">
-          <p className="eyebrow">How it works</p>
-          <h2
-            id="how-heading"
-            className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="eyebrow">How it works</p>
+            <h2
+              id="how-heading"
+              className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
+            >
+              A clearer way to explore private services.
+            </h2>
+          </div>
+          <Link
+            href="/how-it-works"
+            className="text-sm font-medium text-delvara-ink underline-offset-4 transition-colors hover:underline"
           >
-            A clearer way to enquire about private treatment.
-          </h2>
+            See the full journey
+          </Link>
         </div>
 
         <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {howItWorksSteps.map((step) => (
             <li key={step.number} className="relative flex flex-col">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-delvara-border bg-delvara-white text-sm font-medium tracking-wide text-delvara-ink">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-delvara-border bg-delvara-white text-sm font-medium tracking-wide text-delvara-ink transition-transform duration-200 hover:-translate-y-0.5">
                 {step.number}
               </span>
               <h3 className="mt-6 text-lg font-medium text-delvara-ink sm:text-xl">

@@ -27,7 +27,7 @@ export type FeaturedTreatment = {
 export const brand = {
   name: "DELVARA",
   tagline: "Better choices. Better treatment.",
-  positioning: "Considering treatment in London?",
+  positioning: "Explore private treatment with more clarity.",
   geography: "London",
 } as const;
 
@@ -70,43 +70,42 @@ export const featuredDentalTreatments: FeaturedTreatment[] = [
   {
     id: "dental-implants",
     name: "Dental Implants",
-    description:
-      "Explore implant options with clinics that may be able to help.",
+    description: "Explore implant services and submit an informed enquiry.",
     icon: "implant",
     category: "dental",
   },
   {
     id: "composite-bonding",
     name: "Composite Bonding",
-    description: "Enquire about careful, aesthetic bonding treatments.",
+    description: "Tell us about the bonding service you're considering.",
     icon: "bonding",
     category: "dental",
   },
   {
     id: "clear-aligners",
     name: "Invisalign / Clear Aligners",
-    description: "Share interest in discreet alignment treatments.",
+    description: "Share interest in discreet alignment services.",
     icon: "aligners",
     category: "dental",
   },
   {
     id: "teeth-whitening",
     name: "Teeth Whitening",
-    description: "Start an enquiry about professional whitening options.",
+    description: "Start an enquiry about professional whitening services.",
     icon: "whitening",
     category: "dental",
   },
   {
     id: "veneers",
     name: "Veneers",
-    description: "Connect with clinics offering refined smile enhancement.",
+    description: "Explore veneer services with useful enquiry context.",
     icon: "veneers",
     category: "dental",
   },
   {
     id: "emergency-dentistry",
     name: "Emergency Dentistry",
-    description: "Enquire about urgent private dental support in London.",
+    description: "Enquire about urgent private dental services in London.",
     icon: "emergency",
     category: "dental",
   },
@@ -116,42 +115,42 @@ export const featuredAestheticsTreatments: FeaturedTreatment[] = [
   {
     id: "anti-wrinkle",
     name: "Anti-Wrinkle Treatments",
-    description: "Enquire about considered injectable facial treatments.",
+    description: "Explore injectable facial services and make an enquiry.",
     icon: "wrinkle",
     category: "aesthetics",
   },
   {
     id: "dermal-fillers",
     name: "Dermal Fillers",
-    description: "Share interest in filler treatments with participating clinics.",
+    description: "Share interest in filler services with participating clinics.",
     icon: "fillers",
     category: "aesthetics",
   },
   {
     id: "skin-treatments",
     name: "Skin Treatments",
-    description: "Explore skin-focused aesthetic treatment enquiries.",
+    description: "Start with the skin service you're considering.",
     icon: "skin",
     category: "aesthetics",
   },
   {
     id: "body-sculpting",
     name: "Body Sculpting",
-    description: "Start an enquiry about body contouring treatments.",
+    description: "Enquire about body contouring services in London.",
     icon: "body",
     category: "aesthetics",
   },
   {
     id: "hair-treatments",
     name: "Hair Treatments",
-    description: "Enquire about private hair treatment options in London.",
+    description: "Explore private hair treatment services.",
     icon: "hair",
     category: "aesthetics",
   },
   {
     id: "endolift",
     name: "Endolift",
-    description: "Share interest in non-surgical facial tightening options.",
+    description: "Share interest in non-surgical facial tightening services.",
     icon: "endolift",
     category: "aesthetics",
   },
@@ -289,63 +288,83 @@ export const timingOptions = [
   "Just researching",
 ] as const;
 
+export const dentalBudgetOptions = [
+  "Under £500",
+  "£500–£1,000",
+  "£1,000–£2,500",
+  "£2,500–£5,000",
+  "£5,000–£10,000",
+  "£10,000+",
+  "Not sure yet",
+] as const;
+
+export const aestheticsBudgetOptions = [
+  "Under £250",
+  "£250–£500",
+  "£500–£1,000",
+  "£1,000–£2,500",
+  "£2,500–£5,000",
+  "£5,000+",
+  "Not sure yet",
+] as const;
+
 export const priorityOptions = [
-  "Price",
+  "Price / budget",
   "Clinic reputation",
   "Location",
   "Availability",
   "Finance options",
-  "Experience with this treatment",
+  "Experience with this service",
   "Not sure yet",
 ] as const;
 
 export const howItWorksSteps = [
   {
     number: "01",
-    title: "Choose what you're considering",
+    title: "Explore a service",
     description:
-      "Start with dental or aesthetics and tell us the treatment you're interested in.",
+      "Start with dental or aesthetics and tell us the service you're considering.",
   },
   {
     number: "02",
-    title: "Tell us a little more",
+    title: "Add useful context",
     description:
-      "Share your London location, timeframe and a few details about what you're looking for.",
+      "Share your London location, timeframe, approximate budget and priorities.",
   },
   {
     number: "03",
     title: "Submit your enquiry",
     description:
-      "With your consent, DELVARA may share your enquiry with a relevant participating clinic that provides the treatment.",
+      "With your consent, DELVARA may share your enquiry with a relevant participating clinic.",
   },
   {
     number: "04",
-    title: "Hear from a clinic",
+    title: "Clinic conversation",
     description:
-      "If there is a relevant participating clinic, their team may contact you directly to discuss your enquiry.",
+      "If there is a relevant participating clinic, their team may contact you to discuss next steps.",
   },
 ] as const;
 
 export const benefits = [
   {
-    title: "Better-fit options",
+    title: "Explore services",
     description:
-      "Focus on clinics relevant to the treatment and preferences you've provided.",
+      "Start with the dental or aesthetic service you're considering and understand the next step without needing to contact multiple clinics first.",
   },
   {
-    title: "Less searching",
+    title: "Clarify what matters",
     description:
-      "Reduce the time spent visiting dozens of clinic websites and filling in multiple forms.",
+      "Tell us your location, timeframe, approximate budget and priorities so your enquiry starts with useful context.",
   },
   {
-    title: "Your choice",
+    title: "Make an informed enquiry",
     description:
-      "Being introduced to a clinic does not mean you're committed to treatment.",
+      "Provide the information a participating clinic needs to understand what you're looking for before the first conversation.",
   },
   {
-    title: "Clearer decisions",
+    title: "Your decision",
     description:
-      "Start with more context so you can have a better conversation with a clinic.",
+      "An enquiry never commits you to a consultation or treatment. Clinical advice and treatment decisions remain between you and the clinic.",
   },
 ] as const;
 
@@ -354,8 +373,8 @@ export const clinicPaths = [
     id: "dental",
     title: "Dental Clinics",
     description:
-      "Patient enquiries across cosmetic, implant, orthodontic, restorative and general dental treatments.",
-    cta: "I'm a Dental Clinic",
+      "Patient acquisition around cosmetic, implant, orthodontic, restorative and general dental services — with useful enquiry context before the first conversation.",
+    cta: "Explore Dental Partnerships",
     href: "/for-clinics/dental",
     accent: "dental" as const,
   },
@@ -363,8 +382,8 @@ export const clinicPaths = [
     id: "aesthetics",
     title: "Aesthetic Clinics",
     description:
-      "Patient enquiries across injectables, skin, facial, body and hair treatments.",
-    cta: "I'm an Aesthetic Clinic",
+      "Patient acquisition around injectables, skin, facial, body and hair services — supported by conversion journeys and growth infrastructure.",
+    cta: "Explore Aesthetic Partnerships",
     href: "/for-clinics/aesthetics",
     accent: "aesthetics" as const,
   },
@@ -374,17 +393,17 @@ export const clinicBenefits = [
   {
     title: "Treatment-specific enquiries",
     description:
-      "Connect with prospective patients actively interested in treatments your clinic provides.",
+      "Connect with prospective patients actively interested in services your clinic provides.",
   },
   {
     title: "Useful qualification data",
     description:
-      "See treatment interest, location, timeframe and key preferences before making contact.",
+      "See treatment interest, location, timeframe, approximate budget and key priorities before making contact.",
   },
   {
     title: "London-focused acquisition",
     description:
-      "Build patient acquisition around prospective patients looking for private treatment across London.",
+      "Build patient acquisition around people looking for private dental or aesthetic services across London.",
   },
   {
     title: "Performance-led growth",
@@ -393,11 +412,177 @@ export const clinicBenefits = [
   },
 ] as const;
 
+export const clinicGrowthServices = [
+  {
+    title: "Patient acquisition funnels",
+    description:
+      "Campaign-to-enquiry journeys designed around specific treatments and commercial priorities.",
+  },
+  {
+    title: "Website & landing page design",
+    description:
+      "Full clinic websites, treatment pages and conversion-focused landing experiences.",
+  },
+  {
+    title: "Marketing & content",
+    description:
+      "Campaign strategy, ad creative, treatment content and conversion copy.",
+  },
+  {
+    title: "CRM & automation",
+    description:
+      "Routing, automated follow-up, reminders, pipeline workflows and operational automation.",
+  },
+  {
+    title: "Tracking & optimisation",
+    description:
+      "Conversion tracking, source attribution and funnel performance measurement.",
+  },
+  {
+    title: "Custom digital products",
+    description:
+      "Custom web applications, clinic tools, portals, calculators, booking experiences and integrations.",
+  },
+] as const;
+
+export const dentalGrowthTreatments = [
+  { name: "Dental implants", emphasis: "high" as const },
+  { name: "Composite bonding", emphasis: "high" as const },
+  { name: "Clear aligners", emphasis: "high" as const },
+  { name: "Teeth whitening", emphasis: "medium" as const },
+  { name: "Veneers", emphasis: "high" as const },
+  { name: "Cosmetic dentistry", emphasis: "medium" as const },
+  { name: "General dentistry", emphasis: "medium" as const },
+  { name: "Emergency dentistry", emphasis: "medium" as const },
+  { name: "Restorative dentistry", emphasis: "medium" as const },
+] as const;
+
+export const aestheticsGrowthTreatments = [
+  { name: "Anti-wrinkle treatments", emphasis: "high" as const },
+  { name: "Dermal fillers", emphasis: "high" as const },
+  { name: "Skin treatments", emphasis: "high" as const },
+  { name: "Body sculpting", emphasis: "medium" as const },
+  { name: "Hair treatments", emphasis: "medium" as const },
+  { name: "Endolift", emphasis: "high" as const },
+  { name: "Filler packages", emphasis: "medium" as const },
+  { name: "Facial aesthetics", emphasis: "medium" as const },
+] as const;
+
+export const howItWorksPeopleJourney = [
+  {
+    number: "01",
+    title: "Explore",
+    description:
+      "Start with the dental or aesthetic service you're considering.",
+  },
+  {
+    number: "02",
+    title: "Add context",
+    description:
+      "Tell us your London location, timeframe, approximate budget and the things that matter most to you.",
+  },
+  {
+    number: "03",
+    title: "Submit",
+    description:
+      "Provide your contact details and consent for DELVARA to process and, where appropriate, share your enquiry.",
+  },
+  {
+    number: "04",
+    title: "Connection",
+    description:
+      "Where there is a relevant participating clinic, your enquiry may be shared with their team.",
+  },
+  {
+    number: "05",
+    title: "Conversation",
+    description:
+      "The clinic can then discuss the service, answer questions and explain appropriate next steps.",
+  },
+] as const;
+
+export const enquiryWhyItMatters = [
+  {
+    title: "Treatment",
+    description: "Understand what service the person is exploring.",
+  },
+  {
+    title: "Location",
+    description: "Understand practical geographic fit across London.",
+  },
+  {
+    title: "Timing",
+    description: "Understand how active the enquiry is.",
+  },
+  {
+    title: "Budget",
+    description: "Understand approximate expectations — not a published price list.",
+  },
+  {
+    title: "Priorities",
+    description: "Understand what matters most before the first conversation.",
+  },
+  {
+    title: "Contact details",
+    description: "Allow a participating clinic to respond.",
+  },
+  {
+    title: "Consent",
+    description: "Ensure information is only shared through an explicit user action.",
+  },
+] as const;
+
+export const dentalPartnerStandards = [
+  {
+    title: "Professional registration",
+    description:
+      "Dental professionals practising in the UK must be appropriately registered with the General Dental Council (GDC). Where a protected specialist title is used, relevant GDC specialist-list status may be checked.",
+  },
+  {
+    title: "Service / provider regulation",
+    description:
+      "For regulated dental services in England, relevant provider registration and publicly available CQC information may be reviewed where applicable.",
+  },
+  {
+    title: "Treatment credentials",
+    description:
+      "Where relevant, additional professional indicators may be considered — for example BACD accreditation for cosmetic dentistry, or ADI membership / fellowship and other appropriate implant-related credentials. These are professional signals, not government regulators.",
+  },
+  {
+    title: "Patient processes",
+    description:
+      "Partner information may include professional indemnity, practitioner credentials, services provided, locations, enquiry handling, consent, aftercare, complaints processes, finance options where offered, and capacity.",
+  },
+] as const;
+
+export const aestheticsPartnerStandards = [
+  {
+    title: "Practitioner professional registration",
+    description:
+      "Depending on practitioner profession, relevant registers may include GMC, NMC, GDC, GPhC or HCPC. Not every aesthetic practitioner belongs to every register — review considers what is relevant to the services offered.",
+  },
+  {
+    title: "CQC where applicable",
+    description:
+      "CQC regulation applies to some activities and providers, but not every non-surgical cosmetic treatment. Where applicable, relevant publicly available information may be considered.",
+  },
+  {
+    title: "Additional quality signals",
+    description:
+      "Where relevant, JCCP registration can be considered as an additional practitioner-quality signal. It is an accredited / self-regulatory register rather than a statutory regulator.",
+  },
+  {
+    title: "Training, experience and processes",
+    description:
+      "Partner information may include treatment-specific qualifications, training, experience, insurance, prescribing arrangements where relevant, premises, consultation and consent processes, aftercare, and complications / escalation processes.",
+  },
+] as const;
+
 export const faqs = [
   {
     question: "What is DELVARA?",
     answer:
-      "DELVARA is a London-focused treatment enquiry service helping people considering private dental or aesthetic treatment connect with relevant participating clinics.",
+      "DELVARA is a London-focused service that helps people explore private dental or aesthetic services, clarify what matters to them, and submit an informed enquiry to participating clinics. For clinics, DELVARA also supports patient acquisition journeys and growth infrastructure.",
   },
   {
     question: "Does it cost anything to make an enquiry?",
@@ -407,16 +592,16 @@ export const faqs = [
   {
     question: "Am I committing to treatment by enquiring?",
     answer:
-      "No. An enquiry or introduction does not commit someone to treatment or to choosing a particular clinic.",
+      "No. An enquiry never commits you to a consultation or treatment. Clinical advice and treatment decisions remain between you and the clinic.",
   },
   {
     question: "How does DELVARA choose which clinics to introduce?",
     answer:
-      "DELVARA uses details such as treatment category, treatment type, London location, availability preferences and the information you provide to help identify a relevant participating clinic where possible. Matching continues to develop as the service grows.",
+      "DELVARA uses details such as treatment category, service type, London location, timeframe, approximate budget, priorities and the information you provide to help identify a relevant participating clinic where possible. Matching continues to develop as the service grows.",
   },
   {
     question: "Is DELVARA a clinic?",
     answer:
-      "No. DELVARA does not provide treatment or medical diagnosis. Treatment decisions and clinical advice remain between the patient and the chosen healthcare professional.",
+      "No. DELVARA does not provide treatment, diagnosis or medical advice. Clinical suitability and treatment decisions remain between the individual and the relevant healthcare professional.",
   },
 ] as const;

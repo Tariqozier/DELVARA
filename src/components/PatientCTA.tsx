@@ -18,11 +18,12 @@ export function PatientCTA() {
               id="patient-cta-heading"
               className="text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
             >
-              Thinking about treatment in London?
+              Thinking about a private service in London?
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              Tell us whether you&apos;re considering dental or aesthetic
-              treatment. It only takes a few minutes to get started.
+              Tell us whether you&apos;re exploring dental or aesthetic
+              services. It only takes a few minutes to submit an informed
+              enquiry.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <StartSearchButton variant="primary">

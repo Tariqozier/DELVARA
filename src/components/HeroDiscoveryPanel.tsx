@@ -82,7 +82,7 @@ export function HeroDiscoveryPanel() {
           </div>
 
           {category ? (
-            <div>
+            <div key={category} className="category-panel-enter">
               <p className="text-sm font-medium text-delvara-ink">
                 Example treatments
               </p>
