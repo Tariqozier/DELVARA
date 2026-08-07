@@ -330,21 +330,23 @@ export default function AboutPage() {
             </p>
           </ScrollReveal>
 
-          <ScrollReveal as="ul" className="mt-10 grid gap-3 sm:grid-cols-2">
-            {whatDelvaraIsNot.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-xl border border-delvara-border bg-delvara-bg px-5 py-4"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-delvara-ink"
-                />
-                <span className="text-sm leading-relaxed text-delvara-charcoal sm:text-base">
-                  DELVARA is not {item.toLowerCase()}.
-                </span>
-              </li>
-            ))}
+          <ScrollReveal className="mt-10">
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {whatDelvaraIsNot.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 rounded-xl border border-delvara-border bg-delvara-bg px-5 py-4"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-delvara-ink"
+                  />
+                  <span className="text-sm leading-relaxed text-delvara-charcoal sm:text-base">
+                    DELVARA is not {item.toLowerCase()}.
+                  </span>
+                </li>
+              ))}
+            </ul>
           </ScrollReveal>
         </div>
       </section>

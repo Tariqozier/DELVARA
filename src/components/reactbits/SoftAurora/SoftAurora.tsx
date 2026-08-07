@@ -207,15 +207,22 @@ export default function SoftAurora({
       const gl = renderer.gl;
       gl.clearColor(0, 0, 0, 0);
 
+      // SoftAurora is DOM-mounted; OGL types canvas as HTMLCanvasElement | OffscreenCanvas.
+      const canvas = gl.canvas as HTMLCanvasElement;
+      if (!(canvas instanceof HTMLCanvasElement)) {
+        onUnavailable?.();
+        return;
+      }
+
       let program: InstanceType<typeof Program>;
       let currentMouse = [0.5, 0.5];
       let targetMouse = [0.5, 0.5];
 
-      function handleMouseMove(e: MouseEvent) {
-        const rect = gl.canvas.getBoundingClientRect();
+      function handleMouseMove(event: MouseEvent) {
+        const rect = canvas.getBoundingClientRect();
         targetMouse = [
-          (e.clientX - rect.left) / rect.width,
-          1.0 - (e.clientY - rect.top) / rect.height,
+          (event.clientX - rect.left) / rect.width,
+          1.0 - (event.clientY - rect.top) / rect.height,
         ];
       }
 
@@ -227,9 +234,9 @@ export default function SoftAurora({
         renderer.setSize(container.offsetWidth, container.offsetHeight);
         if (program) {
           program.uniforms.uResolution.value = [
-            gl.canvas.width,
-            gl.canvas.height,
-            gl.canvas.width / gl.canvas.height,
+            canvas.width,
+            canvas.height,
+            canvas.width / canvas.height,
           ];
         }
       }
@@ -243,11 +250,7 @@ export default function SoftAurora({
         uniforms: {
           uTime: { value: 0 },
           uResolution: {
-            value: [
-              gl.canvas.width,
-              gl.canvas.height,
-              gl.canvas.width / gl.canvas.height,
-            ],
+            value: [canvas.width, canvas.height, canvas.width / canvas.height],
           },
           uSpeed: { value: speed },
           uScale: { value: scale },
@@ -268,11 +271,11 @@ export default function SoftAurora({
       });
 
       const mesh = new Mesh(gl, { geometry, program });
-      container.appendChild(gl.canvas);
+      container.appendChild(canvas);
 
       if (enableMouseInteraction) {
-        gl.canvas.addEventListener('mousemove', handleMouseMove);
-        gl.canvas.addEventListener('mouseleave', handleMouseLeave);
+        canvas.addEventListener('mousemove', handleMouseMove);
+        canvas.addEventListener('mouseleave', handleMouseLeave);
       }
 
       function update(time: number) {
@@ -297,11 +300,11 @@ export default function SoftAurora({
         cancelAnimationFrame(animationFrameId);
         window.removeEventListener('resize', resize);
         if (enableMouseInteraction) {
-          gl.canvas.removeEventListener('mousemove', handleMouseMove);
-          gl.canvas.removeEventListener('mouseleave', handleMouseLeave);
+          canvas.removeEventListener('mousemove', handleMouseMove);
+          canvas.removeEventListener('mouseleave', handleMouseLeave);
         }
-        if (gl.canvas.parentNode === container) {
-          container.removeChild(gl.canvas);
+        if (canvas.parentNode === container) {
+          container.removeChild(canvas);
         }
         gl.getExtension('WEBGL_lose_context')?.loseContext();
       };
