@@ -63,7 +63,7 @@ export function Header() {
         <div className="flex h-[4.25rem] items-center justify-between gap-4 md:h-[5rem]">
           <Link
             href="/"
-            className="text-[1.15rem] font-semibold tracking-[0.18em] text-delvara-ink md:text-[1.25rem]"
+            className="text-[1.4rem] font-semibold tracking-[0.18em] text-delvara-ink md:text-[1.55rem]"
             aria-label={`${brand.name} home`}
           >
             {brand.name}

@@ -19,7 +19,9 @@ type StartSearchButtonProps = {
   variant?: Variant;
   className?: string;
   category?: TreatmentCategory;
+  /** Singular CTA convenience; normalised into treatments[]. */
   treatment?: string;
+  treatments?: string[];
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "className">;
 
 export function StartSearchButton({
@@ -28,6 +30,7 @@ export function StartSearchButton({
   className = "",
   category,
   treatment,
+  treatments,
   onClick,
   ...props
 }: StartSearchButtonProps) {
@@ -37,10 +40,15 @@ export function StartSearchButton({
     <button
       type="button"
       onClick={(event) => {
+        const hasTreatments =
+          Boolean(treatment) || Boolean(treatments && treatments.length > 0);
         const draft: EnquiryDraft | undefined =
-          category || treatment
+          category || hasTreatments
             ? {
                 ...(category ? { category } : {}),
+                ...(treatments && treatments.length > 0
+                  ? { treatments }
+                  : {}),
                 ...(treatment ? { treatment } : {}),
               }
             : undefined;

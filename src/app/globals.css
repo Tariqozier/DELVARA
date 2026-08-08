@@ -257,6 +257,37 @@
     box-shadow: 0 6px 16px rgb(23 45 46 / 0.12);
   }
 
+  .choice-chip[data-category="aesthetics"][aria-pressed="true"],
+  .choice-chip[data-category="aesthetics"][data-selected="true"] {
+    border-color: var(--color-aesthetics);
+    background-color: var(--color-aesthetics-soft);
+    color: var(--color-aesthetics-deep);
+    box-shadow: inset 0 0 0 1px rgb(169 133 152 / 0.28);
+  }
+
+  .choice-chip[data-category="dental"][aria-pressed="true"],
+  .choice-chip[data-category="dental"][data-selected="true"] {
+    border-color: var(--color-dental);
+    background-color: var(--color-dental-soft);
+    color: var(--color-dental-deep);
+    box-shadow: inset 0 0 0 1px rgb(120 149 133 / 0.28);
+  }
+
+  .choice-chip:disabled,
+  .choice-chip[aria-disabled="true"] {
+    opacity: 0.42;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .choice-chip:disabled:hover,
+  .choice-chip[aria-disabled="true"]:hover {
+    border-color: var(--color-delvara-border);
+    background-color: var(--color-delvara-white);
+    transform: none;
+  }
+
   .category-tab {
     display: flex;
     width: 100%;

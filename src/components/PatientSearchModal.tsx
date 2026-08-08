@@ -21,11 +21,15 @@ import {
   travelOptions,
   type TreatmentCategory,
 } from "@/lib/content";
-import { getEnquiryStartStep } from "@/lib/enquiryContext";
+import {
+  getEnquiryStartStep,
+  MAX_ENQUIRY_TREATMENTS,
+  toggleEnquiryTreatment,
+} from "@/lib/enquiryContext";
 
 type FormState = {
   category: TreatmentCategory | "";
-  treatment: string;
+  treatments: string[];
   location: string;
   travel: string;
   timing: string;
@@ -40,7 +44,7 @@ type FormState = {
 
 const initialForm: FormState = {
   category: "",
-  treatment: "",
+  treatments: [],
   location: "",
   travel: "",
   timing: "",
@@ -73,10 +77,10 @@ export function PatientSearchModal() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [submittedDemo, setSubmittedDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [contextLocked, setContextLocked] = useState(false);
   const [categoryPrefill, setCategoryPrefill] = useState(false);
   const titleId = useId();
   const descriptionId = useId();
+  const treatmentLimitId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
@@ -89,25 +93,28 @@ export function PatientSearchModal() {
         ? enquiryAestheticsTreatments
         : [];
 
-  const treatmentOptions =
-    form.treatment &&
-    !(treatmentOptionsBase as readonly string[]).includes(form.treatment)
-      ? [form.treatment, ...treatmentOptionsBase]
-      : treatmentOptionsBase;
+  const extraTreatments = form.treatments.filter(
+    (treatment) =>
+      !(treatmentOptionsBase as readonly string[]).includes(treatment),
+  );
+  const treatmentOptions = [...extraTreatments, ...treatmentOptionsBase];
 
   const budgetOptions =
     form.category === "aesthetics"
       ? aestheticsBudgetOptions
       : dentalBudgetOptions;
 
-  const minStep = contextLocked ? 2 : 1;
-  const showContextSummary = Boolean(form.category && form.treatment);
+  const atTreatmentLimit = form.treatments.length >= MAX_ENQUIRY_TREATMENTS;
+  const showContextSummary = Boolean(
+    form.category && form.treatments.length > 0,
+  );
   const categoryLabel =
     form.category === "aesthetics"
       ? "Aesthetics"
       : form.category === "dental"
         ? "Dental"
         : "";
+  const treatmentsSummary = form.treatments.join(" · ");
 
   useEffect(() => {
     if (!isOpen) {
@@ -118,7 +125,6 @@ export function PatientSearchModal() {
         setForm(initialForm);
         setSubmittedDemo(false);
         setError(null);
-        setContextLocked(false);
         setCategoryPrefill(false);
       }, 200);
       return () => window.clearTimeout(resetTimer);
@@ -130,7 +136,7 @@ export function PatientSearchModal() {
     const nextForm: FormState = {
       ...initialForm,
       category: draft.category ?? "",
-      treatment: draft.treatment ?? "",
+      treatments: draft.treatments ?? [],
     };
     const startStep = getEnquiryStartStep(draft);
     setForm(nextForm);
@@ -138,7 +144,6 @@ export function PatientSearchModal() {
     setDirection("forward");
     setSubmittedDemo(false);
     setError(null);
-    setContextLocked(Boolean(draft.category && draft.treatment));
     setCategoryPrefill(Boolean(draft.category));
   }, [isOpen, draft]);
 
@@ -177,7 +182,13 @@ export function PatientSearchModal() {
   if (!isOpen) return null;
 
   function canContinue() {
-    if (step === 1) return Boolean(form.category && form.treatment);
+    if (step === 1) {
+      return Boolean(
+        form.category &&
+          form.treatments.length >= 1 &&
+          form.treatments.length <= MAX_ENQUIRY_TREATMENTS,
+      );
+    }
     if (step === 2) return form.location.trim().length >= 2;
     if (step === 3) return Boolean(form.timing && form.budget);
     if (step === 4) return form.priorities.length > 0;
@@ -188,7 +199,7 @@ export function PatientSearchModal() {
     if (!canContinue()) {
       setError(
         step === 1
-          ? "Please choose a category and treatment to continue."
+          ? "Please choose a category and at least one treatment to continue."
           : step === 3
             ? "Please choose a timeframe and approximate budget range."
             : "Please complete this step to continue.",
@@ -203,15 +214,32 @@ export function PatientSearchModal() {
   function goBack() {
     setError(null);
     setDirection("back");
-    setStep((current) => Math.max(current - 1, minStep));
+    setStep((current) => Math.max(current - 1, 1));
   }
 
   function handleChangeContext() {
     setError(null);
-    setContextLocked(false);
     setCategoryPrefill(false);
     setDirection("back");
     setStep(1);
+  }
+
+  function selectCategory(nextCategory: TreatmentCategory) {
+    setForm((current) => ({
+      ...current,
+      category: nextCategory,
+      treatments: [],
+      budget: "",
+    }));
+    setError(null);
+  }
+
+  function toggleTreatment(option: string) {
+    setForm((current) => {
+      const next = toggleEnquiryTreatment(current.treatments, option);
+      return { ...current, treatments: next };
+    });
+    setError(null);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -337,7 +365,7 @@ export function PatientSearchModal() {
                       {categoryLabel}
                     </span>
                     <span className="mx-1.5 text-delvara-border-strong">·</span>
-                    <span>{form.treatment}</span>
+                    <span>{treatmentsSummary}</span>
                   </p>
                   <button
                     type="button"
@@ -361,7 +389,7 @@ export function PatientSearchModal() {
                     <fieldset className="space-y-5">
                       <legend className="text-lg font-medium text-delvara-ink">
                         {categoryPrefill && form.category
-                          ? "Which service are you interested in?"
+                          ? "Which treatments are you considering?"
                           : "What are you considering?"}
                       </legend>
 
@@ -382,7 +410,7 @@ export function PatientSearchModal() {
                               setForm((current) => ({
                                 ...current,
                                 category: "",
-                                treatment: "",
+                                treatments: [],
                                 budget: "",
                               }));
                               setError(null);
@@ -399,16 +427,7 @@ export function PatientSearchModal() {
                             className="category-tab"
                             data-category="aesthetics"
                             aria-pressed={form.category === "aesthetics"}
-                            onClick={() => {
-                              setForm((current) => ({
-                                ...current,
-                                category: "aesthetics",
-                                treatment: "",
-                                budget: "",
-                              }));
-                              setContextLocked(false);
-                              setError(null);
-                            }}
+                            onClick={() => selectCategory("aesthetics")}
                           >
                             <span
                               aria-hidden="true"
@@ -421,16 +440,7 @@ export function PatientSearchModal() {
                             className="category-tab"
                             data-category="dental"
                             aria-pressed={form.category === "dental"}
-                            onClick={() => {
-                              setForm((current) => ({
-                                ...current,
-                                category: "dental",
-                                treatment: "",
-                                budget: "",
-                              }));
-                              setContextLocked(false);
-                              setError(null);
-                            }}
+                            onClick={() => selectCategory("dental")}
                           >
                             <span
                               aria-hidden="true"
@@ -444,28 +454,58 @@ export function PatientSearchModal() {
                       {form.category ? (
                         <div>
                           {!categoryPrefill ? (
-                            <p className="mb-3 text-sm font-medium text-delvara-ink">
-                              Which service are you interested in?
+                            <p className="mb-1 text-sm font-medium text-delvara-ink">
+                              Which treatments are you considering?
                             </p>
                           ) : null}
-                          <div className="grid gap-2.5 sm:grid-cols-2">
-                            {treatmentOptions.map((option) => (
-                              <button
-                                key={option}
-                                type="button"
-                                className="choice-chip w-full justify-start"
-                                aria-pressed={form.treatment === option}
-                                onClick={() => {
-                                  setForm((current) => ({
-                                    ...current,
-                                    treatment: option,
-                                  }));
-                                  setError(null);
-                                }}
-                              >
-                                {option}
-                              </button>
-                            ))}
+                          <p
+                            id={treatmentLimitId}
+                            className="mb-3 text-sm text-delvara-muted-text"
+                            aria-live="polite"
+                          >
+                            {atTreatmentLimit
+                              ? "Maximum of 3 selected. Deselect one to choose another."
+                              : "Choose up to 3."}
+                          </p>
+                          <div
+                            className="grid gap-2.5 sm:grid-cols-2"
+                            role="group"
+                            aria-describedby={treatmentLimitId}
+                          >
+                            {treatmentOptions.map((option) => {
+                              const isSelected =
+                                form.treatments.includes(option);
+                              const isDisabled =
+                                atTreatmentLimit && !isSelected;
+
+                              return (
+                                <button
+                                  key={option}
+                                  type="button"
+                                  className="choice-chip w-full justify-start gap-2"
+                                  data-category={form.category}
+                                  aria-pressed={isSelected}
+                                  aria-disabled={isDisabled || undefined}
+                                  disabled={isDisabled}
+                                  onClick={() => toggleTreatment(option)}
+                                >
+                                  {isSelected ? (
+                                    <IconCheck
+                                      className="h-4 w-4 shrink-0"
+                                      aria-hidden="true"
+                                    />
+                                  ) : null}
+                                  <span>{option}</span>
+                                  <span className="sr-only">
+                                    {isSelected
+                                      ? ", selected"
+                                      : isDisabled
+                                        ? ", unavailable — maximum of 3 treatments selected"
+                                        : ", not selected"}
+                                  </span>
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       ) : (
@@ -769,7 +809,7 @@ export function PatientSearchModal() {
               </div>
 
               <div className="flex flex-col-reverse gap-3 border-t border-delvara-border bg-delvara-white/80 px-5 py-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
-                {step > minStep ? (
+                {step > 1 ? (
                   <button
                     type="button"
                     onClick={goBack}

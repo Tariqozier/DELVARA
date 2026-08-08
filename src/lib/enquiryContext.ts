@@ -4,8 +4,13 @@ import {
   type TreatmentCategory,
 } from "@/lib/content";
 
+export const MAX_ENQUIRY_TREATMENTS = 3;
+
 export type EnquiryDraft = {
   category?: TreatmentCategory;
+  /** Preferred multi-select field. */
+  treatments?: string[];
+  /** Singular CTA convenience; normalised into treatments. */
   treatment?: string;
 };
 
@@ -98,23 +103,51 @@ export function resolveEnquiryTreatment(
   return matchFromList(treatmentName, enquiryDentalTreatments, dentalAliases);
 }
 
+function collectRawTreatments(draft: EnquiryDraft): string[] {
+  const fromArray = draft.treatments ?? [];
+  const fromSingular = draft.treatment ? [draft.treatment] : [];
+  return [...fromArray, ...fromSingular];
+}
+
 export function normalizeEnquiryDraft(
   draft?: EnquiryDraft | null,
 ): EnquiryDraft {
   if (!draft?.category) return {};
 
   const category = draft.category;
-  const treatment = draft.treatment
-    ? resolveEnquiryTreatment(category, draft.treatment)
-    : undefined;
+  const seen = new Set<string>();
+  const treatments: string[] = [];
+
+  for (const raw of collectRawTreatments(draft)) {
+    const resolved = resolveEnquiryTreatment(category, raw);
+    if (!resolved || seen.has(resolved)) continue;
+    seen.add(resolved);
+    treatments.push(resolved);
+    if (treatments.length >= MAX_ENQUIRY_TREATMENTS) break;
+  }
 
   return {
     category,
-    ...(treatment ? { treatment } : {}),
+    ...(treatments.length > 0 ? { treatments } : {}),
   };
 }
 
-export function getEnquiryStartStep(draft: EnquiryDraft): 1 | 2 {
-  if (draft.category && draft.treatment) return 2;
+/**
+ * Multi-select keeps users on step 1 even when a treatment CTA prefilled
+ * one option, so they can still add up to two more before continuing.
+ */
+export function getEnquiryStartStep(_draft: EnquiryDraft): 1 {
   return 1;
+}
+
+export function toggleEnquiryTreatment(
+  current: string[],
+  option: string,
+  max = MAX_ENQUIRY_TREATMENTS,
+): string[] {
+  if (current.includes(option)) {
+    return current.filter((item) => item !== option);
+  }
+  if (current.length >= max) return current;
+  return [...current, option];
 }
