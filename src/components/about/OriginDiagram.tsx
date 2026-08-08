@@ -38,7 +38,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
   return (
     <figure
       className={[
-        "mx-auto w-full max-w-3xl rounded-2xl border border-delvara-border bg-delvara-white p-6 sm:p-10",
+        "origin-diagram mx-auto w-full max-w-none rounded-2xl border border-delvara-border bg-delvara-white p-5 sm:p-8 lg:p-10 xl:p-12",
         className,
       ]
         .filter(Boolean)
@@ -46,280 +46,361 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
       aria-labelledby={titleId}
     >
       <figcaption id={titleId} className="sr-only">
-        How DELVARA connects dental experience, aesthetics experience, people,
-        and clinics.
+        DELVARA was formed from dental and aesthetics experience, and sits
+        between people exploring private treatment and participating clinics.
       </figcaption>
 
       <svg
-        viewBox="0 0 720 420"
+        viewBox="0 0 960 780"
         role="img"
         aria-hidden="true"
-        className="h-auto w-full"
+        className="origin-diagram__svg h-auto w-full"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
           <linearGradient id="origin-sage" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={COLORS.sage} stopOpacity="0.35" />
-            <stop offset="100%" stopColor={COLORS.sage} stopOpacity="0.08" />
+            <stop offset="0%" stopColor={COLORS.sage} stopOpacity="0.42" />
+            <stop offset="100%" stopColor={COLORS.sage} stopOpacity="0.1" />
           </linearGradient>
           <linearGradient id="origin-mauve" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={COLORS.mauve} stopOpacity="0.32" />
-            <stop offset="100%" stopColor={COLORS.mauve} stopOpacity="0.08" />
+            <stop offset="0%" stopColor={COLORS.mauve} stopOpacity="0.4" />
+            <stop offset="100%" stopColor={COLORS.peach} stopOpacity="0.12" />
           </linearGradient>
-          <linearGradient id="origin-peach" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop offset="0%" stopColor={COLORS.peach} stopOpacity="0.28" />
-            <stop offset="100%" stopColor={COLORS.peach} stopOpacity="0.06" />
+          <linearGradient id="origin-flow" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={COLORS.ink} stopOpacity="0.55" />
+            <stop offset="100%" stopColor={COLORS.ink} stopOpacity="0.85" />
           </linearGradient>
-          <marker
-            id="origin-arrow-peach"
-            markerWidth="8"
-            markerHeight="8"
-            refX="6"
-            refY="3"
-            orient="auto"
-          >
-            <path d="M0,0 L6,3 L0,6 Z" fill={COLORS.peach} />
-          </marker>
-          <marker
-            id="origin-arrow-mauve"
-            markerWidth="8"
-            markerHeight="8"
-            refX="6"
-            refY="3"
-            orient="auto"
-          >
-            <path d="M0,0 L6,3 L0,6 Z" fill={COLORS.mauve} />
-          </marker>
-          <marker
-            id="origin-arrow-sage"
-            markerWidth="8"
-            markerHeight="8"
-            refX="6"
-            refY="3"
-            orient="auto"
-          >
-            <path d="M0,0 L6,3 L0,6 Z" fill={COLORS.sage} />
-          </marker>
+          <filter id="origin-soft" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow
+              dx="0"
+              dy="6"
+              stdDeviation="10"
+              floodColor={COLORS.ink}
+              floodOpacity="0.08"
+            />
+          </filter>
         </defs>
 
-        {/* Upper diagram: dental / DELVARA / aesthetics */}
-        <rect
-          x="24"
-          y="28"
-          width="672"
-          height="148"
-          rx="18"
-          fill={COLORS.ivory}
-          stroke={COLORS.ink}
-          strokeOpacity="0.08"
-        />
-
-        <rect x="40" y="52" width="180" height="96" rx="12" fill="url(#origin-sage)" />
-        <rect x="270" y="44" width="180" height="112" rx="14" fill={COLORS.ink} />
-        <rect x="500" y="52" width="180" height="96" rx="12" fill="url(#origin-mauve)" />
-
+        {/* ── Origin confluence ── */}
         <text
-          x="130"
-          y="92"
-          textAnchor="middle"
-          fill={COLORS.ink}
-          fontSize="11"
-          letterSpacing="2.4"
-          fontWeight="500"
-        >
-          DENTAL
-        </text>
-        <text
-          x="130"
-          y="112"
+          x="480"
+          y="36"
           textAnchor="middle"
           fill={COLORS.muted}
-          fontSize="10"
-          letterSpacing="2"
-        >
-          EXPERIENCE
-        </text>
-
-        <text
-          x="360"
-          y="104"
-          textAnchor="middle"
-          fill={COLORS.ivory}
-          fontSize="14"
+          fontSize="12"
           letterSpacing="3.2"
           fontWeight="500"
         >
-          DELVARA
+          WHERE IT BEGAN
         </text>
 
-        <text
-          x="590"
-          y="92"
-          textAnchor="middle"
-          fill={COLORS.ink}
-          fontSize="11"
-          letterSpacing="2.4"
-          fontWeight="500"
-        >
-          AESTHETICS
-        </text>
-        <text
-          x="590"
-          y="112"
-          textAnchor="middle"
-          fill={COLORS.muted}
-          fontSize="10"
-          letterSpacing="2"
-        >
-          EXPERIENCE
-        </text>
+        {/* Dental node */}
+        <g className={animate ? "origin-fade origin-fade--1" : undefined}>
+          <rect
+            x="48"
+            y="64"
+            width="240"
+            height="88"
+            rx="16"
+            fill="url(#origin-sage)"
+            stroke={COLORS.sage}
+            strokeWidth="1.75"
+            strokeOpacity="0.65"
+          />
+          <text
+            x="168"
+            y="102"
+            textAnchor="middle"
+            fill={COLORS.ink}
+            fontSize="13"
+            letterSpacing="2.6"
+            fontWeight="500"
+          >
+            DENTAL
+          </text>
+          <text
+            x="168"
+            y="124"
+            textAnchor="middle"
+            fill={COLORS.muted}
+            fontSize="12"
+            letterSpacing="2.2"
+          >
+            EXPERIENCE
+          </text>
+        </g>
 
-        {/* Animated connectors — upper */}
+        {/* Aesthetics node */}
+        <g className={animate ? "origin-fade origin-fade--2" : undefined}>
+          <rect
+            x="672"
+            y="64"
+            width="240"
+            height="88"
+            rx="16"
+            fill="url(#origin-mauve)"
+            stroke={COLORS.mauve}
+            strokeWidth="1.75"
+            strokeOpacity="0.7"
+          />
+          <text
+            x="792"
+            y="102"
+            textAnchor="middle"
+            fill={COLORS.ink}
+            fontSize="13"
+            letterSpacing="2.6"
+            fontWeight="500"
+          >
+            AESTHETICS
+          </text>
+          <text
+            x="792"
+            y="124"
+            textAnchor="middle"
+            fill={COLORS.muted}
+            fontSize="12"
+            letterSpacing="2.2"
+          >
+            EXPERIENCE
+          </text>
+        </g>
+
+        {/* Converging lines into central DELVARA */}
         <path
-          d="M 220 100 C 245 100, 255 100, 270 100"
+          d="M 288 120 C 360 120, 400 200, 420 230"
           fill="none"
           stroke={COLORS.sage}
-          strokeWidth="1.5"
+          strokeWidth="2.75"
           strokeLinecap="round"
-          className={animate ? "origin-line origin-line--left" : undefined}
+          strokeOpacity="0.9"
+          className={animate ? "origin-line origin-line--dental" : undefined}
         />
         <path
-          d="M 450 100 C 475 100, 485 100, 500 100"
+          d="M 672 120 C 600 120, 560 200, 540 230"
           fill="none"
           stroke={COLORS.mauve}
-          strokeWidth="1.5"
+          strokeWidth="2.75"
           strokeLinecap="round"
-          className={animate ? "origin-line origin-line--right" : undefined}
+          strokeOpacity="0.9"
+          className={animate ? "origin-line origin-line--aesthetics" : undefined}
         />
-
-        {/* Bridge */}
-        <path
-          d="M 360 156 L 360 196"
-          fill="none"
-          stroke={COLORS.ink}
-          strokeOpacity="0.18"
-          strokeWidth="1.5"
-          strokeDasharray="4 5"
-          className={animate ? "origin-line origin-line--bridge" : undefined}
-        />
-
-        {/* Lower diagram: people ↔ DELVARA ↔ clinics */}
-        <rect
-          x="24"
-          y="208"
-          width="672"
-          height="184"
-          rx="18"
-          fill={COLORS.ivory}
-          stroke={COLORS.ink}
-          strokeOpacity="0.08"
-        />
-
-        <circle cx="130" cy="300" r="44" fill="url(#origin-peach)" />
-        <rect x="286" y="256" width="148" height="88" rx="14" fill={COLORS.ink} />
-        <circle cx="590" cy="300" r="44" fill="url(#origin-sage)" />
-
-        <text
-          x="130"
-          y="304"
-          textAnchor="middle"
-          fill={COLORS.ink}
-          fontSize="11"
-          letterSpacing="2.2"
-          fontWeight="500"
-        >
-          PEOPLE
-        </text>
-
-        <text
-          x="360"
-          y="304"
-          textAnchor="middle"
-          fill={COLORS.ivory}
-          fontSize="13"
-          letterSpacing="3"
-          fontWeight="500"
-        >
-          DELVARA
-        </text>
-
-        <text
-          x="590"
-          y="304"
-          textAnchor="middle"
-          fill={COLORS.ink}
-          fontSize="11"
-          letterSpacing="2.2"
-          fontWeight="500"
-        >
-          CLINICS
-        </text>
-
-        {/* Bidirectional lower connectors */}
-        <path
-          d="M 174 300 L 286 300"
-          fill="none"
-          stroke={COLORS.peach}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          markerEnd="url(#origin-arrow-peach)"
-          className={animate ? "origin-line origin-line--flow-a" : undefined}
-        />
-        <path
-          d="M 286 292 L 174 292"
-          fill="none"
-          stroke={COLORS.sage}
-          strokeWidth="1.25"
-          strokeLinecap="round"
-          strokeOpacity="0.75"
-          markerEnd="url(#origin-arrow-sage)"
-          className={animate ? "origin-line origin-line--flow-b" : undefined}
-        />
-        <path
-          d="M 434 300 L 546 300"
-          fill="none"
-          stroke={COLORS.mauve}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          markerEnd="url(#origin-arrow-mauve)"
-          className={animate ? "origin-line origin-line--flow-c" : undefined}
-        />
-        <path
-          d="M 546 292 L 434 292"
-          fill="none"
-          stroke={COLORS.sage}
-          strokeWidth="1.25"
-          strokeLinecap="round"
-          strokeOpacity="0.75"
-          markerEnd="url(#origin-arrow-sage)"
-          className={animate ? "origin-line origin-line--flow-d" : undefined}
-        />
-
-        {/* Decorative nodes */}
         <circle
-          cx="220"
-          cy="100"
-          r="3"
+          cx="288"
+          cy="120"
+          r="5"
           fill={COLORS.sage}
           className={animate ? "origin-node origin-node--a" : undefined}
         />
         <circle
-          cx="500"
-          cy="100"
-          r="3"
+          cx="672"
+          cy="120"
+          r="5"
           fill={COLORS.mauve}
           className={animate ? "origin-node origin-node--b" : undefined}
         />
-        <circle
-          cx="360"
-          cy="196"
-          r="3"
-          fill={COLORS.ink}
-          fillOpacity="0.35"
-          className={animate ? "origin-node origin-node--c" : undefined}
-        />
-      </svg>
 
+        {/* Central origin DELVARA */}
+        <g
+          filter="url(#origin-soft)"
+          className={animate ? "origin-fade origin-fade--3" : undefined}
+        >
+          <rect
+            x="360"
+            y="228"
+            width="240"
+            height="92"
+            rx="18"
+            fill={COLORS.ink}
+          />
+          <text
+            x="480"
+            y="282"
+            textAnchor="middle"
+            fill={COLORS.ivory}
+            fontSize="22"
+            letterSpacing="4.5"
+            fontWeight="500"
+          >
+            DELVARA
+          </text>
+        </g>
+        <circle cx="420" cy="230" r="5" fill={COLORS.sage} />
+        <circle cx="540" cy="230" r="5" fill={COLORS.mauve} />
+
+        {/* Divider */}
+        <line
+          x1="120"
+          y1="360"
+          x2="840"
+          y2="360"
+          stroke={COLORS.ink}
+          strokeOpacity="0.1"
+          strokeWidth="1.5"
+        />
+        <text
+          x="480"
+          y="392"
+          textAnchor="middle"
+          fill={COLORS.muted}
+          fontSize="12"
+          letterSpacing="3.2"
+          fontWeight="500"
+        >
+          HOW IT CONNECTS
+        </text>
+
+        {/* ── Vertical connector model ── */}
+        <g className={animate ? "origin-fade origin-fade--4" : undefined}>
+          <rect
+            x="270"
+            y="416"
+            width="420"
+            height="72"
+            rx="16"
+            fill={COLORS.ivory}
+            stroke={COLORS.ink}
+            strokeWidth="1.5"
+            strokeOpacity="0.14"
+          />
+          <text
+            x="480"
+            y="447"
+            textAnchor="middle"
+            fill={COLORS.ink}
+            fontSize="14"
+            letterSpacing="2.4"
+            fontWeight="500"
+          >
+            PEOPLE EXPLORING TREATMENT
+          </text>
+          <text
+            x="480"
+            y="470"
+            textAnchor="middle"
+            fill={COLORS.muted}
+            fontSize="12"
+            letterSpacing="1.4"
+          >
+            Prospective patients across London
+          </text>
+        </g>
+
+        {/* Flow path people → DELVARA → clinics */}
+        <path
+          id="origin-flow-path"
+          d="M 480 488 L 480 534"
+          fill="none"
+          stroke="url(#origin-flow)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className={animate ? "origin-line origin-line--flow-1" : undefined}
+        />
+        <circle cx="480" cy="488" r="5.5" fill={COLORS.ink} fillOpacity="0.75" />
+        <circle cx="480" cy="534" r="5.5" fill={COLORS.ink} />
+
+        <g
+          filter="url(#origin-soft)"
+          className={animate ? "origin-fade origin-fade--5" : undefined}
+        >
+          <rect
+            x="330"
+            y="534"
+            width="300"
+            height="84"
+            rx="18"
+            fill={COLORS.ink}
+          />
+          <text
+            x="480"
+            y="572"
+            textAnchor="middle"
+            fill={COLORS.ivory}
+            fontSize="20"
+            letterSpacing="4"
+            fontWeight="500"
+          >
+            DELVARA
+          </text>
+          <text
+            x="480"
+            y="596"
+            textAnchor="middle"
+            fill={COLORS.peach}
+            fontSize="11"
+            letterSpacing="2"
+          >
+            STRUCTURED CONNECTION
+          </text>
+        </g>
+
+        <path
+          d="M 480 618 L 480 664"
+          fill="none"
+          stroke="url(#origin-flow)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className={animate ? "origin-line origin-line--flow-2" : undefined}
+        />
+        <circle cx="480" cy="618" r="5.5" fill={COLORS.ink} />
+        <circle cx="480" cy="664" r="5.5" fill={COLORS.ink} fillOpacity="0.75" />
+
+        <g className={animate ? "origin-fade origin-fade--6" : undefined}>
+          <rect
+            x="270"
+            y="664"
+            width="420"
+            height="72"
+            rx="16"
+            fill={COLORS.ivory}
+            stroke={COLORS.ink}
+            strokeWidth="1.5"
+            strokeOpacity="0.14"
+          />
+          <text
+            x="480"
+            y="696"
+            textAnchor="middle"
+            fill={COLORS.ink}
+            fontSize="14"
+            letterSpacing="2.4"
+            fontWeight="500"
+          >
+            PARTICIPATING CLINICS
+          </text>
+          <text
+            x="480"
+            y="718"
+            textAnchor="middle"
+            fill={COLORS.muted}
+            fontSize="12"
+            letterSpacing="1.4"
+          >
+            Dental and aesthetic partners
+          </text>
+        </g>
+
+        {/* Moving flow highlight — people → DELVARA → clinics */}
+        {animate ? (
+          <circle r="4.5" fill={COLORS.peach} className="origin-pulse">
+            <animateMotion
+              dur="4.8s"
+              repeatCount="indefinite"
+              keyPoints="0;0.42;0.58;1"
+              keyTimes="0;0.42;0.58;1"
+              calcMode="linear"
+              path="M 480 488 L 480 576 L 480 576 L 480 700"
+            />
+            <animate
+              attributeName="opacity"
+              values="0;0.95;0.95;0"
+              keyTimes="0;0.12;0.82;1"
+              dur="4.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        ) : null}
+      </svg>
     </figure>
   );
 }

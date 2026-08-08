@@ -1,53 +1,82 @@
+.origin-diagram {
+  max-width: 100%;
+}
+
+.origin-diagram__svg {
+  display: block;
+}
+
 .origin-line {
-  stroke-dasharray: 120;
-  stroke-dashoffset: 120;
-  animation: origin-draw 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
+  animation: origin-draw 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.origin-line--left {
-  animation-delay: 0.15s;
+.origin-line--dental {
+  animation-delay: 0.2s;
 }
 
-.origin-line--right {
+.origin-line--aesthetics {
   animation-delay: 0.35s;
 }
 
-.origin-line--bridge {
-  animation-delay: 0.55s;
-}
-
-.origin-line--flow-a {
+.origin-line--flow-1 {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
   animation-delay: 0.85s;
 }
 
-.origin-line--flow-b {
-  animation-delay: 1.05s;
-}
-
-.origin-line--flow-c {
-  animation-delay: 1.25s;
-}
-
-.origin-line--flow-d {
-  animation-delay: 1.45s;
+.origin-line--flow-2 {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation-delay: 1.15s;
 }
 
 .origin-node {
   opacity: 0;
   transform-origin: center;
-  animation: origin-node-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: origin-node-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .origin-node--a {
-  animation-delay: 0.45s;
+  animation-delay: 0.5s;
 }
 
 .origin-node--b {
   animation-delay: 0.65s;
 }
 
-.origin-node--c {
+.origin-fade {
+  opacity: 0;
+  animation: origin-fade-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.origin-fade--1 {
+  animation-delay: 0.05s;
+}
+
+.origin-fade--2 {
+  animation-delay: 0.12s;
+}
+
+.origin-fade--3 {
+  animation-delay: 0.45s;
+}
+
+.origin-fade--4 {
   animation-delay: 0.75s;
+}
+
+.origin-fade--5 {
+  animation-delay: 1s;
+}
+
+.origin-fade--6 {
+  animation-delay: 1.25s;
+}
+
+.origin-pulse {
+  filter: drop-shadow(0 0 6px rgb(241 196 174 / 0.55));
 }
 
 @keyframes origin-draw {
@@ -67,14 +96,31 @@
   }
 }
 
+@keyframes origin-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .origin-line {
     stroke-dashoffset: 0;
     animation: none;
   }
 
-  .origin-node {
+  .origin-node,
+  .origin-fade {
     opacity: 1;
     animation: none;
+    transform: none;
+  }
+
+  .origin-pulse {
+    display: none;
   }
 }
