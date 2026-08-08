@@ -168,6 +168,7 @@ export default function MoltenMetal({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    const containerEl: HTMLDivElement = container;
 
     let cancelled = false;
     let cleanup: (() => void) | undefined;
@@ -180,7 +181,7 @@ export default function MoltenMetal({
         onUnavailable?.();
         return;
       }
-      if (cancelled || !containerRef.current) return;
+      if (cancelled) return;
 
       const { Renderer, Program, Mesh, Triangle } = ogl;
       const renderer = new Renderer({
@@ -204,7 +205,7 @@ export default function MoltenMetal({
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
-      container.appendChild(canvas);
+      containerEl.appendChild(canvas);
 
       const geometry = new Triangle(gl);
       const program = new Program(gl, {
@@ -236,10 +237,10 @@ export default function MoltenMetal({
       });
 
       const mesh = new Mesh(gl, { geometry, program });
-      ctxMap.set(container, { renderer, program, mesh });
+      ctxMap.set(containerEl, { renderer, program, mesh });
 
       const setSize = () => {
-        const rect = container.getBoundingClientRect();
+        const rect = containerEl.getBoundingClientRect();
         const w = Math.max(1, Math.floor(rect.width));
         const h = Math.max(1, Math.floor(rect.height));
         renderer.setSize(w, h);
@@ -250,7 +251,7 @@ export default function MoltenMetal({
       };
 
       const ro = new ResizeObserver(setSize);
-      ro.observe(container);
+      ro.observe(containerEl);
       setSize();
 
       const targetMouse = [0.5, 0.5];
@@ -310,7 +311,7 @@ export default function MoltenMetal({
         },
         { threshold: 0 }
       );
-      io.observe(container);
+      io.observe(containerEl);
 
       const onVisibility = () => {
         isPageVisible = !document.hidden;
@@ -331,9 +332,9 @@ export default function MoltenMetal({
         document.removeEventListener('visibilitychange', onVisibility);
         canvas.removeEventListener('mousemove', handleMouseMove);
         canvas.removeEventListener('mouseleave', handleMouseLeave);
-        ctxMap.delete(container);
-        if (canvas.parentNode === container) {
-          container.removeChild(canvas);
+        ctxMap.delete(containerEl);
+        if (canvas.parentNode === containerEl) {
+          containerEl.removeChild(canvas);
         }
         gl.getExtension('WEBGL_lose_context')?.loseContext();
       };
