@@ -21,7 +21,7 @@ export function PatientCTA() {
               Thinking about a private service in London?
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              Tell us whether you&apos;re exploring dental or aesthetic
+              Tell us whether you&apos;re exploring aesthetic or dental
               services. It only takes a few minutes to submit an informed
               enquiry.
             </p>

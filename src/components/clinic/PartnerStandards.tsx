@@ -23,9 +23,10 @@ const accentStyles = {
     flow: "border-dental/30 bg-dental-soft/50 text-dental-deep",
   },
   aesthetics: {
-    section: "bg-aesthetics-soft/40",
-    card: "rounded-2xl border-aesthetics/25 bg-delvara-white",
-    marker: "rounded-full border-aesthetics/30 bg-aesthetics-soft text-aesthetics-deep",
+    section: "bg-gradient-to-b from-aesthetics-soft/35 to-delvara-bg",
+    card: "rounded-none border-0 border-l-2 border-aesthetics/45 bg-transparent pl-5",
+    marker:
+      "rounded-full border-aesthetics/40 bg-delvara-white text-aesthetics-deep shadow-[0_0_0_4px_rgb(245_237_235/0.9)]",
     heading: "text-aesthetics-deep",
     flow: "border-aesthetics/30 bg-aesthetics-soft text-aesthetics-deep",
   },
@@ -81,12 +82,18 @@ export function PartnerStandards({
           </ol>
         ) : null}
 
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
+        <ul
+          className={`mt-12 grid gap-5 sm:grid-cols-2 ${
+            accent === "aesthetics" ? "gap-y-8 sm:gap-x-10" : ""
+          }`}
+        >
           {standards.map((standard, index) => (
             <li
               key={standard.title}
-              className={`border p-6 sm:p-7 ${styles.card} ${
-                accent === "dental" ? "rounded-lg" : ""
+              className={`${
+                accent === "dental"
+                  ? `border p-6 sm:p-7 rounded-lg ${styles.card}`
+                  : `py-1 ${styles.card}`
               }`}
             >
               <div className="flex items-start gap-4">
@@ -94,7 +101,7 @@ export function PartnerStandards({
                   aria-hidden="true"
                   className={`inline-flex h-9 w-9 shrink-0 items-center justify-center border text-xs font-medium tracking-wide ${styles.marker}`}
                 >
-                  {String(index + 1).padStart(2, "0")}
+                  {accent === "aesthetics" ? "✓" : String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
                   <h3

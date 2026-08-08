@@ -22,7 +22,7 @@ export function Hero() {
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div className="reveal max-w-xl">
             <p className="eyebrow">
-              Private dental & aesthetic services in London
+              Private aesthetic & dental services in London
             </p>
             <h1 className="mt-5 text-[2.05rem] font-medium leading-[1.1] tracking-tight text-delvara-ink sm:text-[2.75rem] lg:text-[3.15rem]">
               Explore private treatment with more clarity.
@@ -31,7 +31,7 @@ export function Hero() {
               </span>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA helps people explore dental and aesthetic services,
+              DELVARA helps people explore aesthetic and dental services,
               understand what matters to them and make a more informed enquiry
               with participating clinics across London.
             </p>

@@ -44,10 +44,10 @@ export function ClinicPathCard({
         isLight
           ? isDental
             ? "border-dental/35 bg-delvara-white hover:border-dental/60"
-            : "border-aesthetics/35 bg-delvara-white hover:border-aesthetics/60"
+            : "border-aesthetics/45 bg-delvara-white shadow-[0_10px_28px_rgb(169_133_152/0.08)] hover:border-aesthetics/65"
           : isDental
             ? "border-dental/40 bg-white/[0.04] hover:border-dental/70"
-            : "border-aesthetics/45 bg-white/[0.04] hover:border-aesthetics-peach/70"
+            : "border-aesthetics/50 bg-white/[0.05] hover:border-aesthetics-peach/75"
       } hover:-translate-y-0.5 ${
         isLight
           ? "hover:shadow-[0_18px_40px_rgb(23_45_46/0.08)]"

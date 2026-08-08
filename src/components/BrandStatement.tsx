@@ -17,7 +17,7 @@ export function BrandStatement() {
             <span className="mt-2 block">Better treatment.</span>
           </h2>
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            Making the journey from exploring private dental or aesthetic
+            Making the journey from exploring private aesthetic or dental
             services to an informed enquiry clearer — for people and clinics.
           </p>
         </div>

@@ -2,16 +2,16 @@ import Link from "next/link";
 import { brand } from "@/lib/content";
 
 const exploreLinks = [
-  { href: "/treatments/dental", label: "Dental treatments" },
   { href: "/treatments/aesthetics", label: "Aesthetic treatments" },
+  { href: "/treatments/dental", label: "Dental treatments" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
 ] as const;
 
 const clinicLinks = [
   { href: "/for-clinics", label: "Partner with DELVARA" },
-  { href: "/for-clinics/dental", label: "Dental clinics" },
   { href: "/for-clinics/aesthetics", label: "Aesthetic clinics" },
+  { href: "/for-clinics/dental", label: "Dental clinics" },
   { href: "/for-clinics/growth-studio", label: "Growth Studio" },
 ] as const;
 
@@ -34,7 +34,7 @@ export function Footer() {
               {brand.tagline}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-delvara-muted-text">
-              Helping people explore private dental and aesthetic services in
+              Helping people explore private aesthetic and dental services in
               London — and helping participating clinics receive clearer
               enquiries.
             </p>

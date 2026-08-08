@@ -55,19 +55,6 @@ export function HeroDiscoveryPanel() {
               <button
                 type="button"
                 className="category-tab"
-                data-category="dental"
-                aria-pressed={category === "dental"}
-                onClick={() => selectCategory("dental")}
-              >
-                <span
-                  aria-hidden="true"
-                  className="h-2 w-2 rounded-full accent-dot-dental"
-                />
-                Dental
-              </button>
-              <button
-                type="button"
-                className="category-tab"
                 data-category="aesthetics"
                 aria-pressed={category === "aesthetics"}
                 onClick={() => selectCategory("aesthetics")}
@@ -77,6 +64,19 @@ export function HeroDiscoveryPanel() {
                   className="h-2 w-2 rounded-full accent-dot-aesthetics"
                 />
                 Aesthetics
+              </button>
+              <button
+                type="button"
+                className="category-tab"
+                data-category="dental"
+                aria-pressed={category === "dental"}
+                onClick={() => selectCategory("dental")}
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-2 w-2 rounded-full accent-dot-dental"
+                />
+                Dental
               </button>
             </div>
           </div>
@@ -109,7 +109,7 @@ export function HeroDiscoveryPanel() {
             </div>
           ) : (
             <div className="rounded-lg border border-dashed border-delvara-border bg-delvara-bg/70 px-4 py-5 text-sm text-delvara-muted-text">
-              Choose Dental or Aesthetics to see example treatments. Both
+              Choose Aesthetics or Dental to see example treatments. Both
               categories are equally supported.
             </div>
           )}

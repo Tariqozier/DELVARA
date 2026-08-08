@@ -11,17 +11,18 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
+    default:
+      "DELVARA | Private Aesthetic & Dental Treatment Enquiries in London",
     template: "%s | DELVARA",
   },
   description:
-    "DELVARA helps people across London explore private dental or aesthetic services, clarify what matters to them, and submit an informed enquiry to participating clinics. Free to enquire. No obligation.",
+    "DELVARA helps people across London explore private aesthetic or dental services, clarify what matters to them, and submit an informed enquiry to participating clinics. Free to enquire. No obligation.",
   applicationName: "DELVARA",
   openGraph: {
     title:
-      "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
+      "DELVARA | Private Aesthetic & Dental Treatment Enquiries in London",
     description:
-      "Explore private dental and aesthetic services in London with more clarity — then submit an informed enquiry to participating clinics.",
+      "Explore private aesthetic and dental services in London with more clarity — then submit an informed enquiry to participating clinics.",
     siteName: "DELVARA",
     type: "website",
     locale: "en_GB",
@@ -29,9 +30,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title:
-      "DELVARA | Private Dental & Aesthetic Treatment Enquiries in London",
+      "DELVARA | Private Aesthetic & Dental Treatment Enquiries in London",
     description:
-      "DELVARA helps people across London enquire about private dental or aesthetic treatment and connect with relevant participating clinics.",
+      "DELVARA helps people across London enquire about private aesthetic or dental treatment and connect with relevant participating clinics.",
   },
 };
 

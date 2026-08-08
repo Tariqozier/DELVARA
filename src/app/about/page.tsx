@@ -13,11 +13,11 @@ import {
 export const metadata: Metadata = {
   title: "About DELVARA",
   description:
-    "Built from both sides of the industry — DELVARA connects people exploring private dental and aesthetic services with participating clinics across London.",
+    "Built from both sides of the industry — DELVARA connects people exploring private aesthetic and dental services with participating clinics across London.",
 };
 
 const originStatements = [
-  "DELVARA began through conversations between two people working closely with the dental and aesthetics industries.",
+  "DELVARA began through conversations between two people working closely with the aesthetics and dental industries.",
   "From different sides of the market, they kept seeing the same disconnect.",
   "People interested in private treatment were being pushed through ads, clinic websites and generic forms before they had enough clarity about what they were looking for.",
   "At the same time, clinics were investing heavily in websites, marketing and agencies without always receiving enough useful context around the enquiries coming through.",
@@ -45,7 +45,7 @@ export default function AboutPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
               DELVARA started with a simple observation: people looking for
-              private dental and aesthetic services often face a fragmented
+              private aesthetic and dental services often face a fragmented
               journey, while clinics spend heavily trying to connect with the
               right prospective patients.
             </p>
@@ -145,7 +145,7 @@ export default function AboutPage() {
               Already active across London.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA is already working with established dental and aesthetic
+              DELVARA is already working with established aesthetic and dental
               clinics across Harley Street, Knightsbridge and Fulham, alongside
               ambitious growing practices across North and West London.
             </p>

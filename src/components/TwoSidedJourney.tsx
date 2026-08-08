@@ -14,7 +14,7 @@ const journeyNodes: JourneyNode[] = [
   {
     id: "treatment-interest",
     label: "Treatment interest",
-    description: "A person explores a dental or aesthetic service they are considering.",
+    description: "A person explores an aesthetic or dental service they are considering.",
     column: "person",
     accent: "neutral",
   },

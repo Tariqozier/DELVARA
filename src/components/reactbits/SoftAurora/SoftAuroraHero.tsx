@@ -20,8 +20,9 @@ function StaticAuroraFallback() {
       className="h-full w-full"
       style={{
         background: [
-          "radial-gradient(ellipse 85% 65% at 70% 30%, rgb(137 169 147 / 0.42), transparent 55%)",
-          "radial-gradient(ellipse 75% 55% at 90% 65%, rgb(211 160 181 / 0.36), transparent 52%)",
+          "radial-gradient(ellipse 90% 70% at 72% 28%, rgb(211 160 181 / 0.48), transparent 56%)",
+          "radial-gradient(ellipse 70% 55% at 88% 68%, rgb(241 196 174 / 0.32), transparent 52%)",
+          "radial-gradient(ellipse 65% 50% at 58% 78%, rgb(137 169 147 / 0.28), transparent 50%)",
           "linear-gradient(180deg, #f8f5f0 0%, #f1eee8 100%)",
         ].join(", "),
       }}
@@ -100,16 +101,16 @@ export function SoftAuroraHero() {
           <SoftAurora
             speed={0.6}
             scale={0.58}
-            brightness={1.05}
-            color1="#89A993"
-            color2="#D3A0B5"
+            brightness={1.08}
+            color1="#D3A0B5"
+            color2="#89A993"
             noiseFrequency={2.3}
-            noiseAmplitude={1.95}
-            bandHeight={0.52}
-            bandSpread={1.22}
+            noiseAmplitude={2}
+            bandHeight={0.54}
+            bandSpread={1.24}
             octaveDecay={0.1}
-            layerOffset={0.18}
-            colorSpeed={0.65}
+            layerOffset={0.16}
+            colorSpeed={0.62}
             enableMouseInteraction
             mouseInfluence={0.22}
             onUnavailable={() => setAuroraFailed(true)}

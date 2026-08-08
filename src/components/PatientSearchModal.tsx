@@ -249,7 +249,7 @@ export function PatientSearchModal() {
             <p id={descriptionId} className="mt-1 text-sm text-delvara-muted-text">
               {submittedDemo
                 ? "Frontend demo complete — not yet connected to a live database."
-                : "Dental or aesthetics. Across London. No pressure."}
+                : "Aesthetics or dental. Across London. No pressure."}
             </p>
           </div>
           <button
@@ -301,27 +301,6 @@ export function PatientSearchModal() {
                         <button
                           type="button"
                           className="category-tab"
-                          data-category="dental"
-                          aria-pressed={form.category === "dental"}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              category: "dental",
-                              treatment: "",
-                              budget: "",
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="h-2 w-2 rounded-full accent-dot-dental"
-                          />
-                          Dental
-                        </button>
-                        <button
-                          type="button"
-                          className="category-tab"
                           data-category="aesthetics"
                           aria-pressed={form.category === "aesthetics"}
                           onClick={() => {
@@ -339,6 +318,27 @@ export function PatientSearchModal() {
                             className="h-2 w-2 rounded-full accent-dot-aesthetics"
                           />
                           Aesthetics
+                        </button>
+                        <button
+                          type="button"
+                          className="category-tab"
+                          data-category="dental"
+                          aria-pressed={form.category === "dental"}
+                          onClick={() => {
+                            setForm((current) => ({
+                              ...current,
+                              category: "dental",
+                              treatment: "",
+                              budget: "",
+                            }));
+                            setError(null);
+                          }}
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="h-2 w-2 rounded-full accent-dot-dental"
+                          />
+                          Dental
                         </button>
                       </div>
 
@@ -369,7 +369,7 @@ export function PatientSearchModal() {
                         </div>
                       ) : (
                         <p className="rounded-lg border border-dashed border-delvara-border bg-delvara-white px-4 py-4 text-sm text-delvara-muted-text">
-                          Choose Dental or Aesthetics to continue. Both are
+                          Choose Aesthetics or Dental to continue. Both are
                           equally supported.
                         </p>
                       )}

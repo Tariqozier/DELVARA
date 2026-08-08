@@ -7,7 +7,7 @@ import { clinicPaths } from "@/lib/content";
 export const metadata: Metadata = {
   title: "For Clinics",
   description:
-    "Choose your DELVARA path — dental clinics, aesthetic clinics, or Growth Studio for digital infrastructure.",
+    "Choose your DELVARA path — aesthetic clinics, dental clinics, or Growth Studio for digital infrastructure.",
 };
 
 export default function ForClinicsPage() {
@@ -21,7 +21,7 @@ export default function ForClinicsPage() {
               Choose your path.
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-delvara-muted-text">
-              Patient acquisition for dental and aesthetic clinics — or the
+              Patient acquisition for aesthetic and dental clinics — or the
               digital system around growth.
             </p>
           </div>

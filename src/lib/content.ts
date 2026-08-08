@@ -46,8 +46,8 @@ export const navItems = [
     showOverview: true,
     children: [
       { href: "/treatments", label: "Overview" },
-      { href: "/treatments/dental", label: "Dental treatments" },
       { href: "/treatments/aesthetics", label: "Aesthetic treatments" },
+      { href: "/treatments/dental", label: "Dental treatments" },
     ],
   },
   {
@@ -59,8 +59,8 @@ export const navItems = [
     href: "/for-clinics",
     showOverview: false,
     children: [
-      { href: "/for-clinics/dental", label: "Dental Clinics" },
       { href: "/for-clinics/aesthetics", label: "Aesthetic Clinics" },
+      { href: "/for-clinics/dental", label: "Dental Clinics" },
       { href: "/for-clinics/growth-studio", label: "Growth Studio" },
     ],
   },
@@ -327,7 +327,7 @@ export const howItWorksSteps = [
     number: "01",
     title: "Explore a service",
     description:
-      "Start with dental or aesthetics and tell us the service you're considering.",
+      "Start with aesthetics or dental and tell us the service you're considering.",
   },
   {
     number: "02",
@@ -353,7 +353,7 @@ export const benefits = [
   {
     title: "Explore services",
     description:
-      "Start with the dental or aesthetic service you're considering — without contacting multiple clinics first.",
+      "Start with the aesthetic or dental service you're considering — without contacting multiple clinics first.",
   },
   {
     title: "Clarify what matters",
@@ -374,15 +374,6 @@ export const benefits = [
 
 export const clinicPaths = [
   {
-    id: "dental",
-    title: "Dental Clinics",
-    description:
-      "Patient acquisition around cosmetic, implant, orthodontic, restorative and general dental services — with useful enquiry context before the first conversation.",
-    cta: "Explore Dental Partnerships",
-    href: "/for-clinics/dental",
-    accent: "dental" as const,
-  },
-  {
     id: "aesthetics",
     title: "Aesthetic Clinics",
     description:
@@ -390,6 +381,15 @@ export const clinicPaths = [
     cta: "Explore Aesthetic Partnerships",
     href: "/for-clinics/aesthetics",
     accent: "aesthetics" as const,
+  },
+  {
+    id: "dental",
+    title: "Dental Clinics",
+    description:
+      "Patient acquisition around cosmetic, implant, orthodontic, restorative and general dental services — with useful enquiry context before the first conversation.",
+    cta: "Explore Dental Partnerships",
+    href: "/for-clinics/dental",
+    accent: "dental" as const,
   },
 ] as const;
 
@@ -407,7 +407,7 @@ export const clinicBenefits = [
   {
     title: "London-focused acquisition",
     description:
-      "Build patient acquisition around people looking for private dental or aesthetic services across London.",
+      "Build patient acquisition around people looking for private aesthetic or dental services across London.",
   },
   {
     title: "Performance-led growth",
@@ -477,7 +477,7 @@ export const howItWorksPeopleJourney = [
     number: "01",
     title: "Explore",
     description:
-      "Start with the dental or aesthetic service you're considering.",
+      "Start with the aesthetic or dental service you're considering.",
   },
   {
     number: "02",
@@ -594,7 +594,7 @@ export const faqs = [
   {
     question: "What is DELVARA?",
     answer:
-      "A London-focused service that helps people explore private dental or aesthetic services, clarify what matters, and submit an informed enquiry to participating clinics. For clinics, DELVARA also supports acquisition journeys and growth infrastructure.",
+      "A London-focused service that helps people explore private aesthetic or dental services, clarify what matters, and submit an informed enquiry to participating clinics. For clinics, DELVARA also supports acquisition journeys and growth infrastructure.",
   },
   {
     question: "Does it cost anything to make an enquiry?",

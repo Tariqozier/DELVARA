@@ -10,7 +10,7 @@ import {
 } from "@/lib/content";
 
 export function TreatmentDiscovery() {
-  const [category, setCategory] = useState<TreatmentCategory>("dental");
+  const [category, setCategory] = useState<TreatmentCategory>("aesthetics");
   const tablistId = useId();
   const panelId = useId();
 
@@ -62,22 +62,6 @@ export function TreatmentDiscovery() {
           <button
             type="button"
             role="tab"
-            id={`${tablistId}-dental`}
-            aria-selected={category === "dental"}
-            aria-controls={panelId}
-            data-category="dental"
-            className="category-tab"
-            onClick={() => setCategory("dental")}
-          >
-            <span
-              aria-hidden="true"
-              className="h-2.5 w-2.5 rounded-full accent-dot-dental"
-            />
-            Dental
-          </button>
-          <button
-            type="button"
-            role="tab"
             id={`${tablistId}-aesthetics`}
             aria-selected={category === "aesthetics"}
             aria-controls={panelId}
@@ -90,6 +74,22 @@ export function TreatmentDiscovery() {
               className="h-2.5 w-2.5 rounded-full accent-dot-aesthetics"
             />
             Aesthetics
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id={`${tablistId}-dental`}
+            aria-selected={category === "dental"}
+            aria-controls={panelId}
+            data-category="dental"
+            className="category-tab"
+            onClick={() => setCategory("dental")}
+          >
+            <span
+              aria-hidden="true"
+              className="h-2.5 w-2.5 rounded-full accent-dot-dental"
+            />
+            Dental
           </button>
         </div>
 

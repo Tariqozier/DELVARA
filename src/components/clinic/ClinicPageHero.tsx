@@ -13,11 +13,13 @@ const accentStyles = {
     wash: "from-dental-soft/80 via-delvara-bg to-delvara-bg",
     dot: "bg-dental",
     eyebrow: "text-dental-deep",
+    pad: "section-pad",
   },
   aesthetics: {
-    wash: "from-aesthetics-soft via-delvara-bg to-aesthetics-soft/30",
+    wash: "from-aesthetics-soft via-delvara-bg to-aesthetics-peach/15",
     dot: "bg-aesthetics-peach",
     eyebrow: "text-aesthetics-deep",
+    pad: "py-14 md:py-16 lg:py-[4.5rem]",
   },
 } as const;
 
@@ -31,19 +33,19 @@ export function ClinicPageHero({
 
   return (
     <section
-      className={`relative overflow-hidden bg-gradient-to-b ${styles.wash} section-pad`}
+      className={`relative overflow-hidden bg-gradient-to-b ${styles.wash} ${styles.pad}`}
       aria-labelledby="clinic-hero-heading"
     >
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full opacity-40 blur-3xl ${
-          accent === "dental" ? "bg-dental/25" : "bg-aesthetics/20"
+          accent === "dental" ? "bg-dental/25" : "bg-aesthetics/30"
         }`}
       />
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute -bottom-16 left-0 h-56 w-56 rounded-full opacity-30 blur-3xl ${
-          accent === "dental" ? "bg-dental-soft" : "bg-aesthetics-peach/30"
+          accent === "dental" ? "bg-dental-soft" : "bg-aesthetics-peach/40"
         }`}
       />
 
@@ -58,15 +60,15 @@ export function ClinicPageHero({
           </p>
           <h1
             id="clinic-hero-heading"
-            className="mt-5 text-4xl font-medium tracking-tight text-delvara-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.12]"
+            className="mt-4 text-4xl font-medium tracking-tight text-delvara-ink sm:text-5xl lg:text-[3.1rem] lg:leading-[1.12]"
           >
             {title}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
             {description}
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="mailto:partnerships@getdelvara.com"
               className="btn btn-primary group"

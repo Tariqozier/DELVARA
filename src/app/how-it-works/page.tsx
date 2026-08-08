@@ -9,7 +9,7 @@ import { IconArrowRight } from "@/components/icons";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "From interest to conversation — how DELVARA structures private dental and aesthetic enquiries in London.",
+    "From interest to conversation — how DELVARA structures private aesthetic and dental enquiries in London.",
 };
 
 const whyWeAsk = [

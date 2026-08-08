@@ -24,7 +24,7 @@ export function FAQ() {
               Questions, answered clearly.
             </h2>
             <p className="mt-4 max-w-md text-base leading-relaxed text-delvara-muted-text">
-              Straightforward answers about exploring private dental and
+              Straightforward answers about exploring private aesthetic and
               aesthetic services across London — without overclaiming.
             </p>
           </div>

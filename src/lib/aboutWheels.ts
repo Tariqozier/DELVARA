@@ -5,48 +5,6 @@ const GROWTH_BASE = "/about/growth";
 
 export const treatmentWheelItems: WheelItem[] = [
   {
-    id: "tooth",
-    label: "Tooth",
-    src: `${TREATMENTS_BASE}/tooth.svg`,
-    alt: "Abstract illustration representing dental care",
-    accent: "#89A993",
-  },
-  {
-    id: "clinic",
-    label: "Clinic",
-    src: `${TREATMENTS_BASE}/clinic.svg`,
-    alt: "Abstract illustration of a dental clinic building",
-    accent: "#89A993",
-  },
-  {
-    id: "smile",
-    label: "Smile",
-    src: `${TREATMENTS_BASE}/smile.svg`,
-    alt: "Abstract illustration of a confident smile",
-    accent: "#D3A0B5",
-  },
-  {
-    id: "whitening",
-    label: "Whitening",
-    src: `${TREATMENTS_BASE}/whitening.svg`,
-    alt: "Abstract illustration representing teeth whitening",
-    accent: "#F1C4AE",
-  },
-  {
-    id: "aligners",
-    label: "Aligners",
-    src: `${TREATMENTS_BASE}/aligners.svg`,
-    alt: "Abstract illustration of clear aligners",
-    accent: "#89A993",
-  },
-  {
-    id: "implant",
-    label: "Implant",
-    src: `${TREATMENTS_BASE}/implant.svg`,
-    alt: "Abstract illustration of a dental implant",
-    accent: "#89A993",
-  },
-  {
     id: "skin",
     label: "Skin",
     src: `${TREATMENTS_BASE}/skin.svg`,
@@ -75,6 +33,13 @@ export const treatmentWheelItems: WheelItem[] = [
     accent: "#D3A0B5",
   },
   {
+    id: "serum",
+    label: "Serum",
+    src: `${TREATMENTS_BASE}/serum.svg`,
+    alt: "Abstract illustration of a facial serum dropper bottle",
+    accent: "#F1C4AE",
+  },
+  {
     id: "consultation",
     label: "Consultation",
     src: `${TREATMENTS_BASE}/consultation.svg`,
@@ -82,11 +47,46 @@ export const treatmentWheelItems: WheelItem[] = [
     accent: "#89A993",
   },
   {
-    id: "serum",
-    label: "Serum",
-    src: `${TREATMENTS_BASE}/serum.svg`,
-    alt: "Abstract illustration of a facial serum dropper bottle",
+    id: "smile",
+    label: "Smile",
+    src: `${TREATMENTS_BASE}/smile.svg`,
+    alt: "Abstract illustration of a confident smile",
+    accent: "#D3A0B5",
+  },
+  {
+    id: "tooth",
+    label: "Tooth",
+    src: `${TREATMENTS_BASE}/tooth.svg`,
+    alt: "Abstract illustration representing dental care",
+    accent: "#89A993",
+  },
+  {
+    id: "clinic",
+    label: "Clinic",
+    src: `${TREATMENTS_BASE}/clinic.svg`,
+    alt: "Abstract illustration of a dental clinic building",
+    accent: "#89A993",
+  },
+  {
+    id: "whitening",
+    label: "Whitening",
+    src: `${TREATMENTS_BASE}/whitening.svg`,
+    alt: "Abstract illustration representing teeth whitening",
     accent: "#F1C4AE",
+  },
+  {
+    id: "aligners",
+    label: "Aligners",
+    src: `${TREATMENTS_BASE}/aligners.svg`,
+    alt: "Abstract illustration of clear aligners",
+    accent: "#89A993",
+  },
+  {
+    id: "implant",
+    label: "Implant",
+    src: `${TREATMENTS_BASE}/implant.svg`,
+    alt: "Abstract illustration of a dental implant",
+    accent: "#89A993",
   },
 ];
 

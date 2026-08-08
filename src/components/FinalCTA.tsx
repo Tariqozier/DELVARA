@@ -15,7 +15,7 @@ export function FinalCTA() {
             Start with DELVARA.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            Tell us the dental or aesthetic service you&apos;re considering and
+            Tell us the aesthetic or dental service you&apos;re considering and
             take the first step towards an informed enquiry with a participating
             clinic in London.
           </p>

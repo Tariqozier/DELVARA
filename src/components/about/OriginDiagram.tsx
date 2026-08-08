@@ -46,7 +46,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
       aria-labelledby={titleId}
     >
       <figcaption id={titleId} className="sr-only">
-        DELVARA was formed from dental and aesthetics experience, and sits
+        DELVARA was formed from aesthetics and dental experience, and sits
         between people exploring private treatment and participating clinics.
       </figcaption>
 
@@ -94,7 +94,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
           WHERE IT BEGAN
         </text>
 
-        {/* Dental node */}
+        {/* Aesthetics node — left / first */}
         <g className={animate ? "origin-fade origin-fade--1" : undefined}>
           <rect
             x="48"
@@ -102,10 +102,10 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             width="240"
             height="88"
             rx="16"
-            fill="url(#origin-sage)"
-            stroke={COLORS.sage}
+            fill="url(#origin-mauve)"
+            stroke={COLORS.mauve}
             strokeWidth="1.75"
-            strokeOpacity="0.65"
+            strokeOpacity="0.7"
           />
           <text
             x="168"
@@ -116,7 +116,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             letterSpacing="2.6"
             fontWeight="500"
           >
-            DENTAL
+            AESTHETICS
           </text>
           <text
             x="168"
@@ -130,7 +130,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
           </text>
         </g>
 
-        {/* Aesthetics node */}
+        {/* Dental node — right / second */}
         <g className={animate ? "origin-fade origin-fade--2" : undefined}>
           <rect
             x="672"
@@ -138,10 +138,10 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             width="240"
             height="88"
             rx="16"
-            fill="url(#origin-mauve)"
-            stroke={COLORS.mauve}
+            fill="url(#origin-sage)"
+            stroke={COLORS.sage}
             strokeWidth="1.75"
-            strokeOpacity="0.7"
+            strokeOpacity="0.65"
           />
           <text
             x="792"
@@ -152,7 +152,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             letterSpacing="2.6"
             fontWeight="500"
           >
-            AESTHETICS
+            DENTAL
           </text>
           <text
             x="792"
@@ -170,33 +170,33 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
         <path
           d="M 288 120 C 360 120, 400 200, 420 230"
           fill="none"
-          stroke={COLORS.sage}
-          strokeWidth="2.75"
-          strokeLinecap="round"
-          strokeOpacity="0.9"
-          className={animate ? "origin-line origin-line--dental" : undefined}
-        />
-        <path
-          d="M 672 120 C 600 120, 560 200, 540 230"
-          fill="none"
           stroke={COLORS.mauve}
           strokeWidth="2.75"
           strokeLinecap="round"
           strokeOpacity="0.9"
           className={animate ? "origin-line origin-line--aesthetics" : undefined}
         />
+        <path
+          d="M 672 120 C 600 120, 560 200, 540 230"
+          fill="none"
+          stroke={COLORS.sage}
+          strokeWidth="2.75"
+          strokeLinecap="round"
+          strokeOpacity="0.9"
+          className={animate ? "origin-line origin-line--dental" : undefined}
+        />
         <circle
           cx="288"
           cy="120"
           r="5"
-          fill={COLORS.sage}
+          fill={COLORS.mauve}
           className={animate ? "origin-node origin-node--a" : undefined}
         />
         <circle
           cx="672"
           cy="120"
           r="5"
-          fill={COLORS.mauve}
+          fill={COLORS.sage}
           className={animate ? "origin-node origin-node--b" : undefined}
         />
 
@@ -225,8 +225,8 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             DELVARA
           </text>
         </g>
-        <circle cx="420" cy="230" r="5" fill={COLORS.sage} />
-        <circle cx="540" cy="230" r="5" fill={COLORS.mauve} />
+        <circle cx="420" cy="230" r="5" fill={COLORS.mauve} />
+        <circle cx="540" cy="230" r="5" fill={COLORS.sage} />
 
         {/* Divider */}
         <line
@@ -376,7 +376,7 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
             fontSize="12"
             letterSpacing="1.4"
           >
-            Dental and aesthetic partners
+            Aesthetic and dental partners
           </text>
         </g>
 

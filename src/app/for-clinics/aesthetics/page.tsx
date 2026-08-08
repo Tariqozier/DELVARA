@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IconArrowRight } from "@/components/icons";
+import { AestheticJourney } from "@/components/clinic/AestheticJourney";
 import { ClinicPageHero } from "@/components/clinic/ClinicPageHero";
-import { ClinicServicesGrid } from "@/components/clinic/ClinicServicesGrid";
 import { PartnerStandards } from "@/components/clinic/PartnerStandards";
-import { ScrollFlow } from "@/components/clinic/ScrollFlow";
 import {
   aestheticsGrowthTreatments,
   aestheticsPartnerStandards,
@@ -13,46 +12,47 @@ import {
 export const metadata: Metadata = {
   title: "Aesthetic Clinics",
   description:
-    "Patient acquisition for aesthetic clinics in London — qualified enquiries, conversion journeys, content, automation and custom digital growth infrastructure from DELVARA.",
+    "Patient acquisition for aesthetic clinics in London — structured enquiries, conversion journeys, content, automation and growth infrastructure from DELVARA.",
 };
 
 const acquisitionSteps = [
   {
     title: "Define your services",
     description:
-      "Clarify the treatments, audience, areas, availability and capacity you want acquisition built around.",
-    detail: "Treatments · audience · areas · availability · capacity",
+      "Treatments, audience, geography, availability and capacity.",
+    detail: "Treatments · audience · geography · availability · capacity",
   },
   {
     title: "Create the journey",
     description:
-      "Shape the creative, content, campaigns and landing experience that turn treatment interest into structured enquiries.",
-    detail: "Creative · content · campaigns · landing experience",
+      "Campaigns, content and landing experiences designed around the services you want to grow.",
+    detail: "Campaigns · content · landing experiences",
   },
   {
     title: "Capture interest",
     description:
-      "Prospective patients share treatment interest, London area, timeframe, rough budget and what matters most.",
+      "Prospective patients share treatment interest, London area, timeframe, approximate budget and priorities.",
     detail: "Treatment · area · timeframe · budget · priorities",
   },
   {
-    title: "Qualify the enquiry",
+    title: "Structure the enquiry",
     description:
-      "Collect structured information and explicit contact and sharing consent before any clinic introduction.",
+      "DELVARA captures useful context and explicit contact/share consent.",
+    detail: "Context · consent · structured sharing",
   },
   {
-    title: "Connect with the clinic",
+    title: "Clinic conversation",
     description:
-      "Your team handles consultation, clinical assessment, treatment suitability, pricing and booking.",
+      "The clinic handles consultation, clinical assessment, suitability, pricing and booking.",
     detail: "Consultation · suitability · pricing · booking",
   },
   {
     title: "Follow up & optimise",
     description:
-      "Automation, response workflows, conversion data and campaign refinement help improve the journey over time.",
+      "Automation, response workflows, conversion data and campaign refinement improve the journey over time.",
     detail: "Automation · workflows · conversion data · refinement",
   },
-];
+] as const;
 
 const aestheticsServices = [
   {
@@ -78,7 +78,7 @@ const aestheticsServices = [
   {
     title: "Automation & reporting",
     description:
-      "Operational automation with conversion tracking, source attribution and funnel performance measurement.",
+      "Operational automation with conversion tracking, source attribution and funnel performance.",
   },
   {
     title: "Custom applications & portals",
@@ -94,11 +94,11 @@ export default function AestheticClinicsPage() {
         accent="aesthetics"
         eyebrow="For Aesthetic Clinics"
         title="Turn treatment interest into a stronger patient acquisition journey."
-        description="Treatment-specific demand across London — combining structured patient enquiries with conversion journeys, content, automation and growth infrastructure."
+        description="Structured enquiries, conversion journeys and growth infrastructure for aesthetic clinics across London."
       />
 
       <section
-        className="section-pad bg-gradient-to-b from-aesthetics-soft/50 to-delvara-bg"
+        className="border-b border-delvara-border bg-gradient-to-b from-aesthetics-soft/45 to-delvara-bg py-12 md:py-14"
         aria-labelledby="aesthetics-treatments-heading"
       >
         <div className="container-delvara">
@@ -106,24 +106,24 @@ export default function AestheticClinicsPage() {
             <p className="eyebrow text-aesthetics-deep">Services you can grow</p>
             <h2
               id="aesthetics-treatments-heading"
-              className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
+              className="mt-3 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
             >
               Demand built around your treatment mix.
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-delvara-muted-text">
               Acquisition shaped around the services your clinic offers and
               wants to grow.
             </p>
           </div>
 
-          <ul className="mt-10 flex flex-wrap gap-3">
+          <ul className="mt-8 flex flex-wrap gap-2.5">
             {aestheticsGrowthTreatments.map((treatment) => (
               <li
                 key={treatment.name}
                 className={
                   treatment.emphasis === "high"
-                    ? "rounded-full border border-aesthetics/35 bg-aesthetics-soft px-5 py-2.5 text-base font-medium text-aesthetics-deep"
-                    : "rounded-full border border-delvara-border bg-delvara-white/80 px-4 py-2 text-sm text-delvara-muted-text"
+                    ? "rounded-full border border-aesthetics/40 bg-aesthetics-soft px-4 py-2 text-sm font-medium text-aesthetics-deep sm:text-base"
+                    : "rounded-full border border-delvara-border bg-delvara-white/90 px-3.5 py-1.5 text-sm text-delvara-muted-text"
                 }
               >
                 {treatment.name}
@@ -133,11 +133,7 @@ export default function AestheticClinicsPage() {
         </div>
       </section>
 
-      <ScrollFlow
-        variant="aesthetics"
-        heading="The aesthetic acquisition journey."
-        steps={acquisitionSteps}
-      />
+      <AestheticJourney steps={acquisitionSteps} />
 
       <PartnerStandards
         accent="aesthetics"
@@ -147,25 +143,45 @@ export default function AestheticClinicsPage() {
       />
 
       <section
-        className="section-pad bg-delvara-white"
+        className="border-t border-delvara-border bg-delvara-white py-12 md:py-16"
         aria-labelledby="aesthetics-services-heading"
       >
         <div className="container-delvara">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Beyond enquiries</p>
+          <div className="max-w-2xl">
+            <p className="eyebrow text-aesthetics-deep">Beyond enquiries</p>
             <h2
               id="aesthetics-services-heading"
-              className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
+              className="mt-3 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
             >
-              Growth infrastructure for premium aesthetic businesses.
+              Growth infrastructure for aesthetic clinics.
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-delvara-muted-text">
               Funnels, digital experiences and systems that help convert
               treatment interest consistently.
             </p>
           </div>
 
-          <ClinicServicesGrid accent="aesthetics" services={aestheticsServices} />
+          <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {aestheticsServices.map((service, index) => (
+              <li
+                key={service.title}
+                className="border-t border-aesthetics/25 pt-5"
+              >
+                <span
+                  aria-hidden="true"
+                  className="text-[0.65rem] font-medium tracking-[0.16em] text-aesthetics-deep uppercase"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 text-lg font-medium text-delvara-ink">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-delvara-muted-text">
+                  {service.description}
+                </p>
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
@@ -175,7 +191,10 @@ export default function AestheticClinicsPage() {
               Discuss your clinic
               <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
-            <Link href="/for-clinics/growth-studio" className="btn btn-secondary">
+            <Link
+              href="/for-clinics/growth-studio"
+              className="btn btn-secondary"
+            >
               Explore Growth Studio
               <IconArrowRight className="h-4 w-4" />
             </Link>
@@ -183,7 +202,7 @@ export default function AestheticClinicsPage() {
         </div>
       </section>
 
-      <section className="border-t border-delvara-border bg-delvara-surface py-8">
+      <section className="border-t border-delvara-border bg-delvara-surface py-7">
         <div className="container-delvara">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <p className="text-sm text-delvara-muted-text">

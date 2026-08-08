@@ -15,7 +15,7 @@ const steps: JourneyStep[] = [
   {
     number: "01",
     title: "Explore",
-    description: "Choose the dental or aesthetic service you're considering.",
+    description: "Choose the aesthetic or dental service you're considering.",
     group: "person",
   },
   {
@@ -109,7 +109,7 @@ export function JourneyFlow() {
       <ol className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         <span
           aria-hidden="true"
-          className={`journey-flow__path pointer-events-none absolute top-[2.15rem] right-6 left-6 hidden h-px bg-gradient-to-r from-dental via-delvara-ink to-aesthetics lg:block ${
+          className={`journey-flow__path pointer-events-none absolute top-[2.15rem] right-6 left-6 hidden h-px bg-gradient-to-r from-aesthetics via-delvara-ink to-dental lg:block ${
             show ? "journey-flow__path--drawn" : ""
           }`}
         />
