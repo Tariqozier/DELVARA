@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { IconArrowRight, TreatmentIcon } from "@/components/icons";
+import { useSearch } from "@/components/SearchProvider";
 import {
   featuredAestheticsTreatments,
   featuredDentalTreatments,
@@ -11,6 +12,7 @@ import {
 
 export function TreatmentDiscovery() {
   const [category, setCategory] = useState<TreatmentCategory>("aesthetics");
+  const { openSearch } = useSearch();
   const tablistId = useId();
   const panelId = useId();
 
@@ -105,9 +107,15 @@ export function TreatmentDiscovery() {
           >
             {treatments.map((treatment) => (
               <li key={treatment.id}>
-                <Link
-                  href={exploreHref}
-                  className="group flex h-full flex-col rounded-xl border border-delvara-border bg-delvara-bg p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-delvara-border-strong hover:bg-delvara-white hover:shadow-[0_12px_30px_rgb(23_45_46/0.06)] focus-visible:outline-offset-4"
+                <button
+                  type="button"
+                  onClick={() =>
+                    openSearch({
+                      category: treatment.category,
+                      treatment: treatment.name,
+                    })
+                  }
+                  className="group flex h-full w-full flex-col rounded-xl border border-delvara-border bg-delvara-bg p-6 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-delvara-border-strong hover:bg-delvara-white hover:shadow-[0_12px_30px_rgb(23_45_46/0.06)] focus-visible:outline-offset-4"
                 >
                   <span
                     className={`inline-flex h-11 w-11 items-center justify-center rounded-lg border ${iconSurface}`}
@@ -126,7 +134,7 @@ export function TreatmentDiscovery() {
                     Enquire
                     <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                   </span>
-                </Link>
+                </button>
               </li>
             ))}
           </ul>

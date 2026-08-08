@@ -238,8 +238,10 @@ export const enquiryDentalTreatments = [
   "Invisalign / clear aligners",
   "Teeth whitening",
   "Veneers",
+  "Cosmetic dentistry",
   "General dentistry",
   "Emergency dentistry",
+  "Restorative dentistry",
   "Other / not sure",
 ] as const;
 
@@ -251,6 +253,7 @@ export const enquiryAestheticsTreatments = [
   "Hair treatments",
   "Endolift",
   "Filler packages",
+  "Facial aesthetics",
   "Other / not sure",
 ] as const;
 

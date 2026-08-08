@@ -126,7 +126,12 @@ export function HeroDiscoveryPanel() {
             </div>
           </div>
 
-          <StartSearchButton variant="primary" className="w-full">
+          <StartSearchButton
+            variant="primary"
+            className="w-full"
+            category={category ?? undefined}
+            treatment={selectedTreatment || undefined}
+          >
             Continue enquiry
           </StartSearchButton>
         </div>

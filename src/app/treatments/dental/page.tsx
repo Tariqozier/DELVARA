@@ -27,7 +27,7 @@ export default function DentalTreatmentsPage() {
               start an enquiry when you&apos;re ready.
             </p>
             <div className="mt-8">
-              <StartSearchButton variant="primary">
+              <StartSearchButton variant="primary" category="dental">
                 Start your enquiry
               </StartSearchButton>
             </div>
@@ -67,7 +67,7 @@ export default function DentalTreatmentsPage() {
               Clinical diagnosis remains with the dental professional.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <StartSearchButton variant="primary">
+              <StartSearchButton variant="primary" category="dental">
                 Start an enquiry
               </StartSearchButton>
               <Link href="/treatments/aesthetics" className="btn btn-secondary">

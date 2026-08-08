@@ -21,6 +21,7 @@ import {
   travelOptions,
   type TreatmentCategory,
 } from "@/lib/content";
+import { getEnquiryStartStep } from "@/lib/enquiryContext";
 
 type FormState = {
   category: TreatmentCategory | "";
@@ -66,29 +67,80 @@ function togglePriority(current: string[], value: string) {
 }
 
 export function PatientSearchModal() {
-  const { isOpen, closeSearch } = useSearch();
+  const { isOpen, closeSearch, draft } = useSearch();
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const [form, setForm] = useState<FormState>(initialForm);
   const [submittedDemo, setSubmittedDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [contextLocked, setContextLocked] = useState(false);
+  const [categoryPrefill, setCategoryPrefill] = useState(false);
   const titleId = useId();
   const descriptionId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+  const openSessionRef = useRef(false);
 
-  const treatmentOptions =
+  const treatmentOptionsBase =
     form.category === "dental"
       ? enquiryDentalTreatments
       : form.category === "aesthetics"
         ? enquiryAestheticsTreatments
         : [];
 
+  const treatmentOptions =
+    form.treatment &&
+    !(treatmentOptionsBase as readonly string[]).includes(form.treatment)
+      ? [form.treatment, ...treatmentOptionsBase]
+      : treatmentOptionsBase;
+
   const budgetOptions =
     form.category === "aesthetics"
       ? aestheticsBudgetOptions
       : dentalBudgetOptions;
+
+  const minStep = contextLocked ? 2 : 1;
+  const showContextSummary = Boolean(form.category && form.treatment);
+  const categoryLabel =
+    form.category === "aesthetics"
+      ? "Aesthetics"
+      : form.category === "dental"
+        ? "Dental"
+        : "";
+
+  useEffect(() => {
+    if (!isOpen) {
+      openSessionRef.current = false;
+      const resetTimer = window.setTimeout(() => {
+        setStep(1);
+        setDirection("forward");
+        setForm(initialForm);
+        setSubmittedDemo(false);
+        setError(null);
+        setContextLocked(false);
+        setCategoryPrefill(false);
+      }, 200);
+      return () => window.clearTimeout(resetTimer);
+    }
+
+    if (openSessionRef.current) return;
+    openSessionRef.current = true;
+
+    const nextForm: FormState = {
+      ...initialForm,
+      category: draft.category ?? "",
+      treatment: draft.treatment ?? "",
+    };
+    const startStep = getEnquiryStartStep(draft);
+    setForm(nextForm);
+    setStep(startStep);
+    setDirection("forward");
+    setSubmittedDemo(false);
+    setError(null);
+    setContextLocked(Boolean(draft.category && draft.treatment));
+    setCategoryPrefill(Boolean(draft.category));
+  }, [isOpen, draft]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -122,19 +174,6 @@ export function PatientSearchModal() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, closeSearch]);
 
-  useEffect(() => {
-    if (!isOpen) {
-      const resetTimer = window.setTimeout(() => {
-        setStep(1);
-        setDirection("forward");
-        setForm(initialForm);
-        setSubmittedDemo(false);
-        setError(null);
-      }, 200);
-      return () => window.clearTimeout(resetTimer);
-    }
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
   function canContinue() {
@@ -164,7 +203,15 @@ export function PatientSearchModal() {
   function goBack() {
     setError(null);
     setDirection("back");
-    setStep((current) => Math.max(current - 1, 1));
+    setStep((current) => Math.max(current - 1, minStep));
+  }
+
+  function handleChangeContext() {
+    setError(null);
+    setContextLocked(false);
+    setCategoryPrefill(false);
+    setDirection("back");
+    setStep(1);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -283,6 +330,24 @@ export function PatientSearchModal() {
                   ))}
                 </ol>
               </div>
+              {showContextSummary && step > 1 ? (
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-delvara-border bg-delvara-white px-3 py-2.5">
+                  <p className="text-sm text-delvara-charcoal">
+                    <span className="font-medium text-delvara-ink">
+                      {categoryLabel}
+                    </span>
+                    <span className="mx-1.5 text-delvara-border-strong">·</span>
+                    <span>{form.treatment}</span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleChangeContext}
+                    className="text-sm font-medium text-delvara-ink underline-offset-2 transition-colors hover:underline"
+                  >
+                    Change
+                  </button>
+                </div>
+              ) : null}
             </div>
 
             <form
@@ -295,58 +360,94 @@ export function PatientSearchModal() {
                   {step === 1 && (
                     <fieldset className="space-y-5">
                       <legend className="text-lg font-medium text-delvara-ink">
-                        What are you considering?
+                        {categoryPrefill && form.category
+                          ? "Which service are you interested in?"
+                          : "What are you considering?"}
                       </legend>
-                      <div className="grid grid-cols-2 gap-2.5">
-                        <button
-                          type="button"
-                          className="category-tab"
-                          data-category="aesthetics"
-                          aria-pressed={form.category === "aesthetics"}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              category: "aesthetics",
-                              treatment: "",
-                              budget: "",
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="h-2 w-2 rounded-full accent-dot-aesthetics"
-                          />
-                          Aesthetics
-                        </button>
-                        <button
-                          type="button"
-                          className="category-tab"
-                          data-category="dental"
-                          aria-pressed={form.category === "dental"}
-                          onClick={() => {
-                            setForm((current) => ({
-                              ...current,
-                              category: "dental",
-                              treatment: "",
-                              budget: "",
-                            }));
-                            setError(null);
-                          }}
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="h-2 w-2 rounded-full accent-dot-dental"
-                          />
-                          Dental
-                        </button>
-                      </div>
+
+                      {categoryPrefill && form.category ? (
+                        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-delvara-border bg-delvara-white px-3 py-2.5">
+                          <p className="text-sm text-delvara-charcoal">
+                            <span className="font-medium text-delvara-ink">
+                              {categoryLabel}
+                            </span>
+                            <span className="ml-2 text-delvara-muted-text">
+                              selected
+                            </span>
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCategoryPrefill(false);
+                              setForm((current) => ({
+                                ...current,
+                                category: "",
+                                treatment: "",
+                                budget: "",
+                              }));
+                              setError(null);
+                            }}
+                            className="text-sm font-medium text-delvara-ink underline-offset-2 hover:underline"
+                          >
+                            Change
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-2.5">
+                          <button
+                            type="button"
+                            className="category-tab"
+                            data-category="aesthetics"
+                            aria-pressed={form.category === "aesthetics"}
+                            onClick={() => {
+                              setForm((current) => ({
+                                ...current,
+                                category: "aesthetics",
+                                treatment: "",
+                                budget: "",
+                              }));
+                              setContextLocked(false);
+                              setError(null);
+                            }}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="h-2 w-2 rounded-full accent-dot-aesthetics"
+                            />
+                            Aesthetics
+                          </button>
+                          <button
+                            type="button"
+                            className="category-tab"
+                            data-category="dental"
+                            aria-pressed={form.category === "dental"}
+                            onClick={() => {
+                              setForm((current) => ({
+                                ...current,
+                                category: "dental",
+                                treatment: "",
+                                budget: "",
+                              }));
+                              setContextLocked(false);
+                              setError(null);
+                            }}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="h-2 w-2 rounded-full accent-dot-dental"
+                            />
+                            Dental
+                          </button>
+                        </div>
+                      )}
 
                       {form.category ? (
                         <div>
-                          <p className="mb-3 text-sm font-medium text-delvara-ink">
-                            Which service are you interested in?
-                          </p>
+                          {!categoryPrefill ? (
+                            <p className="mb-3 text-sm font-medium text-delvara-ink">
+                              Which service are you interested in?
+                            </p>
+                          ) : null}
                           <div className="grid gap-2.5 sm:grid-cols-2">
                             {treatmentOptions.map((option) => (
                               <button
@@ -668,7 +769,7 @@ export function PatientSearchModal() {
               </div>
 
               <div className="flex flex-col-reverse gap-3 border-t border-delvara-border bg-delvara-white/80 px-5 py-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
-                {step > 1 ? (
+                {step > minStep ? (
                   <button
                     type="button"
                     onClick={goBack}

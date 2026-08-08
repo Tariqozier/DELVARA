@@ -47,6 +47,8 @@ export function TreatmentCatalog({ groups, accent }: TreatmentCatalogProps) {
                 <StartSearchButton
                   variant="secondary"
                   className="justify-self-start md:justify-self-end"
+                  category={accent}
+                  treatment={treatment.name}
                 >
                   Start an enquiry
                 </StartSearchButton>
