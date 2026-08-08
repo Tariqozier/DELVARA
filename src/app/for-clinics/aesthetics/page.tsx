@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { IconArrowRight } from "@/components/icons";
 import { AestheticJourney } from "@/components/clinic/AestheticJourney";
+import { ClinicGrowthTreatments } from "@/components/clinic/ClinicGrowthTreatments";
 import { ClinicPageHero } from "@/components/clinic/ClinicPageHero";
 import { PartnerStandards } from "@/components/clinic/PartnerStandards";
 import {
@@ -116,20 +117,10 @@ export default function AestheticClinicsPage() {
             </p>
           </div>
 
-          <ul className="mt-8 flex flex-wrap gap-2.5">
-            {aestheticsGrowthTreatments.map((treatment) => (
-              <li
-                key={treatment.name}
-                className={
-                  treatment.emphasis === "high"
-                    ? "rounded-full border border-aesthetics/40 bg-aesthetics-soft px-4 py-2 text-sm font-medium text-aesthetics-deep sm:text-base"
-                    : "rounded-full border border-delvara-border bg-delvara-white/90 px-3.5 py-1.5 text-sm text-delvara-muted-text"
-                }
-              >
-                {treatment.name}
-              </li>
-            ))}
-          </ul>
+          <ClinicGrowthTreatments
+            accent="aesthetics"
+            items={aestheticsGrowthTreatments}
+          />
         </div>
       </section>
 

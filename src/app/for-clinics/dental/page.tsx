@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IconArrowRight } from "@/components/icons";
+import { ClinicGrowthTreatments } from "@/components/clinic/ClinicGrowthTreatments";
 import { ClinicPageHero } from "@/components/clinic/ClinicPageHero";
 import { ClinicServicesGrid } from "@/components/clinic/ClinicServicesGrid";
 import { PartnerStandards } from "@/components/clinic/PartnerStandards";
@@ -68,7 +69,7 @@ export default function DentalClinicsPage() {
       />
 
       <section
-        className="section-pad bg-delvara-bg"
+        className="bg-delvara-bg py-12 md:py-14"
         aria-labelledby="dental-treatments-heading"
       >
         <div className="container-delvara">
@@ -86,20 +87,10 @@ export default function DentalClinicsPage() {
             </p>
           </div>
 
-          <ul className="mt-10 flex flex-wrap gap-3">
-            {dentalGrowthTreatments.map((treatment) => (
-              <li
-                key={treatment.name}
-                className={
-                  treatment.emphasis === "high"
-                    ? "rounded-md border border-dental/35 bg-dental-soft px-4 py-2.5 text-base font-medium text-dental-deep"
-                    : "rounded-md border border-delvara-border bg-delvara-white px-3.5 py-2 text-sm text-delvara-muted-text"
-                }
-              >
-                {treatment.name}
-              </li>
-            ))}
-          </ul>
+          <ClinicGrowthTreatments
+            accent="dental"
+            items={dentalGrowthTreatments}
+          />
         </div>
       </section>
 
