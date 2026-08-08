@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="digital-experiences-title">
+  <title id="digital-experiences-title">Digital experiences</title>
+  <defs>
+    <linearGradient id="digital-experiences-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D3A0B5" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#89A993" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F1C4AE" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="digital-experiences-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#D3A0B5" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="digital-experiences-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#digital-experiences-bg)"/>
+  <path d="M80 280 C120 180, 280 180, 320 280" fill="none" stroke="#89A993" stroke-width="3" stroke-opacity="0.45"/>
+       <circle cx="120" cy="250" r="28" fill="url(#digital-experiences-shape)" stroke="#172D2E" stroke-opacity="0.1"/>
+       <circle cx="200" cy="210" r="36" fill="#D3A0B5" fill-opacity="0.32"/>
+       <circle cx="280" cy="250" r="28" fill="#F1C4AE" fill-opacity="0.38"/>
+       <rect x="155" y="300" width="90" height="36" rx="10" fill="#172D2E" fill-opacity="0.65"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">DIGITAL EXPERIENCES</text>
+</svg>

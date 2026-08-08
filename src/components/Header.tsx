@@ -121,18 +121,11 @@ export function Header() {
                   </button>
                   {expanded ? (
                     <div className="absolute top-full left-0 z-50 mt-3 min-w-[15rem] rounded-lg border border-delvara-border bg-delvara-white p-2 shadow-[0_16px_40px_rgb(23_45_46/0.08)]">
-                      <Link
-                        href={item.href}
-                        className="block rounded-md px-3 py-2.5 text-sm text-delvara-muted-text transition-colors hover:bg-delvara-surface hover:text-delvara-ink"
-                        onClick={() => setOpenDesktopMenu(null)}
-                      >
-                        Overview
-                      </Link>
                       {children.map((child) => (
                         <Link
-                          key={child.href}
+                          key={`${child.href}-${child.label}`}
                           href={child.href}
-                          className={`block rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-delvara-surface ${
+                          className={`block rounded-md px-3 py-2.5 text-sm transition-all duration-200 hover:bg-delvara-surface ${
                             pathname === child.href
                               ? "bg-delvara-surface text-delvara-ink"
                               : "text-delvara-charcoal hover:text-delvara-ink"
@@ -187,36 +180,42 @@ export function Header() {
                     key={item.label}
                     className="border-b border-delvara-border/70 py-1 last:border-b-0"
                   >
-                    <Link
-                      href={item.href}
-                      className={`block rounded-md px-3 py-3 text-base transition-colors ${
-                        isActive(item.href, children)
-                          ? "bg-delvara-surface text-delvara-ink"
-                          : "text-delvara-charcoal hover:bg-delvara-surface"
-                      }`}
-                      aria-current={
-                        pathname === item.href ? "page" : undefined
-                      }
-                    >
-                      {item.label}
-                    </Link>
                     {children ? (
-                      <div className="mb-2 ml-3 flex flex-col gap-1 border-l border-delvara-border pl-3">
-                        {children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={`rounded-md px-3 py-2.5 text-sm transition-colors ${
-                              pathname === child.href
-                                ? "bg-delvara-surface text-delvara-ink"
-                                : "text-delvara-muted-text hover:bg-delvara-surface hover:text-delvara-ink"
-                            }`}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : null}
+                      <>
+                        <p className="px-3 py-3 text-base font-medium text-delvara-ink">
+                          {item.label}
+                        </p>
+                        <div className="mb-2 ml-3 flex flex-col gap-1 border-l border-delvara-border pl-3">
+                          {children.map((child) => (
+                            <Link
+                              key={`${child.href}-${child.label}`}
+                              href={child.href}
+                              className={`rounded-md px-3 py-2.5 text-sm transition-colors duration-200 ${
+                                pathname === child.href
+                                  ? "bg-delvara-surface text-delvara-ink"
+                                  : "text-delvara-muted-text hover:bg-delvara-surface hover:text-delvara-ink"
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className={`block rounded-md px-3 py-3 text-base transition-colors duration-200 ${
+                          isActive(item.href)
+                            ? "bg-delvara-surface text-delvara-ink"
+                            : "text-delvara-charcoal hover:bg-delvara-surface"
+                        }`}
+                        aria-current={
+                          pathname === item.href ? "page" : undefined
+                        }
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                   </div>
                 );
               })}

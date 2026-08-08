@@ -16,9 +16,8 @@ export function Benefits() {
             A clearer starting point.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            Private treatment can involve a lot of information, different
-            providers and unfamiliar terminology. DELVARA helps make the first
-            step simpler.
+            Private treatment can feel fragmented. DELVARA makes the first step
+            clearer.
           </p>
         </div>
 

@@ -1,16 +1,14 @@
-'use client';
+"use client";
 
-import { Component, type ReactNode, useEffect, useState } from 'react';
+import { Component, type ReactNode, useEffect, useState } from "react";
 
-import SoftAurora from './SoftAurora';
+import SoftAurora from "./SoftAurora";
 
 function hasWebGL(): boolean {
-  if (typeof document === 'undefined') return false;
+  if (typeof document === "undefined") return false;
   try {
-    const canvas = document.createElement('canvas');
-    return !!(
-      canvas.getContext('webgl') ?? canvas.getContext('webgl2')
-    );
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl") ?? canvas.getContext("webgl2"));
   } catch {
     return false;
   }
@@ -22,10 +20,10 @@ function StaticAuroraFallback() {
       className="h-full w-full"
       style={{
         background: [
-          'radial-gradient(ellipse 80% 60% at 72% 28%, rgb(134 163 145 / 0.22), transparent 55%)',
-          'radial-gradient(ellipse 70% 50% at 88% 62%, rgb(201 155 173 / 0.18), transparent 50%)',
-          'linear-gradient(180deg, #f8f5f0 0%, #f1eee8 100%)',
-        ].join(', '),
+          "radial-gradient(ellipse 85% 65% at 70% 30%, rgb(137 169 147 / 0.42), transparent 55%)",
+          "radial-gradient(ellipse 75% 55% at 90% 65%, rgb(211 160 181 / 0.36), transparent 52%)",
+          "linear-gradient(180deg, #f8f5f0 0%, #f1eee8 100%)",
+        ].join(", "),
       }}
     />
   );
@@ -70,15 +68,15 @@ export function SoftAuroraHero() {
     setMounted(true);
     setWebGLAvailable(hasWebGL());
 
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
     const handleChange = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   const useStaticFallback =
@@ -87,12 +85,12 @@ export function SoftAuroraHero() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 opacity-50"
+      className="pointer-events-none absolute inset-0 opacity-[0.88]"
       style={{
         maskImage:
-          'linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.35) 40%, black 70%)',
+          "linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.25) 28%, rgb(0 0 0 / 0.75) 52%, black 72%)",
         WebkitMaskImage:
-          'linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.35) 40%, black 70%)',
+          "linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.25) 28%, rgb(0 0 0 / 0.75) 52%, black 72%)",
       }}
     >
       {useStaticFallback ? (
@@ -100,20 +98,20 @@ export function SoftAuroraHero() {
       ) : (
         <AuroraErrorBoundary onError={() => setAuroraFailed(true)}>
           <SoftAurora
-            speed={0.45}
-            scale={0.55}
-            brightness={0.65}
-            color1="#86A391"
-            color2="#C99BAD"
+            speed={0.6}
+            scale={0.58}
+            brightness={1.05}
+            color1="#89A993"
+            color2="#D3A0B5"
             noiseFrequency={2.3}
-            noiseAmplitude={1.6}
-            bandHeight={0.45}
-            bandSpread={1.15}
+            noiseAmplitude={1.95}
+            bandHeight={0.52}
+            bandSpread={1.22}
             octaveDecay={0.1}
             layerOffset={0.18}
-            colorSpeed={0.55}
+            colorSpeed={0.65}
             enableMouseInteraction
-            mouseInfluence={0.12}
+            mouseInfluence={0.22}
             onUnavailable={() => setAuroraFailed(true)}
           />
         </AuroraErrorBoundary>

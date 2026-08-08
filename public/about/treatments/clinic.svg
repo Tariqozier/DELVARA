@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="clinic-title">
+  <title id="clinic-title">Clinic</title>
+  <defs>
+    <linearGradient id="clinic-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89A993" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#F8F5F0" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F1C4AE" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="clinic-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="clinic-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#clinic-bg)"/>
+  <rect x="95" y="145" width="210" height="180" rx="16" fill="url(#clinic-shape)" stroke="#172D2E" stroke-opacity="0.1" stroke-width="2"/>
+       <rect x="125" y="175" width="55" height="70" rx="6" fill="#89A993" fill-opacity="0.35"/>
+       <rect x="195" y="175" width="80" height="35" rx="6" fill="#D3A0B5" fill-opacity="0.3"/>
+       <rect x="195" y="220" width="80" height="25" rx="6" fill="#F1C4AE" fill-opacity="0.35"/>
+       <path d="M200 115 L200 145 M185 130 L215 130" stroke="#89A993" stroke-width="4" stroke-linecap="round"/>
+       <circle cx="310" cy="120" r="48" fill="#D3A0B5" fill-opacity="0.16"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">CLINIC</text>
+</svg>

@@ -94,7 +94,7 @@ export default function AestheticClinicsPage() {
         accent="aesthetics"
         eyebrow="For Aesthetic Clinics"
         title="Turn treatment interest into a stronger patient acquisition journey."
-        description="DELVARA helps aesthetic clinics build treatment-specific demand across London — combining qualified patient enquiries with conversion journeys, content, automation and custom digital growth infrastructure."
+        description="Treatment-specific demand across London — combining structured patient enquiries with conversion journeys, content, automation and growth infrastructure."
       />
 
       <section
@@ -111,9 +111,8 @@ export default function AestheticClinicsPage() {
               Demand built around your treatment mix.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              From injectables and skin treatments to body sculpting and hair
-              services — acquisition shaped around the services your clinic
-              offers and wants to grow.
+              Acquisition shaped around the services your clinic offers and
+              wants to grow.
             </p>
           </div>
 
@@ -161,48 +160,25 @@ export default function AestheticClinicsPage() {
               Growth infrastructure for premium aesthetic businesses.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA supports more than enquiry generation — building the
-              funnels, digital experiences and operational systems that help
-              aesthetic clinics convert treatment interest consistently.
+              Funnels, digital experiences and systems that help convert
+              treatment interest consistently.
             </p>
           </div>
 
           <ClinicServicesGrid accent="aesthetics" services={aestheticsServices} />
 
-          <p className="mt-8 max-w-3xl text-sm leading-relaxed text-delvara-muted-text">
-            Professional, medical-aesthetic positioning — not beauty-salon
-            marketing. Work is scoped around your practitioners, services and
-            commercial goals.
-          </p>
-        </div>
-      </section>
-
-      <section
-        className="section-pad bg-gradient-to-br from-aesthetics-soft/60 via-delvara-bg to-aesthetics-peach/10"
-        aria-labelledby="aesthetics-custom-heading"
-      >
-        <div className="container-delvara">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-aesthetics/20 bg-delvara-white/70 p-8 text-center backdrop-blur-sm sm:p-12">
-            <p className="eyebrow text-aesthetics-deep">Custom engagements</p>
-            <h2
-              id="aesthetics-custom-heading"
-              className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
-            >
-              Shaped around your clinic.
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              Whether you need a focused campaign for a single treatment, an
-              ongoing growth programme or a custom digital build — DELVARA works
-              around your practitioners, service mix and the way your clinic
-              operates. No public pricing; scope is discussed directly.
-            </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="mailto:partnerships@getdelvara.com?subject=Aesthetic%20clinic%20discussion"
-              className="btn btn-primary group mt-10"
+              className="btn btn-primary group"
             >
               Discuss your clinic
               <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
+            <Link href="/for-clinics/growth-studio" className="btn btn-secondary">
+              Explore Growth Studio
+              <IconArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

@@ -16,7 +16,7 @@ export function Hero() {
       <SoftAuroraHero />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,rgb(248_245_240/0.94)_0%,rgb(248_245_240/0.78)_42%,rgb(248_245_240/0.28)_72%,transparent_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,rgb(248_245_240/0.92)_0%,rgb(248_245_240/0.72)_38%,rgb(248_245_240/0.22)_68%,transparent_100%)]"
       />
       <div className="container-delvara relative section-pad !pt-10 md:!pt-16">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
@@ -31,13 +31,13 @@ export function Hero() {
               </span>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA helps people understand the dental and aesthetic services
-              they&apos;re considering, decide what matters to them, and submit
-              an informed enquiry to participating clinics across London.
+              DELVARA helps people explore dental and aesthetic services,
+              understand what matters to them and make a more informed enquiry
+              with participating clinics across London.
             </p>
             <p className="mt-3 text-sm font-medium text-delvara-charcoal sm:text-base">
               Helping people find services that fit what they&apos;re looking
-              for — without the pressure of knowing exactly where to begin.
+              for — without needing to know exactly where to begin.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">

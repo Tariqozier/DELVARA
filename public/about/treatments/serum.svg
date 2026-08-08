@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="serum-title">
+  <title id="serum-title">Serum</title>
+  <defs>
+    <linearGradient id="serum-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D3A0B5" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#F1C4AE" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="serum-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#D3A0B5" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="serum-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#serum-bg)"/>
+  <path d="M170 120 L230 120 L245 170 L155 170 Z" fill="#D3A0B5" fill-opacity="0.35"/>
+       <rect x="158" y="170" width="84" height="150" rx="14" fill="url(#serum-shape)" stroke="#172D2E" stroke-opacity="0.1" stroke-width="2"/>
+       <ellipse cx="200" cy="250" rx="18" ry="28" fill="#F1C4AE" fill-opacity="0.4"/>
+       <circle cx="200" cy="250" r="6" fill="#F8F5F0" fill-opacity="0.9"/>
+       <path d="M100 330 Q200 290 300 330" fill="none" stroke="#89A993" stroke-width="2" stroke-opacity="0.35"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">SERUM</text>
+</svg>

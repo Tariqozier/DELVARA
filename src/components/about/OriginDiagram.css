@@ -1,0 +1,80 @@
+.origin-line {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: origin-draw 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.origin-line--left {
+  animation-delay: 0.15s;
+}
+
+.origin-line--right {
+  animation-delay: 0.35s;
+}
+
+.origin-line--bridge {
+  animation-delay: 0.55s;
+}
+
+.origin-line--flow-a {
+  animation-delay: 0.85s;
+}
+
+.origin-line--flow-b {
+  animation-delay: 1.05s;
+}
+
+.origin-line--flow-c {
+  animation-delay: 1.25s;
+}
+
+.origin-line--flow-d {
+  animation-delay: 1.45s;
+}
+
+.origin-node {
+  opacity: 0;
+  transform-origin: center;
+  animation: origin-node-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.origin-node--a {
+  animation-delay: 0.45s;
+}
+
+.origin-node--b {
+  animation-delay: 0.65s;
+}
+
+.origin-node--c {
+  animation-delay: 0.75s;
+}
+
+@keyframes origin-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes origin-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origin-line {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .origin-node {
+    opacity: 1;
+    animation: none;
+  }
+}

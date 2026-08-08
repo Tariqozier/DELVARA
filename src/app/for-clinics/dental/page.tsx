@@ -9,6 +9,7 @@ import {
   clinicGrowthServices,
   dentalGrowthTreatments,
   dentalPartnerStandards,
+  dentalVerificationSteps,
 } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -63,7 +64,7 @@ export default function DentalClinicsPage() {
         accent="dental"
         eyebrow="For Dental Clinics"
         title="Patient acquisition built around the treatments you want to grow."
-        description="DELVARA helps dental practices generate and manage treatment-specific patient enquiries across London — with qualification, funnel design, marketing and automation built around the clinic."
+        description="Treatment-specific patient enquiries across London — with qualification, funnel design, marketing and automation built around the clinic."
       />
 
       <section
@@ -80,9 +81,8 @@ export default function DentalClinicsPage() {
               Acquisition around the services that matter commercially.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              Focus visually on higher-intent treatment categories while
-              supporting the broader practice — from implants and cosmetic work
-              to general and emergency dentistry.
+              Higher-intent treatment categories, with support for the broader
+              practice.
             </p>
           </div>
 
@@ -111,8 +111,40 @@ export default function DentalClinicsPage() {
 
       <PartnerStandards
         accent="dental"
-        title="Built around credible clinic partnerships."
-        intro="Our clinic review framework may consider professional registration, relevant provider regulation, treatment-specific credentials and patient-facing processes. Checks are applied proportionately — we do not claim every clinic has completed every check until our operational programme confirms it."
+        title="Who we work with."
+        intro="DELVARA intends to work with reputable, appropriately regulated dental providers. For dental partnerships, DELVARA's review framework includes confirming the professional and regulatory status relevant to the services being promoted."
+        regulatorNote={
+          <>
+            <p>
+              Dental professionals practising in the UK must be appropriately
+              registered with the{" "}
+              <a
+                href="https://www.gdc-uk.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-delvara-ink underline decoration-delvara-border-strong underline-offset-2 transition-colors hover:text-dental-deep"
+              >
+                General Dental Council (GDC)
+              </a>
+              , which sets standards of conduct, performance and ethics for the
+              dental team.
+            </p>
+            <p>
+              In England, dental providers carrying on regulated activities are
+              subject to the relevant{" "}
+              <a
+                href="https://www.cqc.org.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-delvara-ink underline decoration-delvara-border-strong underline-offset-2 transition-colors hover:text-dental-deep"
+              >
+                Care Quality Commission (CQC)
+              </a>{" "}
+              registration and regulatory requirements.
+            </p>
+          </>
+        }
+        verificationSteps={dentalVerificationSteps}
         standards={dentalPartnerStandards}
       />
 
@@ -130,9 +162,8 @@ export default function DentalClinicsPage() {
               Build the system around your growth.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              Some clinics need patient enquiries. Others need the infrastructure
-              that turns marketing activity into a repeatable acquisition
-              engine. DELVARA can build both.
+              Enquiries, funnels, websites, automation — scoped around your
+              treatments and capacity.
             </p>
           </div>
 
@@ -141,41 +172,18 @@ export default function DentalClinicsPage() {
             services={clinicGrowthServices}
           />
 
-          <p className="mt-8 max-w-3xl text-sm leading-relaxed text-delvara-muted-text">
-            This is tailored growth infrastructure — not a generic full-service
-            agency retainer. Work is scoped around your treatments, capacity and
-            commercial priorities.
-          </p>
-        </div>
-      </section>
-
-      <section
-        className="section-pad border-t border-delvara-border bg-dental-soft/30"
-        aria-labelledby="dental-custom-heading"
-      >
-        <div className="container-delvara">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow text-dental-deep">Custom engagements</p>
-            <h2
-              id="dental-custom-heading"
-              className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
-            >
-              Built around your clinic.
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-              DELVARA can support a single acquisition campaign or build a wider
-              digital growth system around the way your practice operates —
-              whether that means project-based work, ongoing growth programmes,
-              custom builds, different treatment priorities or different clinic
-              sizes.
-            </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="mailto:partnerships@getdelvara.com?subject=Dental%20clinic%20discussion"
-              className="btn btn-primary group mt-10"
+              className="btn btn-primary group"
             >
               Discuss your clinic
               <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
+            <Link href="/for-clinics/growth-studio" className="btn btn-secondary">
+              Explore Growth Studio
+              <IconArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="tooth-title">
+  <title id="tooth-title">Tooth</title>
+  <defs>
+    <linearGradient id="tooth-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89A993" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#F1C4AE" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#D3A0B5" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="tooth-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="tooth-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#tooth-bg)"/>
+  <ellipse cx="320" cy="110" rx="90" ry="70" fill="#89A993" fill-opacity="0.18" filter="url(#tooth-soft)"/>
+       <path d="M140 300 C140 210, 260 180, 200 130 C170 100, 120 150, 130 220 C135 260, 155 340, 200 370 C245 340, 265 260, 270 220 C280 150, 230 100, 200 130" fill="url(#tooth-shape)" stroke="#172D2E" stroke-opacity="0.12" stroke-width="2"/>
+       <path d="M175 250 Q200 270 225 250" fill="none" stroke="#89A993" stroke-width="3" stroke-linecap="round"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">TOOTH</text>
+</svg>

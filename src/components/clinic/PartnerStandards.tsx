@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type Standard = {
   title: string;
   description: string;
@@ -8,6 +10,8 @@ type PartnerStandardsProps = {
   intro: string;
   standards: readonly Standard[];
   accent: "dental" | "aesthetics";
+  regulatorNote?: ReactNode;
+  verificationSteps?: readonly string[];
 };
 
 const accentStyles = {
@@ -16,12 +20,14 @@ const accentStyles = {
     card: "border-dental/25 bg-delvara-white",
     marker: "border-dental/30 bg-dental-soft text-dental-deep",
     heading: "text-dental-deep",
+    flow: "border-dental/30 bg-dental-soft/50 text-dental-deep",
   },
   aesthetics: {
     section: "bg-aesthetics-soft/40",
     card: "rounded-2xl border-aesthetics/25 bg-delvara-white",
     marker: "rounded-full border-aesthetics/30 bg-aesthetics-soft text-aesthetics-deep",
     heading: "text-aesthetics-deep",
+    flow: "border-aesthetics/30 bg-aesthetics-soft text-aesthetics-deep",
   },
 } as const;
 
@@ -30,6 +36,8 @@ export function PartnerStandards({
   intro,
   standards,
   accent,
+  regulatorNote,
+  verificationSteps,
 }: PartnerStandardsProps) {
   const styles = accentStyles[accent];
 
@@ -40,7 +48,7 @@ export function PartnerStandards({
     >
       <div className="container-delvara">
         <div className="max-w-3xl">
-          <p className="eyebrow">Partner standards</p>
+          <p className="eyebrow">Who we work with</p>
           <h2
             id="partner-standards-heading"
             className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
@@ -50,7 +58,28 @@ export function PartnerStandards({
           <p className="mt-5 text-base leading-relaxed text-delvara-muted-text sm:text-lg">
             {intro}
           </p>
+          {regulatorNote ? (
+            <div className="mt-6 space-y-3 text-sm leading-relaxed text-delvara-muted-text sm:text-base">
+              {regulatorNote}
+            </div>
+          ) : null}
         </div>
+
+        {verificationSteps && verificationSteps.length > 0 ? (
+          <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {verificationSteps.map((step, index) => (
+              <li
+                key={step}
+                className={`rounded-lg border px-4 py-4 text-sm font-medium ${styles.flow}`}
+              >
+                <span className="block text-[0.65rem] tracking-[0.14em] uppercase opacity-70">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-2 block text-delvara-ink">{step}</span>
+              </li>
+            ))}
+          </ol>
+        ) : null}
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2">
           {standards.map((standard, index) => (
@@ -85,8 +114,8 @@ export function PartnerStandards({
         <p className="mt-8 max-w-3xl text-sm leading-relaxed text-delvara-muted-text">
           These checks may form part of our clinic review framework. They do not
           replace professional regulation, clinical assessment or a
-          patient&apos;s own decision-making. DELVARA does not guarantee
-          clinical outcomes.
+          patient&apos;s own decision-making. DELVARA does not claim regulator
+          approval for clinics and does not guarantee clinical outcomes.
         </p>
       </div>
     </section>

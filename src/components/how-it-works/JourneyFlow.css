@@ -1,0 +1,16 @@
+.journey-flow__path {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-flow__path--drawn {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-flow__path {
+    transform: scaleX(1);
+    transition: none;
+  }
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="smile-title">
+  <title id="smile-title">Smile</title>
+  <defs>
+    <linearGradient id="smile-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F1C4AE" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#D3A0B5" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="smile-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#F1C4AE" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="smile-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#smile-bg)"/>
+  <circle cx="200" cy="230" r="95" fill="url(#smile-shape)" stroke="#172D2E" stroke-opacity="0.08" stroke-width="2"/>
+       <circle cx="165" cy="210" r="10" fill="#172D2E" fill-opacity="0.65"/>
+       <circle cx="235" cy="210" r="10" fill="#172D2E" fill-opacity="0.65"/>
+       <path d="M155 255 Q200 295 245 255" fill="none" stroke="#D3A0B5" stroke-width="5" stroke-linecap="round"/>
+       <path d="M60 360 Q200 320 340 360" fill="none" stroke="#F1C4AE" stroke-opacity="0.45" stroke-width="2"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">SMILE</text>
+</svg>

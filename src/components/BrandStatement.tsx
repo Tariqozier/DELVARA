@@ -17,9 +17,8 @@ export function BrandStatement() {
             <span className="mt-2 block">Better treatment.</span>
           </h2>
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            DELVARA exists to make the journey between exploring private dental
-            or aesthetic services and submitting an informed enquiry simpler,
-            clearer and more considered.
+            Making the journey from exploring private dental or aesthetic
+            services to an informed enquiry clearer — for people and clinics.
           </p>
         </div>
       </div>

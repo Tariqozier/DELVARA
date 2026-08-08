@@ -12,6 +12,7 @@ const clinicLinks = [
   { href: "/for-clinics", label: "Partner with DELVARA" },
   { href: "/for-clinics/dental", label: "Dental clinics" },
   { href: "/for-clinics/aesthetics", label: "Aesthetic clinics" },
+  { href: "/for-clinics/growth-studio", label: "Growth Studio" },
 ] as const;
 
 const legalLinks = [
@@ -33,9 +34,9 @@ export function Footer() {
               {brand.tagline}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-delvara-muted-text">
-              A London-focused treatment enquiry service for private dental and
-              aesthetic care — helping people make clearer choices and helping
-              participating clinics connect with relevant enquiries.
+              Helping people explore private dental and aesthetic services in
+              London — and helping participating clinics receive clearer
+              enquiries.
             </p>
           </div>
 

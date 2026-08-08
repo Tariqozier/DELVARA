@@ -43,7 +43,9 @@ export const navItems = [
   {
     label: "Treatments",
     href: "/treatments",
+    showOverview: true,
     children: [
+      { href: "/treatments", label: "Overview" },
       { href: "/treatments/dental", label: "Dental treatments" },
       { href: "/treatments/aesthetics", label: "Aesthetic treatments" },
     ],
@@ -55,9 +57,11 @@ export const navItems = [
   {
     label: "For Clinics",
     href: "/for-clinics",
+    showOverview: false,
     children: [
-      { href: "/for-clinics/dental", label: "Dental clinics" },
-      { href: "/for-clinics/aesthetics", label: "Aesthetic clinics" },
+      { href: "/for-clinics/dental", label: "Dental Clinics" },
+      { href: "/for-clinics/aesthetics", label: "Aesthetic Clinics" },
+      { href: "/for-clinics/growth-studio", label: "Growth Studio" },
     ],
   },
   {
@@ -349,22 +353,22 @@ export const benefits = [
   {
     title: "Explore services",
     description:
-      "Start with the dental or aesthetic service you're considering and understand the next step without needing to contact multiple clinics first.",
+      "Start with the dental or aesthetic service you're considering — without contacting multiple clinics first.",
   },
   {
     title: "Clarify what matters",
     description:
-      "Tell us your location, timeframe, approximate budget and priorities so your enquiry starts with useful context.",
+      "Share location, timeframe, approximate budget and priorities so your enquiry begins with useful context.",
   },
   {
     title: "Make an informed enquiry",
     description:
-      "Provide the information a participating clinic needs to understand what you're looking for before the first conversation.",
+      "Give a participating clinic the information it needs before the first conversation.",
   },
   {
     title: "Your decision",
     description:
-      "An enquiry never commits you to a consultation or treatment. Clinical advice and treatment decisions remain between you and the clinic.",
+      "An enquiry never commits you to consultation or treatment. Clinical decisions stay with you and the clinic.",
   },
 ] as const;
 
@@ -536,23 +540,31 @@ export const dentalPartnerStandards = [
   {
     title: "Professional registration",
     description:
-      "Dental professionals practising in the UK must be appropriately registered with the General Dental Council (GDC). Where a protected specialist title is used, relevant GDC specialist-list status may be checked.",
+      "Relevant clinician GDC registration may be confirmed for the services being promoted. Where a protected specialist title is used, relevant GDC specialist-list status may also be checked.",
   },
   {
-    title: "Service / provider regulation",
+    title: "Provider / service regulation",
     description:
-      "For regulated dental services in England, relevant provider registration and publicly available CQC information may be reviewed where applicable.",
+      "In England, CQC registration and publicly available status may be reviewed where regulated activities apply to the provider and services being promoted.",
   },
   {
     title: "Treatment credentials",
     description:
-      "Where relevant, additional professional indicators may be considered — for example BACD accreditation for cosmetic dentistry, or ADI membership / fellowship and other appropriate implant-related credentials. These are professional signals, not government regulators.",
+      "Treatment-specific credentials and practitioner information may be considered where relevant — including specialist status for protected titles, implant-related professional signals and other appropriate indicators. These are professional signals, not government approvals.",
   },
   {
     title: "Patient processes",
     description:
-      "Partner information may include professional indemnity, practitioner credentials, services provided, locations, enquiry handling, consent, aftercare, complaints processes, finance options where offered, and capacity.",
+      "Review may include professional indemnity, enquiry handling, consent practices, complaints process, patient communication and aftercare processes — alongside services offered and capacity.",
   },
+] as const;
+
+export const dentalVerificationSteps = [
+  "Professional registration",
+  "Provider / service regulation",
+  "Treatment credentials",
+  "Patient processes",
+  "DELVARA partnership review",
 ] as const;
 
 export const aestheticsPartnerStandards = [
@@ -582,26 +594,26 @@ export const faqs = [
   {
     question: "What is DELVARA?",
     answer:
-      "DELVARA is a London-focused service that helps people explore private dental or aesthetic services, clarify what matters to them, and submit an informed enquiry to participating clinics. For clinics, DELVARA also supports patient acquisition journeys and growth infrastructure.",
+      "A London-focused service that helps people explore private dental or aesthetic services, clarify what matters, and submit an informed enquiry to participating clinics. For clinics, DELVARA also supports acquisition journeys and growth infrastructure.",
   },
   {
     question: "Does it cost anything to make an enquiry?",
     answer:
-      "There is no charge for consumers to submit an initial enquiry through DELVARA.",
+      "No. There is no charge for consumers to submit an initial enquiry through DELVARA.",
   },
   {
     question: "Am I committing to treatment by enquiring?",
     answer:
-      "No. An enquiry never commits you to a consultation or treatment. Clinical advice and treatment decisions remain between you and the clinic.",
+      "No. An enquiry never commits you to a consultation or treatment. Clinical decisions remain between you and the clinic.",
   },
   {
     question: "How does DELVARA choose which clinics to introduce?",
     answer:
-      "DELVARA uses details such as treatment category, service type, London location, timeframe, approximate budget, priorities and the information you provide to help identify a relevant participating clinic where possible. Matching continues to develop as the service grows.",
+      "DELVARA uses category, service type, London location, timeframe, approximate budget, priorities and the details you provide to help identify a relevant participating clinic where possible. Matching continues to develop as the service grows.",
   },
   {
     question: "Is DELVARA a clinic?",
     answer:
-      "No. DELVARA does not provide treatment, diagnosis or medical advice. Clinical suitability and treatment decisions remain between the individual and the relevant healthcare professional.",
+      "No. DELVARA does not provide treatment, diagnosis or medical advice. Clinical suitability remains with the relevant healthcare professional.",
   },
 ] as const;

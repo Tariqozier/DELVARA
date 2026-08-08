@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="crm-title">
+  <title id="crm-title">CRM</title>
+  <defs>
+    <linearGradient id="crm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89A993" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#D3A0B5" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F1C4AE" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="crm-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="crm-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#crm-bg)"/>
+  <rect x="110" y="160" width="180" height="150" rx="16" fill="url(#crm-shape)" stroke="#172D2E" stroke-opacity="0.12" stroke-width="2"/>
+       <circle cx="155" cy="210" r="22" fill="#89A993" fill-opacity="0.4"/>
+       <circle cx="230" cy="210" r="22" fill="#D3A0B5" fill-opacity="0.35"/>
+       <circle cx="192" cy="270" r="22" fill="#F1C4AE" fill-opacity="0.4"/>
+       <line x1="170" y1="220" x2="210" y2="255" stroke="#172D2E" stroke-opacity="0.2" stroke-width="2"/>
+       <line x1="215" y1="220" x2="205" y2="255" stroke="#172D2E" stroke-opacity="0.2" stroke-width="2"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">CRM</text>
+</svg>

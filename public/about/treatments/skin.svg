@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="skin-title">
+  <title id="skin-title">Skin</title>
+  <defs>
+    <linearGradient id="skin-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F1C4AE" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#D3A0B5" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#89A993" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="skin-shape" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F5F0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#F1C4AE" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="skin-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#F8F5F0"/>
+  <rect width="400" height="500" fill="url(#skin-bg)"/>
+  <path d="M120 160 C170 120, 230 120, 280 160 C310 190, 310 260, 280 300 C230 350, 170 350, 120 300 C90 260, 90 190, 120 160Z" fill="url(#skin-shape)" stroke="#172D2E" stroke-opacity="0.08" stroke-width="2"/>
+       <path d="M140 220 C180 200, 220 200, 260 220" fill="none" stroke="#F1C4AE" stroke-width="2" stroke-opacity="0.55"/>
+       <path d="M150 260 C190 245, 210 245, 250 260" fill="none" stroke="#D3A0B5" stroke-width="2" stroke-opacity="0.45"/>
+       <circle cx="310" cy="130" r="40" fill="#F1C4AE" fill-opacity="0.22"/>
+  <text x="32" y="468" fill="#172D2E" fill-opacity="0.55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2.8" font-weight="500">SKIN</text>
+</svg>
