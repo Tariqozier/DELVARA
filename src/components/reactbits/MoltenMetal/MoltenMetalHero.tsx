@@ -61,6 +61,7 @@ class MoltenErrorBoundary extends Component<
 
 export function MoltenMetalHero() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [webGLAvailable, setWebGLAvailable] = useState(false);
   const [moltenFailed, setMoltenFailed] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -69,15 +70,24 @@ export function MoltenMetalHero() {
     setMounted(true);
     setWebGLAvailable(hasWebGL());
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compactQuery = window.matchMedia("(max-width: 768px)");
+    setPrefersReducedMotion(motionQuery.matches);
+    setIsCompactViewport(compactQuery.matches);
 
-    const handleChange = (event: MediaQueryListEvent) => {
+    const handleMotion = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };
+    const handleCompact = (event: MediaQueryListEvent) => {
+      setIsCompactViewport(event.matches);
+    };
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    motionQuery.addEventListener("change", handleMotion);
+    compactQuery.addEventListener("change", handleCompact);
+    return () => {
+      motionQuery.removeEventListener("change", handleMotion);
+      compactQuery.removeEventListener("change", handleCompact);
+    };
   }, []);
 
   const useStaticFallback =
@@ -96,19 +106,19 @@ export function MoltenMetalHero() {
             color1="#163B39"
             color2="#B67E96"
             color3="#F1C4AE"
-            speed={0.24}
-            scale={4}
-            detail={3}
-            glow={1.5}
+            speed={isCompactViewport ? 0.16 : 0.24}
+            scale={isCompactViewport ? 3.4 : 4}
+            detail={isCompactViewport ? 2 : 3}
+            glow={isCompactViewport ? 1.25 : 1.5}
             coreSize={0.1}
-            swirl={0.85}
+            swirl={isCompactViewport ? 0.65 : 0.85}
             fold={-0.2}
             blackPoint={0.05}
             brightness={1.15}
             colorMode="molten"
-            grain
+            grain={!isCompactViewport}
             grainIntensity={0.035}
-            mouseInteraction
+            mouseInteraction={!isCompactViewport}
             mouseStrength={0.18}
             opacity={0.9}
             onUnavailable={() => setMoltenFailed(true)}

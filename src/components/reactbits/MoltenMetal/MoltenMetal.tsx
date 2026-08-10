@@ -189,7 +189,10 @@ export default function MoltenMetal({
         alpha: true,
         premultipliedAlpha: true,
         antialias: false,
-        dpr: Math.min(window.devicePixelRatio || 1, 2),
+        dpr: Math.min(
+          window.devicePixelRatio || 1,
+          window.matchMedia("(max-width: 768px)").matches ? 1.25 : 2,
+        ),
       });
 
       const gl = renderer.gl;

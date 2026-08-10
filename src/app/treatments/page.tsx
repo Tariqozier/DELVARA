@@ -15,7 +15,7 @@ export default function TreatmentsPage() {
         <div className="container-delvara">
           <div className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Treatments</p>
-            <h1 className="mt-4 text-4xl font-medium tracking-tight text-delvara-ink sm:text-5xl">
+            <h1 className="mt-4 text-[clamp(1.85rem,7vw,3rem)] font-medium tracking-tight text-delvara-ink sm:text-5xl">
               Explore aesthetic and dental services.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">

@@ -50,6 +50,28 @@ export function OriginDiagram({ className = "" }: OriginDiagramProps) {
         between people exploring private treatment and participating clinics.
       </figcaption>
 
+      <div className="origin-diagram__mobile" aria-hidden="true">
+        <p className="origin-diagram__mobile-eyebrow">Where it began</p>
+        <div className="origin-diagram__mobile-pair">
+          <span className="origin-diagram__mobile-chip origin-diagram__mobile-chip--aesthetics">
+            Aesthetics
+          </span>
+          <span className="origin-diagram__mobile-chip origin-diagram__mobile-chip--dental">
+            Dental
+          </span>
+        </div>
+        <div className="origin-diagram__mobile-arrow" />
+        <div className="origin-diagram__mobile-core">DELVARA</div>
+        <div className="origin-diagram__mobile-arrow" />
+        <div className="origin-diagram__mobile-pair">
+          <span className="origin-diagram__mobile-chip">People</span>
+          <span className="origin-diagram__mobile-chip">Clinics</span>
+        </div>
+        <p className="origin-diagram__mobile-note">
+          Connecting treatment interest with participating clinics.
+        </p>
+      </div>
+
       <svg
         viewBox="0 0 960 780"
         role="img"

@@ -203,7 +203,12 @@ export default function SoftAurora({
       if (cancelled || !containerRef.current) return;
 
       const { Renderer, Program, Mesh, Triangle } = ogl;
-      const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
+      const isCompactViewport = window.matchMedia("(max-width: 768px)").matches;
+      const renderer = new Renderer({
+        alpha: true,
+        premultipliedAlpha: false,
+        dpr: Math.min(window.devicePixelRatio || 1, isCompactViewport ? 1.25 : 2),
+      });
       const gl = renderer.gl;
       gl.clearColor(0, 0, 0, 0);
 
@@ -278,7 +283,15 @@ export default function SoftAurora({
         canvas.addEventListener('mouseleave', handleMouseLeave);
       }
 
+      let isVisible = true;
+      let isPageVisible = !document.hidden;
+
       function update(time: number) {
+        if (!isVisible || !isPageVisible) {
+          animationFrameId = 0;
+          return;
+        }
+
         animationFrameId = requestAnimationFrame(update);
         program.uniforms.uTime.value = time * 0.001;
 
@@ -294,10 +307,43 @@ export default function SoftAurora({
 
         renderer.render({ scene: mesh });
       }
-      animationFrameId = requestAnimationFrame(update);
+
+      const tryStart = () => {
+        if (isVisible && isPageVisible && animationFrameId === 0) {
+          animationFrameId = requestAnimationFrame(update);
+        }
+      };
+
+      const tryStop = () => {
+        if (animationFrameId !== 0) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = 0;
+        }
+      };
+
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = Boolean(entry?.isIntersecting);
+          if (isVisible) tryStart();
+          else tryStop();
+        },
+        { threshold: 0 },
+      );
+      io.observe(container);
+
+      const onVisibility = () => {
+        isPageVisible = !document.hidden;
+        if (isPageVisible) tryStart();
+        else tryStop();
+      };
+      document.addEventListener('visibilitychange', onVisibility);
+
+      tryStart();
 
       cleanup = () => {
-        cancelAnimationFrame(animationFrameId);
+        tryStop();
+        io.disconnect();
+        document.removeEventListener('visibilitychange', onVisibility);
         window.removeEventListener('resize', resize);
         if (enableMouseInteraction) {
           canvas.removeEventListener('mousemove', handleMouseMove);

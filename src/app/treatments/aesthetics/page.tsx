@@ -19,7 +19,7 @@ export default function AestheticsTreatmentsPage() {
         <div className="container-delvara">
           <ScrollReveal className="max-w-3xl">
             <p className="eyebrow text-aesthetics-deep">Aesthetic services</p>
-            <h1 className="mt-4 text-4xl font-medium tracking-tight text-delvara-ink sm:text-5xl">
+            <h1 className="mt-4 text-[clamp(1.85rem,7vw,3rem)] font-medium tracking-tight text-delvara-ink sm:text-5xl">
               Explore private aesthetic services in London.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">

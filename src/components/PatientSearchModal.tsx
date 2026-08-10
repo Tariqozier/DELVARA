@@ -318,10 +318,10 @@ export function PatientSearchModal() {
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
-        className="modal-panel flex max-h-[min(92vh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(23_45_46/0.28)] sm:rounded-xl"
+        className="modal-panel flex max-h-[min(92dvh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(23_45_46/0.28)] sm:rounded-xl"
         onKeyDown={onPanelKeyDown}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
           <div>
             <p className="eyebrow">Your enquiry</p>
             <h2
@@ -349,7 +349,7 @@ export function PatientSearchModal() {
 
         {!submittedDemo ? (
           <>
-            <div className="border-b border-delvara-border px-5 py-3 sm:px-7">
+            <div className="shrink-0 border-b border-delvara-border px-5 py-3 sm:px-7">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm text-delvara-muted-text">
                   Step {step} of {TOTAL_STEPS}
@@ -823,7 +823,7 @@ export function PatientSearchModal() {
                 ) : null}
               </div>
 
-              <div className="flex flex-col-reverse gap-3 border-t border-delvara-border bg-delvara-white/80 px-5 py-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
+              <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-delvara-border bg-delvara-white/80 px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
                 {step > minStep ? (
                   <button
                     type="button"

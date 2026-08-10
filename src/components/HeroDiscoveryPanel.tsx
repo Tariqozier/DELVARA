@@ -53,10 +53,10 @@ export function HeroDiscoveryPanel() {
   }
 
   return (
-    <div className="reveal relative lg:justify-self-end">
+    <div className="reveal relative w-full min-w-0 lg:justify-self-end">
       <div
         aria-hidden="true"
-        className="absolute -inset-4 rounded-[1.5rem] bg-[linear-gradient(145deg,rgb(23_45_46/0.04),transparent_50%,rgb(169_133_152/0.06))]"
+        className="absolute -inset-3 rounded-[1.5rem] bg-[linear-gradient(145deg,rgb(23_45_46/0.04),transparent_50%,rgb(169_133_152/0.06))] sm:-inset-4"
       />
       <div className="relative overflow-hidden rounded-[1.15rem] border border-delvara-border bg-delvara-white shadow-[0_18px_50px_rgb(23_45_46/0.08)]">
         <div className="border-b border-delvara-border px-5 py-4 sm:px-6">
@@ -158,8 +158,7 @@ export function HeroDiscoveryPanel() {
             </div>
           ) : (
             <div className="rounded-lg border border-dashed border-delvara-border bg-delvara-bg/70 px-4 py-5 text-sm text-delvara-muted-text">
-              Choose Aesthetics or Dental to see treatments. Both categories are
-              equally supported.
+              Choose Aesthetics or Dental to see treatments.
             </div>
           )}
 
@@ -191,7 +190,7 @@ export function HeroDiscoveryPanel() {
             className="btn btn-primary w-full"
             onClick={handleContinue}
           >
-            Continue enquiry
+            Continue
           </button>
         </div>
       </div>

@@ -37,7 +37,8 @@ export function TreatmentDiscovery() {
 
   return (
     <section
-      className="section-pad bg-delvara-white"
+      id="treatments"
+      className="section-pad scroll-mt-24 bg-delvara-white"
       aria-labelledby="treatments-heading"
     >
       <div className="container-delvara">

@@ -170,6 +170,32 @@ export const growthWheelItems: WheelItem[] = [
   },
 ];
 
+/**
+ * Homepage marketplace wheel — aesthetics-led mix using the same About assets.
+ * Order puts aesthetic concepts first for commercial emphasis.
+ */
+const londonMarketplaceWheelIds = [
+  "skin",
+  "skincare",
+  "aesthetic-clinic",
+  "injectable-product",
+  "serum",
+  "consultation",
+  "smile",
+  "tooth",
+  "clinic",
+  "whitening",
+] as const;
+
+export const londonMarketplaceWheelItems: WheelItem[] =
+  londonMarketplaceWheelIds.map((id) => {
+    const item = treatmentWheelItems.find((entry) => entry.id === id);
+    if (!item) {
+      throw new Error(`Missing treatment wheel item: ${id}`);
+    }
+    return item;
+  });
+
 export const aboutWheelHeadings = {
   treatments: "The worlds we work across",
   growth: "Beyond patient enquiries",

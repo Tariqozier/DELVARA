@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { IconChevron, IconClose, IconMenu } from "@/components/icons";
-import { StartSearchButton } from "@/components/StartSearchButton";
 import { brand, navItems } from "@/lib/content";
 
 export function Header() {
@@ -63,7 +62,7 @@ export function Header() {
         <div className="flex h-[4.25rem] items-center justify-between gap-4 md:h-[5rem]">
           <Link
             href="/"
-            className="text-[1.4rem] font-semibold tracking-[0.18em] text-delvara-ink md:text-[1.55rem]"
+            className="text-[1.25rem] font-semibold tracking-[0.16em] text-delvara-ink sm:text-[1.4rem] sm:tracking-[0.18em] md:text-[1.55rem]"
             aria-label={`${brand.name} home`}
           >
             {brand.name}
@@ -143,9 +142,9 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <StartSearchButton variant="primary" className="min-h-11 px-4">
-              Start your enquiry
-            </StartSearchButton>
+            <Link href="/for-clinics" className="btn btn-primary min-h-11 px-4">
+              Partner with DELVARA
+            </Link>
           </div>
 
           <button
@@ -221,13 +220,13 @@ export function Header() {
               })}
             </nav>
             <div className="mt-5 border-t border-delvara-border pt-5">
-              <StartSearchButton
-                variant="primary"
-                className="w-full"
+              <Link
+                href="/for-clinics"
+                className="btn btn-primary w-full"
                 onClick={() => setMenuOpen(false)}
               >
-                Start your enquiry
-              </StartSearchButton>
+                Partner with DELVARA
+              </Link>
             </div>
           </div>
         </div>

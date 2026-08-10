@@ -1,42 +1,38 @@
-import { StartSearchButton } from "@/components/StartSearchButton";
+import { ImageWheel } from "@/components/about/ImageWheel";
+import { londonMarketplaceWheelItems } from "@/lib/aboutWheels";
 import { londonAreas } from "@/lib/content";
 
 export function LondonSection() {
   return (
     <section
-      className="section-pad border-y border-delvara-border bg-delvara-white"
+      className="section-pad overflow-x-clip border-y border-delvara-border bg-delvara-white"
       aria-labelledby="london-heading"
     >
       <div className="container-delvara">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow">Across London</p>
-          <h2
-            id="london-heading"
-            className="mt-4 text-3xl font-medium tracking-tight text-delvara-ink sm:text-4xl"
-          >
-            Private treatment enquiries across London.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
-            Tell us what you&apos;re considering and where you&apos;re based.
-            DELVARA helps connect enquiries with relevant participating clinics
-            across London.
-          </p>
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14 xl:gap-16">
+          <div className="max-w-xl lg:max-w-none">
+            <p className="eyebrow">Across London</p>
+            <h2
+              id="london-heading"
+              className="mt-4 text-[clamp(1.75rem,4.5vw,2.25rem)] font-medium tracking-tight text-delvara-ink sm:text-4xl"
+            >
+              Private treatment enquiries across London.
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-delvara-muted-text sm:text-lg">
+              DELVARA connects treatment interest with participating aesthetic
+              and dental clinics across London.
+            </p>
+            <p className="mt-6 text-sm tracking-wide text-delvara-muted-text">
+              {londonAreas.join(" · ")}
+            </p>
+          </div>
 
-          <ul className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
-            {londonAreas.map((area) => (
-              <li
-                key={area}
-                className="rounded-lg border border-delvara-border bg-delvara-bg px-4 py-2.5 text-sm font-medium tracking-wide text-delvara-ink"
-              >
-                {area}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8 flex justify-center">
-            <StartSearchButton variant="primary">
-              Start your enquiry
-            </StartSearchButton>
+          <div className="min-w-0 justify-self-center lg:justify-self-stretch">
+            <ImageWheel
+              items={londonMarketplaceWheelItems}
+              variant="treatments"
+              className="image-wheel--homepage"
+            />
           </div>
         </div>
       </div>

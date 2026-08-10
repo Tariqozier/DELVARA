@@ -3,7 +3,98 @@
 }
 
 .origin-diagram__svg {
-  display: block;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .origin-diagram__svg {
+    display: block;
+  }
+}
+
+.origin-diagram__mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.25rem 0.15rem 0.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .origin-diagram__mobile {
+    display: none;
+  }
+}
+
+.origin-diagram__mobile-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-delvara-muted-text, #68706e);
+}
+
+.origin-diagram__mobile-pair {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+}
+
+.origin-diagram__mobile-chip {
+  min-width: 7.5rem;
+  border: 1px solid var(--color-delvara-border, #dddcd7);
+  border-radius: 999px;
+  background: var(--color-delvara-bg, #f8f5f0);
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-delvara-ink, #172d2e);
+}
+
+.origin-diagram__mobile-chip--aesthetics {
+  border-color: rgb(169 133 152 / 0.45);
+  background: var(--color-aesthetics-soft, #f5edeb);
+  color: var(--color-aesthetics-deep, #7a5f6e);
+}
+
+.origin-diagram__mobile-chip--dental {
+  border-color: rgb(120 149 133 / 0.45);
+  background: var(--color-dental-soft, #e4ede8);
+  color: var(--color-dental-deep, #4f6a5c);
+}
+
+.origin-diagram__mobile-arrow {
+  width: 1px;
+  height: 1.35rem;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(23 45 46 / 0.35),
+    transparent
+  );
+}
+
+.origin-diagram__mobile-core {
+  min-width: 10rem;
+  border-radius: 999px;
+  border: 1px solid rgb(23 45 46 / 0.18);
+  background: var(--color-delvara-ink, #172d2e);
+  color: var(--color-delvara-white, #fff);
+  padding: 0.85rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.origin-diagram__mobile-note {
+  max-width: 18rem;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-delvara-muted-text, #68706e);
 }
 
 .origin-line {

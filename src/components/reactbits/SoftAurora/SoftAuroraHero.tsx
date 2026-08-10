@@ -61,6 +61,7 @@ class AuroraErrorBoundary extends Component<
 
 export function SoftAuroraHero() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [webGLAvailable, setWebGLAvailable] = useState(false);
   const [auroraFailed, setAuroraFailed] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -69,15 +70,24 @@ export function SoftAuroraHero() {
     setMounted(true);
     setWebGLAvailable(hasWebGL());
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compactQuery = window.matchMedia("(max-width: 768px)");
+    setPrefersReducedMotion(motionQuery.matches);
+    setIsCompactViewport(compactQuery.matches);
 
-    const handleChange = (event: MediaQueryListEvent) => {
+    const handleMotion = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };
+    const handleCompact = (event: MediaQueryListEvent) => {
+      setIsCompactViewport(event.matches);
+    };
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    motionQuery.addEventListener("change", handleMotion);
+    compactQuery.addEventListener("change", handleCompact);
+    return () => {
+      motionQuery.removeEventListener("change", handleMotion);
+      compactQuery.removeEventListener("change", handleCompact);
+    };
   }, []);
 
   const useStaticFallback =
@@ -99,19 +109,19 @@ export function SoftAuroraHero() {
       ) : (
         <AuroraErrorBoundary onError={() => setAuroraFailed(true)}>
           <SoftAurora
-            speed={0.6}
-            scale={0.58}
+            speed={isCompactViewport ? 0.42 : 0.6}
+            scale={isCompactViewport ? 0.5 : 0.58}
             brightness={1.08}
             color1="#D3A0B5"
             color2="#89A993"
-            noiseFrequency={2.3}
-            noiseAmplitude={2}
+            noiseFrequency={isCompactViewport ? 1.8 : 2.3}
+            noiseAmplitude={isCompactViewport ? 1.5 : 2}
             bandHeight={0.54}
             bandSpread={1.24}
             octaveDecay={0.1}
             layerOffset={0.16}
-            colorSpeed={0.62}
-            enableMouseInteraction
+            colorSpeed={isCompactViewport ? 0.45 : 0.62}
+            enableMouseInteraction={!isCompactViewport}
             mouseInfluence={0.22}
             onUnavailable={() => setAuroraFailed(true)}
           />

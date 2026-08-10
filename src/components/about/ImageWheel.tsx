@@ -100,8 +100,9 @@ export function ImageWheel({
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const count = items.length;
-  const radiusX = 240;
-  const radiusZ = 110;
+  const [radiusX, setRadiusX] = useState(240);
+  const [radiusZ, setRadiusZ] = useState(110);
+  const [isVisible, setIsVisible] = useState(true);
 
   const ariaLabel = useMemo(() => {
     const labels = items.map((item) => item.label).join(", ");
@@ -131,6 +132,35 @@ export function ImageWheel({
     });
   }, [count, items, radiusX, radiusZ]);
 
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const updateRadii = () => {
+      const width = stage.clientWidth;
+      const scale = Math.min(1, Math.max(0.42, width / 640));
+      setRadiusX(Math.round(240 * scale));
+      setRadiusZ(Math.round(110 * scale));
+    };
+
+    updateRadii();
+    const observer = new ResizeObserver(updateRadii);
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || prefersReducedMotion) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(Boolean(entry?.isIntersecting)),
+      { rootMargin: "120px 0px", threshold: 0.05 },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
+
   const tick = useCallback(() => {
     if (!dragRef.current.active) {
       velocityRef.current =
@@ -155,7 +185,14 @@ export function ImageWheel({
   }, [applyTransforms]);
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !isVisible) {
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      if (!prefersReducedMotion) applyTransforms();
+      return;
+    }
 
     applyTransforms();
     rafRef.current = window.requestAnimationFrame(tick);
@@ -163,9 +200,10 @@ export function ImageWheel({
     return () => {
       if (rafRef.current !== null) {
         window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
     };
-  }, [applyTransforms, prefersReducedMotion, tick]);
+  }, [applyTransforms, isVisible, prefersReducedMotion, tick]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;

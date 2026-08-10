@@ -44,6 +44,11 @@
     }
   }
 
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   body {
     background-color: var(--color-delvara-bg);
     color: var(--color-delvara-charcoal);
@@ -176,7 +181,7 @@
   }
 
   .section-pad {
-    padding-block: 5rem;
+    padding-block: 3.75rem;
   }
 
   @media (min-width: 768px) {
