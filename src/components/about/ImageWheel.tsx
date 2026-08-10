@@ -4,10 +4,12 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
   type PointerEvent as ReactPointerEvent,
+  type UIEvent,
 } from "react";
 import "./ImageWheel.css";
 
@@ -32,6 +34,7 @@ const MAX_VELOCITY = 0.018;
 const DRAG_SENSITIVITY = 0.0042;
 const SCROLL_SENSITIVITY = 0.00055;
 const IDLE_VELOCITY = 0.00028;
+const DESKTOP_MQ = "(min-width: 768px)";
 
 type CardTransform = {
   x: number;
@@ -60,25 +63,50 @@ function computeCardTransform(
   const z = Math.cos(angle) * radiusZ;
   const depth = (z + radiusZ) / (radiusZ * 2);
   const scale = 0.72 + depth * 0.34;
-  const opacity = 0.42 + depth * 0.58;
+  const opacity = 0.55 + depth * 0.45;
   const rotateY = -(angle * 180) / Math.PI;
   const zIndex = Math.round(depth * 100);
 
   return { x, z, rotateY, scale, opacity, zIndex };
 }
 
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setPrefersReducedMotion(media.matches);
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
-  }, []);
+  }, [query]);
 
-  return prefersReducedMotion;
+  return matches;
+}
+
+function WheelCard({ item }: { item: WheelItem }) {
+  return (
+    <figure className="image-wheel__card-inner">
+      <div className="image-wheel__image-wrap">
+        <img
+          src={item.src}
+          alt={item.alt}
+          width={340}
+          height={425}
+          className="image-wheel__image"
+          draggable={false}
+        />
+      </div>
+      {item.accent ? (
+        <span
+          className="image-wheel__accent"
+          style={{ backgroundColor: item.accent }}
+          aria-hidden="true"
+        />
+      ) : null}
+      <figcaption className="image-wheel__label">{item.label}</figcaption>
+    </figure>
+  );
 }
 
 export function ImageWheel({
@@ -89,6 +117,7 @@ export function ImageWheel({
 }: ImageWheelProps) {
   const headingId = useId();
   const stageRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const rotationRef = useRef(0);
   const velocityRef = useRef(IDLE_VELOCITY);
   const dragRef = useRef<{ active: boolean; lastX: number }>({
@@ -97,12 +126,16 @@ export function ImageWheel({
   });
   const rafRef = useRef<number | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const isDesktop = useMediaQuery(DESKTOP_MQ);
+  const useDesktopWheel = isDesktop && !prefersReducedMotion;
 
   const count = items.length;
   const [radiusX, setRadiusX] = useState(240);
   const [radiusZ, setRadiusZ] = useState(110);
   const [isVisible, setIsVisible] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [desktopReady, setDesktopReady] = useState(false);
 
   const ariaLabel = useMemo(() => {
     const labels = items.map((item) => item.label).join(", ");
@@ -133,12 +166,16 @@ export function ImageWheel({
   }, [count, items, radiusX, radiusZ]);
 
   useEffect(() => {
+    if (!useDesktopWheel) {
+      setDesktopReady(false);
+      return;
+    }
     const stage = stageRef.current;
     if (!stage) return;
 
     const updateRadii = () => {
       const width = stage.clientWidth;
-      const scale = Math.min(1, Math.max(0.42, width / 640));
+      const scale = Math.min(1, Math.max(0.7, width / 640));
       setRadiusX(Math.round(240 * scale));
       setRadiusZ(Math.round(110 * scale));
     };
@@ -147,11 +184,18 @@ export function ImageWheel({
     const observer = new ResizeObserver(updateRadii);
     observer.observe(stage);
     return () => observer.disconnect();
-  }, []);
+  }, [useDesktopWheel]);
+
+  useLayoutEffect(() => {
+    if (!useDesktopWheel) return;
+    applyTransforms();
+    setDesktopReady(true);
+  }, [applyTransforms, useDesktopWheel]);
 
   useEffect(() => {
+    if (!useDesktopWheel) return;
     const stage = stageRef.current;
-    if (!stage || prefersReducedMotion) return;
+    if (!stage) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(Boolean(entry?.isIntersecting)),
@@ -159,7 +203,7 @@ export function ImageWheel({
     );
     observer.observe(stage);
     return () => observer.disconnect();
-  }, [prefersReducedMotion]);
+  }, [useDesktopWheel]);
 
   const tick = useCallback(() => {
     if (!dragRef.current.active) {
@@ -185,12 +229,11 @@ export function ImageWheel({
   }, [applyTransforms]);
 
   useEffect(() => {
-    if (prefersReducedMotion || !isVisible) {
+    if (!useDesktopWheel || !isVisible) {
       if (rafRef.current !== null) {
         window.cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
-      if (!prefersReducedMotion) applyTransforms();
       return;
     }
 
@@ -203,10 +246,10 @@ export function ImageWheel({
         rafRef.current = null;
       }
     };
-  }, [applyTransforms, isVisible, prefersReducedMotion, tick]);
+  }, [applyTransforms, isVisible, tick, useDesktopWheel]);
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (!useDesktopWheel) return;
 
     const stage = stageRef.current;
     if (!stage) return;
@@ -225,16 +268,50 @@ export function ImageWheel({
 
     stage.addEventListener("wheel", onWheel, { passive: true });
     return () => stage.removeEventListener("wheel", onWheel);
-  }, [prefersReducedMotion]);
+  }, [useDesktopWheel]);
+
+  const updateActiveFromScroll = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const centerX = trackRect.left + trackRect.width / 2;
+    const slides = track.querySelectorAll<HTMLElement>(".image-wheel__slide");
+
+    let bestIndex = 0;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    slides.forEach((slide, index) => {
+      const rect = slide.getBoundingClientRect();
+      const slideCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(slideCenter - centerX);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIndex = index;
+      }
+    });
+
+    setActiveIndex(bestIndex);
+  }, []);
+
+  useEffect(() => {
+    if (useDesktopWheel) return;
+    updateActiveFromScroll();
+  }, [items, updateActiveFromScroll, useDesktopWheel]);
+
+  const onTrackScroll = (event: UIEvent<HTMLDivElement>) => {
+    void event;
+    updateActiveFromScroll();
+  };
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (prefersReducedMotion) return;
+    if (!useDesktopWheel) return;
     dragRef.current = { active: true, lastX: event.clientX };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!dragRef.current.active || prefersReducedMotion) return;
+    if (!dragRef.current.active || !useDesktopWheel) return;
 
     const deltaX = event.clientX - dragRef.current.lastX;
     dragRef.current.lastX = event.clientX;
@@ -260,6 +337,8 @@ export function ImageWheel({
   const rootClass = [
     "image-wheel",
     variant === "growth" ? "image-wheel--growth" : "image-wheel--treatments",
+    prefersReducedMotion ? "image-wheel--reduced" : "",
+    desktopReady ? "image-wheel--desktop-ready" : "",
     className,
   ]
     .filter(Boolean)
@@ -271,22 +350,49 @@ export function ImageWheel({
       aria-labelledby={heading ? headingId : undefined}
       aria-label={heading ? undefined : ariaLabel}
     >
-      {(heading || !prefersReducedMotion) && (
-        <header className="image-wheel__header">
-          {heading ? (
-            <h2 id={headingId} className="image-wheel__heading">
-              {heading}
-            </h2>
-          ) : null}
-          {!prefersReducedMotion ? (
-            <p className="image-wheel__hint">Scroll or drag to explore</p>
-          ) : null}
-        </header>
-      )}
+      <header className="image-wheel__header">
+        {heading ? (
+          <h2 id={headingId} className="image-wheel__heading">
+            {heading}
+          </h2>
+        ) : null}
+        <p className="image-wheel__hint">
+          <span className="image-wheel__hint-mobile">Swipe to explore</span>
+          <span className="image-wheel__hint-desktop">
+            Scroll or drag to explore
+          </span>
+        </p>
+      </header>
 
+      {/* Mobile / reduced-motion: native iOS scroll-snap carousel */}
+      <div
+        className="image-wheel__mobile-stage"
+        aria-label={heading ? ariaLabel : undefined}
+        role={heading ? "group" : undefined}
+      >
+        <div
+          ref={trackRef}
+          className="image-wheel__track"
+          onScroll={onTrackScroll}
+        >
+          {items.map((item, index) => (
+            <div
+              key={item.id}
+              className={`image-wheel__slide${
+                index === activeIndex ? " is-active" : ""
+              }`}
+              data-index={index}
+            >
+              <WheelCard item={item} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: 3D wheel */}
       <div
         ref={stageRef}
-        className="image-wheel__stage"
+        className="image-wheel__desktop-stage"
         aria-label={heading ? ariaLabel : undefined}
         role={heading ? "group" : undefined}
         onPointerDown={onPointerDown}
@@ -295,77 +401,22 @@ export function ImageWheel({
         onPointerCancel={endDrag}
         onPointerLeave={endDrag}
       >
-        {prefersReducedMotion ? (
-          <div className="image-wheel__static">
-            {items.map((item) => (
-              <figure key={item.id} className="image-wheel__static-card">
-                <div className="image-wheel__card-inner">
-                  <div className="image-wheel__image-wrap">
-                    {/* Local SVG placeholders — plain img avoids next/image SVG constraints */}
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      width={340}
-                      height={425}
-                      className="h-full w-full object-cover"
-                      draggable={false}
-                    />
-                  </div>
-                  {item.accent ? (
-                    <span
-                      className="image-wheel__accent"
-                      style={{ backgroundColor: item.accent }}
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                  <figcaption className="image-wheel__label">
-                    {item.label}
-                  </figcaption>
-                </div>
-              </figure>
+        <div className="image-wheel__scene">
+          <div className="image-wheel__ring">
+            {items.map((item, index) => (
+              <div
+                key={item.id}
+                ref={(node) => {
+                  cardRefs.current[index] = node;
+                }}
+                className="image-wheel__card"
+              >
+                <WheelCard item={item} />
+              </div>
             ))}
           </div>
-        ) : (
-          <>
-            <div className="image-wheel__scene">
-              <div className="image-wheel__ring">
-                {items.map((item, index) => (
-                  <div
-                    key={item.id}
-                    ref={(node) => {
-                      cardRefs.current[index] = node;
-                    }}
-                    className="image-wheel__card"
-                  >
-                    <figure className="image-wheel__card-inner">
-                      <div className="image-wheel__image-wrap">
-                        <img
-                          src={item.src}
-                          alt={item.alt}
-                          width={340}
-                          height={425}
-                          className="h-full w-full object-cover"
-                          draggable={false}
-                        />
-                      </div>
-                      {item.accent ? (
-                        <span
-                          className="image-wheel__accent"
-                          style={{ backgroundColor: item.accent }}
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                      <figcaption className="image-wheel__label">
-                        {item.label}
-                      </figcaption>
-                    </figure>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="image-wheel__floor" aria-hidden="true" />
-          </>
-        )}
+        </div>
+        <div className="image-wheel__floor" aria-hidden="true" />
       </div>
     </section>
   );
