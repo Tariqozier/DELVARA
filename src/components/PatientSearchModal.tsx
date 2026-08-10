@@ -9,6 +9,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import Link from "next/link";
+import { EnquirySuccessState } from "@/components/EnquirySuccessState";
 import { useSearch } from "@/components/SearchProvider";
 import { IconArrowRight, IconCheck, IconClose } from "@/components/icons";
 import {
@@ -321,31 +322,46 @@ export function PatientSearchModal() {
         className="modal-panel flex max-h-[min(92dvh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(23_45_46/0.28)] sm:rounded-xl"
         onKeyDown={onPanelKeyDown}
       >
-        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
-          <div>
-            <p className="eyebrow">Your enquiry</p>
-            <h2
-              id={titleId}
-              className="mt-2 text-xl font-medium tracking-tight text-delvara-ink sm:text-2xl"
+        {!submittedDemo ? (
+          <div className="flex shrink-0 items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
+            <div>
+              <p className="eyebrow">Your enquiry</p>
+              <h2
+                id={titleId}
+                className="mt-2 text-xl font-medium tracking-tight text-delvara-ink sm:text-2xl"
+              >
+                Start your enquiry
+              </h2>
+              <p
+                id={descriptionId}
+                className="mt-1 text-sm text-delvara-muted-text"
+              >
+                Aesthetics or dental. Across London. No pressure.
+              </p>
+            </div>
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={closeSearch}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-all duration-200 hover:-translate-y-px hover:bg-delvara-surface active:scale-[0.98]"
+              aria-label="Close enquiry"
             >
-              {submittedDemo ? "Enquiry ready" : "Start your enquiry"}
-            </h2>
-            <p id={descriptionId} className="mt-1 text-sm text-delvara-muted-text">
-              {submittedDemo
-                ? "Frontend demo complete — not yet connected to a live database."
-                : "Aesthetics or dental. Across London. No pressure."}
-            </p>
+              <IconClose className="h-5 w-5" />
+            </button>
           </div>
-          <button
-            ref={closeButtonRef}
-            type="button"
-            onClick={closeSearch}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-all duration-200 hover:-translate-y-px hover:bg-delvara-surface active:scale-[0.98]"
-            aria-label="Close enquiry"
-          >
-            <IconClose className="h-5 w-5" />
-          </button>
-        </div>
+        ) : (
+          <div className="flex shrink-0 items-center justify-end border-b border-delvara-border px-5 py-3 sm:px-7">
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={closeSearch}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-delvara-border text-delvara-ink transition-all duration-200 hover:-translate-y-px hover:bg-delvara-surface active:scale-[0.98]"
+              aria-label="Close enquiry"
+            >
+              <IconClose className="h-5 w-5" />
+            </button>
+          </div>
+        )}
 
         {!submittedDemo ? (
           <>
@@ -863,29 +879,11 @@ export function PatientSearchModal() {
             </form>
           </>
         ) : (
-          <div className="overflow-y-auto px-5 py-8 sm:px-7 sm:py-10">
-            <div className="mx-auto max-w-md text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-delvara-surface text-delvara-ink">
-                <IconCheck className="h-7 w-7" />
-              </div>
-              <h3 className="mt-5 text-2xl font-medium tracking-tight text-delvara-ink">
-                Your enquiry is ready to submit.
-              </h3>
-              <p className="mt-3 text-delvara-muted-text leading-relaxed">
-                This is a frontend demonstration. Your details have not been
-                stored remotely yet. When the enquiry intake service is
-                connected, DELVARA may use the information you provide to help
-                connect you with a relevant participating clinic.
-              </p>
-              <button
-                type="button"
-                onClick={closeSearch}
-                className="btn btn-primary mt-8"
-              >
-                Close
-              </button>
-            </div>
-          </div>
+          <EnquirySuccessState
+            titleId={titleId}
+            descriptionId={descriptionId}
+            onClose={closeSearch}
+          />
         )}
       </div>
     </div>
