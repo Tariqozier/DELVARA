@@ -127,6 +127,19 @@ export function IconSkin(props: IconProps) {
   );
 }
 
+export function IconLaser(props: IconProps) {
+  return (
+    <svg {...baseProps(props)}>
+      <path d="M5.5 14.5h3.2v4H5.5z" />
+      <path d="M8.7 16.5h2.3" />
+      <path d="m11 16.5 7.5-5.2" />
+      <path d="M18.5 10.8h.01" />
+      <path d="M14.2 8.2 19 6.5" />
+      <path d="M14.8 12.8 19.2 13.8" />
+    </svg>
+  );
+}
+
 export function IconBody(props: IconProps) {
   return (
     <svg {...baseProps(props)}>
@@ -234,6 +247,7 @@ const treatmentIcons: Record<TreatmentIconName, ComponentType<IconProps>> = {
   wrinkle: IconWrinkle,
   fillers: IconFillers,
   skin: IconSkin,
+  laser: IconLaser,
   body: IconBody,
   hair: IconHair,
   endolift: IconEndolift,

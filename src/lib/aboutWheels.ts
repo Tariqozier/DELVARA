@@ -40,6 +40,13 @@ export const treatmentWheelItems: WheelItem[] = [
     accent: "#F1C4AE",
   },
   {
+    id: "laser",
+    label: "Laser",
+    src: `${TREATMENTS_BASE}/laser.svg`,
+    alt: "Abstract illustration representing laser aesthetic treatment",
+    accent: "#D3A0B5",
+  },
+  {
     id: "consultation",
     label: "Consultation",
     src: `${TREATMENTS_BASE}/consultation.svg`,
@@ -177,6 +184,7 @@ export const growthWheelItems: WheelItem[] = [
 const londonMarketplaceWheelIds = [
   "skin",
   "skincare",
+  "laser",
   "aesthetic-clinic",
   "injectable-product",
   "serum",

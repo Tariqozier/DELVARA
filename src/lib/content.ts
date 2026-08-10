@@ -11,6 +11,7 @@ export type TreatmentIconName =
   | "wrinkle"
   | "fillers"
   | "skin"
+  | "laser"
   | "body"
   | "hair"
   | "endolift"
@@ -138,6 +139,13 @@ export const featuredAestheticsTreatments: FeaturedTreatment[] = [
     category: "aesthetics",
   },
   {
+    id: "laser",
+    name: "Laser",
+    description: "Explore laser aesthetic services and make an enquiry.",
+    icon: "laser",
+    category: "aesthetics",
+  },
+  {
     id: "body-sculpting",
     name: "Body Sculpting",
     description: "Enquire about body contouring services in London.",
@@ -216,6 +224,7 @@ export const aestheticsTaxonomy = [
       "Skin Treatments",
       "Skin Rejuvenation",
       "Advanced Facial Treatments",
+      "Laser",
     ],
   },
   {
@@ -249,6 +258,7 @@ export const enquiryAestheticsTreatments = [
   "Anti-wrinkle treatments",
   "Dermal fillers",
   "Skin treatments",
+  "Laser",
   "Body sculpting",
   "Hair treatments",
   "Endolift",
@@ -272,6 +282,7 @@ export const heroAestheticsTreatments = [
   "Anti-wrinkle treatments",
   "Dermal fillers",
   "Skin treatments",
+  "Laser",
   "Body sculpting",
   "Hair treatments",
   "Endolift",
@@ -468,6 +479,7 @@ export const aestheticsGrowthTreatments = [
   { name: "Anti-wrinkle treatments", emphasis: "high" as const },
   { name: "Dermal fillers", emphasis: "high" as const },
   { name: "Skin treatments", emphasis: "high" as const },
+  { name: "Laser", emphasis: "high" as const },
   { name: "Body sculpting", emphasis: "medium" as const },
   { name: "Hair treatments", emphasis: "medium" as const },
   { name: "Endolift", emphasis: "high" as const },

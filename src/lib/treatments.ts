@@ -207,6 +207,13 @@ export const aestheticsTreatmentGroups: TreatmentGroup[] = [
         reasons:
           "Commonly explored for deeper skin concerns under clinical aesthetic care.",
       },
+      {
+        name: "Laser",
+        description:
+          "Clinic-led laser services used across a range of aesthetic skin and hair goals.",
+        reasons:
+          "People often enquire about laser for skin quality, pigmentation, hair reduction or refinement.",
+      },
     ],
   },
   {

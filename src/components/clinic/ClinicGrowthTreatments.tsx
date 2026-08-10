@@ -5,7 +5,7 @@ type ClinicGrowthTreatmentsProps = {
 
 const accentStyles = {
   aesthetics: {
-    list: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4",
+    list: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
     tile:
       "border-aesthetics/30 bg-delvara-white hover:-translate-y-0.5 hover:border-aesthetics/55 hover:bg-aesthetics-soft/50",
   },
