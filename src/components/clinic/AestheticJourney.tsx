@@ -101,7 +101,7 @@ export function AestheticJourney({
             </h2>
           </div>
 
-          {/* Desktop serpentine */}
+          {/* Desktop: single 01–06 journey in reading order */}
           <div className="aesthetic-journey__desktop relative mx-auto mt-10 hidden max-w-[72rem] lg:block">
             <svg
               aria-hidden="true"
@@ -110,7 +110,7 @@ export function AestheticJourney({
               preserveAspectRatio="none"
             >
               <path
-                d="M 95 95 H 1005 Q 1040 95 1040 140 V 250 Q 1040 295 1005 295 H 95"
+                d="M 95 95 H 1005 M 1005 95 V 295 M 95 295 H 1005"
                 fill="none"
                 stroke="rgb(169 133 152 / 0.32)"
                 strokeWidth="3.25"
@@ -118,7 +118,7 @@ export function AestheticJourney({
               />
               <path
                 className="aesthetic-journey__path-draw"
-                d="M 95 95 H 1005 Q 1040 95 1040 140 V 250 Q 1040 295 1005 295 H 95"
+                d="M 95 95 H 1005 M 1005 95 V 295 M 95 295 H 1005"
                 fill="none"
                 stroke="#D9A994"
                 strokeWidth="3.75"
@@ -134,62 +134,14 @@ export function AestheticJourney({
                   <animateMotion
                     dur="5.5s"
                     repeatCount="indefinite"
-                    path="M 95 95 H 1005 Q 1040 95 1040 140 V 250 Q 1040 295 1005 295 H 95"
+                    path="M 95 95 H 1005 M 1005 95 V 295 M 95 295 H 1005"
                   />
                 </circle>
               ) : null}
             </svg>
 
             <ol className="relative grid grid-cols-3 gap-x-6 gap-y-10 px-2 py-2">
-              {/* Row 1: 01 02 03 */}
-              {steps.slice(0, 3).map((step, index) => {
-                const isActive = index <= activeIndex || reducedMotion;
-                return (
-                  <li
-                    key={step.title}
-                    className={`aesthetic-journey__card transition-all duration-500 ${
-                      isActive
-                        ? "translate-y-0 opacity-100"
-                        : "translate-y-3 opacity-40"
-                    }`}
-                    style={{
-                      transitionDelay: reducedMotion
-                        ? "0ms"
-                        : `${index * 80}ms`,
-                    }}
-                  >
-                    <article className="group rounded-2xl border border-aesthetics/35 bg-delvara-white p-5 shadow-[0_10px_28px_rgb(23_45_46/0.05)] transition-all duration-200 hover:-translate-y-0.5 hover:border-aesthetics/55 hover:shadow-[0_14px_32px_rgb(169_133_152/0.12)] sm:p-6">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`inline-flex h-11 w-11 items-center justify-center rounded-full border text-xs font-medium tracking-widest transition-colors duration-300 ${
-                            isActive
-                              ? "border-aesthetics bg-aesthetics text-white ring-4 ring-aesthetics/15"
-                              : "border-aesthetics/40 bg-aesthetics-soft text-aesthetics-deep"
-                          }`}
-                        >
-                          {formatStepNumber(index)}
-                        </span>
-                        <h3 className="text-base font-medium text-delvara-ink sm:text-lg">
-                          {step.title}
-                        </h3>
-                      </div>
-                      <p className="mt-3 text-sm leading-relaxed text-delvara-muted-text">
-                        {step.description}
-                      </p>
-                      {step.detail ? (
-                        <p className="mt-2 text-xs leading-relaxed text-aesthetics-deep/80">
-                          {step.detail}
-                        </p>
-                      ) : null}
-                    </article>
-                  </li>
-                );
-              })}
-
-              {/* Row 2: 06 05 04 (visual reverse of flow) */}
-              {[steps[5], steps[4], steps[3]].map((step, visualIndex) => {
-                if (!step) return null;
-                const index = 5 - visualIndex;
+              {steps.map((step, index) => {
                 const isActive = index <= activeIndex || reducedMotion;
                 return (
                   <li
@@ -235,7 +187,7 @@ export function AestheticJourney({
             </ol>
           </div>
 
-          {/* Mobile vertical timeline */}
+          {/* Mobile vertical timeline — same canonical 01–06 order */}
           <ol className="relative mt-10 space-y-0 lg:hidden">
             {steps.map((step, index) => {
               const isActive = index <= activeIndex || reducedMotion;

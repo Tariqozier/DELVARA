@@ -4,12 +4,14 @@ type EnquirySuccessStateProps = {
   titleId: string;
   descriptionId: string;
   onClose: () => void;
+  enquiryId?: string | null;
 };
 
 export function EnquirySuccessState({
   titleId,
   descriptionId,
   onClose,
+  enquiryId,
 }: EnquirySuccessStateProps) {
   return (
     <div className="enquiry-success overflow-y-auto px-5 py-8 sm:px-7 sm:py-10">
@@ -40,19 +42,25 @@ export function EnquirySuccessState({
           id={titleId}
           className="enquiry-success__title mt-3 text-2xl font-medium tracking-tight text-delvara-ink sm:text-[1.75rem]"
         >
-          Your enquiry is ready.
+          Enquiry received.
         </h2>
         <p
           id={descriptionId}
           className="enquiry-success__copy mt-3 text-base leading-relaxed text-delvara-muted-text"
         >
-          DELVARA has captured your treatment preferences and enquiry details.
+          Your enquiry has reached the DELVARA team. We&apos;ll review the
+          information you&apos;ve provided and aim to be in touch within 2–4
+          hours.
         </p>
-        <p className="enquiry-success__demo mt-4 text-sm leading-relaxed text-delvara-muted-text">
-          Frontend demo: Nothing has been submitted yet. Once the live enquiry
-          service is connected, your details can be securely shared with a
-          relevant participating clinic.
+        <p className="enquiry-success__note mt-4 text-sm leading-relaxed text-delvara-muted-text">
+          If you submit outside our normal contact hours, we&apos;ll get back to
+          you as soon as possible on the next working day.
         </p>
+        {enquiryId ? (
+          <p className="enquiry-success__note mt-3 text-xs tracking-wide text-delvara-muted-text uppercase">
+            Reference {enquiryId}
+          </p>
+        ) : null}
 
         <div
           className="enquiry-success__journey mt-8"

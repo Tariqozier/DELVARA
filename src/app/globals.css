@@ -520,7 +520,7 @@
 .enquiry-success__eyebrow,
 .enquiry-success__title,
 .enquiry-success__copy,
-.enquiry-success__demo,
+.enquiry-success__note,
 .enquiry-success__journey,
 .enquiry-success__action {
   opacity: 0;
@@ -539,7 +539,7 @@
   animation: enquiry-success-rise 420ms var(--ease-delvara) 560ms both;
 }
 
-.enquiry-success__demo {
+.enquiry-success__note {
   animation: enquiry-success-rise 420ms var(--ease-delvara) 680ms both;
 }
 
@@ -746,7 +746,7 @@
   .enquiry-success__eyebrow,
   .enquiry-success__title,
   .enquiry-success__copy,
-  .enquiry-success__demo,
+  .enquiry-success__note,
   .enquiry-success__journey,
   .enquiry-success__action,
   .enquiry-success__node--you .enquiry-success__dot,
@@ -765,7 +765,7 @@
   .enquiry-success__eyebrow,
   .enquiry-success__title,
   .enquiry-success__copy,
-  .enquiry-success__demo,
+  .enquiry-success__note,
   .enquiry-success__journey,
   .enquiry-success__action {
     opacity: 1;

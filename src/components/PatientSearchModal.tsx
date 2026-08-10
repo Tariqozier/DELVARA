@@ -76,7 +76,9 @@ export function PatientSearchModal() {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const [form, setForm] = useState<FormState>(initialForm);
-  const [submittedDemo, setSubmittedDemo] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [enquiryId, setEnquiryId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [categoryPrefill, setCategoryPrefill] = useState(false);
   const [minStep, setMinStep] = useState(1);
@@ -129,7 +131,9 @@ export function PatientSearchModal() {
         setStep(1);
         setDirection("forward");
         setForm(initialForm);
-        setSubmittedDemo(false);
+        setSubmitted(false);
+        setIsSubmitting(false);
+        setEnquiryId(null);
         setError(null);
         setCategoryPrefill(false);
         setMinStep(1);
@@ -151,7 +155,9 @@ export function PatientSearchModal() {
     setStep(startStep);
     setMinStep(startStep);
     setDirection("forward");
-    setSubmittedDemo(false);
+    setSubmitted(false);
+    setIsSubmitting(false);
+    setEnquiryId(null);
     setError(null);
     setCategoryPrefill(Boolean(draft.category));
   }, [isOpen, draft]);
@@ -252,7 +258,7 @@ export function PatientSearchModal() {
     setError(null);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (
@@ -270,16 +276,54 @@ export function PatientSearchModal() {
       return;
     }
 
-    // FRONTEND DEMO ONLY — not persisted remotely yet.
-    // Connect this handler to the enquiry intake API when available.
-    console.info("[DELVARA] Demo enquiry payload (not submitted remotely)", {
-      ...form,
-      demo: true,
-      persisted: false,
-    });
+    if (isSubmitting) return;
 
     setError(null);
-    setSubmittedDemo(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: form.category,
+          treatments: form.treatments,
+          location: form.location,
+          travel: form.travel,
+          timeframe: form.timing,
+          budget: form.budget,
+          priorities: form.priorities,
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          consent: form.consent,
+          sourceUrl: window.location.href,
+          referrer: document.referrer || "",
+        }),
+      });
+
+      const result = (await response.json().catch(() => null)) as {
+        success?: boolean;
+        enquiryId?: string;
+        error?: string;
+      } | null;
+
+      if (!response.ok || !result?.success) {
+        setError(
+          result?.error ||
+            "We could not send your enquiry just now. Please try again.",
+        );
+        return;
+      }
+
+      setEnquiryId(result.enquiryId ?? null);
+      setSubmitted(true);
+    } catch {
+      setError("We could not send your enquiry just now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function onPanelKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
@@ -322,7 +366,7 @@ export function PatientSearchModal() {
         className="modal-panel flex max-h-[min(92dvh,52rem)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-delvara-border bg-delvara-bg shadow-[0_24px_80px_rgb(23_45_46/0.28)] sm:rounded-xl"
         onKeyDown={onPanelKeyDown}
       >
-        {!submittedDemo ? (
+        {!submitted ? (
           <div className="flex shrink-0 items-start justify-between gap-4 border-b border-delvara-border px-5 py-4 sm:px-7 sm:py-5">
             <div>
               <p className="eyebrow">Your enquiry</p>
@@ -363,7 +407,7 @@ export function PatientSearchModal() {
           </div>
         )}
 
-        {!submittedDemo ? (
+        {!submitted ? (
           <>
             <div className="shrink-0 border-b border-delvara-border px-5 py-3 sm:px-7">
               <div className="flex items-center justify-between gap-3">
@@ -811,12 +855,10 @@ export function PatientSearchModal() {
                             }
                           />
                           <span>
-                            I agree that DELVARA may contact me about my enquiry
-                            and share the information I&apos;ve provided with a
-                            relevant participating clinic so they may contact me
-                            about the service I&apos;ve expressed interest in. I
-                            understand that submitting an enquiry does not
-                            commit me to consultation or treatment. See the{" "}
+                            I consent to DELVARA using the information I&apos;ve
+                            provided to manage my enquiry and, where appropriate,
+                            share it with a relevant participating clinic. I have
+                            read the{" "}
                             <Link
                               href="/privacy"
                               className="underline underline-offset-2 hover:text-delvara-ink"
@@ -871,8 +913,13 @@ export function PatientSearchModal() {
                   <button
                     type="submit"
                     className="btn btn-primary w-full sm:w-auto"
+                    disabled={isSubmitting}
                   >
-                    Submit enquiry
+                    {isSubmitting
+                      ? "Sending…"
+                      : error
+                        ? "Retry"
+                        : "Submit enquiry"}
                   </button>
                 )}
               </div>
@@ -883,6 +930,7 @@ export function PatientSearchModal() {
             titleId={titleId}
             descriptionId={descriptionId}
             onClose={closeSearch}
+            enquiryId={enquiryId}
           />
         )}
       </div>
