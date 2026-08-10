@@ -12,7 +12,11 @@ export type EnquiryDraft = {
   treatments?: string[];
   /** Singular CTA convenience; normalised into treatments. */
   treatment?: string;
+  /** London postcode or area from homepage quick-start or deep links. */
+  location?: string;
 };
+
+export type EnquiryStartStep = 1 | 2 | 3;
 
 function normalizeKey(value: string): string {
   return value
@@ -126,18 +130,23 @@ export function normalizeEnquiryDraft(
     if (treatments.length >= MAX_ENQUIRY_TREATMENTS) break;
   }
 
+  const location = draft.location?.trim() ?? "";
+
   return {
     category,
     ...(treatments.length > 0 ? { treatments } : {}),
+    ...(location ? { location } : {}),
   };
 }
 
 /**
- * Multi-select keeps users on step 1 even when a treatment CTA prefilled
- * one option, so they can still add up to two more before continuing.
+ * Open on the first unanswered qualification stage.
+ * 1 = category/treatments, 2 = location, 3 = timeframe/budget.
  */
-export function getEnquiryStartStep(_draft: EnquiryDraft): 1 {
-  return 1;
+export function getEnquiryStartStep(draft: EnquiryDraft): EnquiryStartStep {
+  if (!draft.category || !draft.treatments?.length) return 1;
+  if (!draft.location?.trim()) return 2;
+  return 3;
 }
 
 export function toggleEnquiryTreatment(

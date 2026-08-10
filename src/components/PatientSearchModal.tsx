@@ -78,6 +78,7 @@ export function PatientSearchModal() {
   const [submittedDemo, setSubmittedDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [categoryPrefill, setCategoryPrefill] = useState(false);
+  const [minStep, setMinStep] = useState(1);
   const titleId = useId();
   const descriptionId = useId();
   const treatmentLimitId = useId();
@@ -114,7 +115,11 @@ export function PatientSearchModal() {
       : form.category === "dental"
         ? "Dental"
         : "";
-  const treatmentsSummary = form.treatments.join(" · ");
+  const contextSummaryParts = [
+    categoryLabel,
+    ...form.treatments,
+    form.location.trim() ? form.location.trim() : "",
+  ].filter(Boolean);
 
   useEffect(() => {
     if (!isOpen) {
@@ -126,6 +131,7 @@ export function PatientSearchModal() {
         setSubmittedDemo(false);
         setError(null);
         setCategoryPrefill(false);
+        setMinStep(1);
       }, 200);
       return () => window.clearTimeout(resetTimer);
     }
@@ -137,10 +143,12 @@ export function PatientSearchModal() {
       ...initialForm,
       category: draft.category ?? "",
       treatments: draft.treatments ?? [],
+      location: draft.location ?? "",
     };
     const startStep = getEnquiryStartStep(draft);
     setForm(nextForm);
     setStep(startStep);
+    setMinStep(startStep);
     setDirection("forward");
     setSubmittedDemo(false);
     setError(null);
@@ -214,12 +222,13 @@ export function PatientSearchModal() {
   function goBack() {
     setError(null);
     setDirection("back");
-    setStep((current) => Math.max(current - 1, 1));
+    setStep((current) => Math.max(current - 1, minStep));
   }
 
   function handleChangeContext() {
     setError(null);
     setCategoryPrefill(false);
+    setMinStep(1);
     setDirection("back");
     setStep(1);
   }
@@ -362,10 +371,16 @@ export function PatientSearchModal() {
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-delvara-border bg-delvara-white px-3 py-2.5">
                   <p className="text-sm text-delvara-charcoal">
                     <span className="font-medium text-delvara-ink">
-                      {categoryLabel}
+                      {contextSummaryParts[0]}
                     </span>
-                    <span className="mx-1.5 text-delvara-border-strong">·</span>
-                    <span>{treatmentsSummary}</span>
+                    {contextSummaryParts.length > 1 ? (
+                      <>
+                        <span className="mx-1.5 text-delvara-border-strong">
+                          ·
+                        </span>
+                        <span>{contextSummaryParts.slice(1).join(" · ")}</span>
+                      </>
+                    ) : null}
                   </p>
                   <button
                     type="button"
@@ -809,7 +824,7 @@ export function PatientSearchModal() {
               </div>
 
               <div className="flex flex-col-reverse gap-3 border-t border-delvara-border bg-delvara-white/80 px-5 py-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
-                {step > 1 ? (
+                {step > minStep ? (
                   <button
                     type="button"
                     onClick={goBack}

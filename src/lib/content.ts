@@ -328,9 +328,9 @@ export const priorityOptions = [
 export const howItWorksSteps = [
   {
     number: "01",
-    title: "Explore a service",
+    title: "Explore services",
     description:
-      "Start with aesthetics or dental and tell us the service you're considering.",
+      "Choose up to three aesthetic or dental services you're considering.",
   },
   {
     number: "02",

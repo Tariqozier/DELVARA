@@ -1,17 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { IconPin } from "@/components/icons";
-import { StartSearchButton } from "@/components/StartSearchButton";
+import { useId, useState } from "react";
+import { IconCheck, IconPin } from "@/components/icons";
+import { useSearch } from "@/components/SearchProvider";
 import {
   heroAestheticsTreatments,
   heroDentalTreatments,
   type TreatmentCategory,
 } from "@/lib/content";
+import {
+  MAX_ENQUIRY_TREATMENTS,
+  toggleEnquiryTreatment,
+} from "@/lib/enquiryContext";
 
 export function HeroDiscoveryPanel() {
+  const { openSearch } = useSearch();
   const [category, setCategory] = useState<TreatmentCategory | null>(null);
-  const [selectedTreatment, setSelectedTreatment] = useState("");
+  const [treatments, setTreatments] = useState<string[]>([]);
+  const [location, setLocation] = useState("");
+  const treatmentLimitId = useId();
+  const locationId = useId();
 
   const treatmentOptions =
     category === "dental"
@@ -20,9 +28,28 @@ export function HeroDiscoveryPanel() {
         ? heroAestheticsTreatments
         : [];
 
+  const atTreatmentLimit = treatments.length >= MAX_ENQUIRY_TREATMENTS;
+
   function selectCategory(next: TreatmentCategory) {
     setCategory(next);
-    setSelectedTreatment("");
+    setTreatments([]);
+  }
+
+  function toggleTreatment(option: string) {
+    setTreatments((current) => toggleEnquiryTreatment(current, option));
+  }
+
+  function handleContinue() {
+    if (!category) {
+      openSearch();
+      return;
+    }
+
+    openSearch({
+      category,
+      ...(treatments.length > 0 ? { treatments } : {}),
+      ...(location.trim() ? { location: location.trim() } : {}),
+    });
   }
 
   return (
@@ -32,18 +59,13 @@ export function HeroDiscoveryPanel() {
         className="absolute -inset-4 rounded-[1.5rem] bg-[linear-gradient(145deg,rgb(23_45_46/0.04),transparent_50%,rgb(169_133_152/0.06))]"
       />
       <div className="relative overflow-hidden rounded-[1.15rem] border border-delvara-border bg-delvara-white shadow-[0_18px_50px_rgb(23_45_46/0.08)]">
-        <div className="flex items-center justify-between border-b border-delvara-border px-5 py-4 sm:px-6">
-          <div>
-            <p className="text-[0.7rem] font-medium tracking-[0.16em] text-delvara-muted-text uppercase">
-              DELVARA
-            </p>
-            <p className="mt-1 text-base font-medium text-delvara-ink">
-              Start your treatment enquiry
-            </p>
-          </div>
-          <span className="rounded-md bg-delvara-surface px-2.5 py-1 text-xs text-delvara-muted-text">
-            Preview
-          </span>
+        <div className="border-b border-delvara-border px-5 py-4 sm:px-6">
+          <p className="text-[0.7rem] font-medium tracking-[0.16em] text-delvara-muted-text uppercase">
+            DELVARA
+          </p>
+          <p className="mt-1 text-base font-medium text-delvara-ink">
+            Start your treatment enquiry
+          </p>
         </div>
 
         <div className="space-y-5 px-5 py-5 sm:px-6 sm:py-6">
@@ -84,24 +106,51 @@ export function HeroDiscoveryPanel() {
           {category ? (
             <div key={category} className="category-panel-enter">
               <p className="text-sm font-medium text-delvara-ink">
-                Example treatments
+                Treatments you&apos;re considering
               </p>
-              <div className="mt-3 flex max-h-40 flex-wrap gap-2 overflow-y-auto pr-1">
+              <p
+                id={treatmentLimitId}
+                className="mt-1 text-sm text-delvara-muted-text"
+                aria-live="polite"
+              >
+                {atTreatmentLimit
+                  ? "Maximum of 3 selected. Deselect one to choose another."
+                  : "Choose up to 3."}
+              </p>
+              <div
+                className="mt-3 flex max-h-40 flex-wrap gap-2 overflow-y-auto pr-1"
+                role="group"
+                aria-describedby={treatmentLimitId}
+              >
                 {treatmentOptions.map((treatment) => {
-                  const isSelected = selectedTreatment === treatment;
+                  const isSelected = treatments.includes(treatment);
+                  const isDisabled = atTreatmentLimit && !isSelected;
+
                   return (
                     <button
                       key={treatment}
                       type="button"
+                      className="choice-chip gap-1.5 px-3 py-2"
+                      data-category={category}
                       aria-pressed={isSelected}
-                      onClick={() => setSelectedTreatment(treatment)}
-                      className={`rounded-md border px-3 py-2 text-sm transition-all duration-200 ${
-                        isSelected
-                          ? "border-delvara-ink bg-delvara-ink text-white"
-                          : "border-delvara-border bg-delvara-bg text-delvara-charcoal hover:border-delvara-border-strong hover:bg-delvara-surface"
-                      }`}
+                      aria-disabled={isDisabled || undefined}
+                      disabled={isDisabled}
+                      onClick={() => toggleTreatment(treatment)}
                     >
-                      {treatment}
+                      {isSelected ? (
+                        <IconCheck
+                          className="h-3.5 w-3.5 shrink-0"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      <span>{treatment}</span>
+                      <span className="sr-only">
+                        {isSelected
+                          ? ", selected"
+                          : isDisabled
+                            ? ", unavailable — maximum of 3 treatments selected"
+                            : ", not selected"}
+                      </span>
                     </button>
                   );
                 })}
@@ -109,31 +158,41 @@ export function HeroDiscoveryPanel() {
             </div>
           ) : (
             <div className="rounded-lg border border-dashed border-delvara-border bg-delvara-bg/70 px-4 py-5 text-sm text-delvara-muted-text">
-              Choose Aesthetics or Dental to see example treatments. Both
-              categories are equally supported.
+              Choose Aesthetics or Dental to see treatments. Both categories are
+              equally supported.
             </div>
           )}
 
           <div>
-            <p className="mb-2 text-sm font-medium text-delvara-ink">
+            <label
+              htmlFor={locationId}
+              className="mb-2 block text-sm font-medium text-delvara-ink"
+            >
               Where in London are you based?
-            </p>
+            </label>
             <div className="relative">
-              <IconPin className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-delvara-muted-text" />
-              <div className="input-field flex items-center pl-10 text-delvara-muted-text">
-                e.g. N12 or Finchley
-              </div>
+              <IconPin className="pointer-events-none absolute top-1/2 left-3 z-[1] h-4 w-4 -translate-y-1/2 text-delvara-muted-text" />
+              <input
+                id={locationId}
+                name="hero-location"
+                type="text"
+                autoComplete="address-level2"
+                inputMode="text"
+                className="input-field pl-10"
+                placeholder="e.g. N12 or Finchley"
+                value={location}
+                onChange={(event) => setLocation(event.target.value)}
+              />
             </div>
           </div>
 
-          <StartSearchButton
-            variant="primary"
-            className="w-full"
-            category={category ?? undefined}
-            treatment={selectedTreatment || undefined}
+          <button
+            type="button"
+            className="btn btn-primary w-full"
+            onClick={handleContinue}
           >
             Continue enquiry
-          </StartSearchButton>
+          </button>
         </div>
       </div>
     </div>
