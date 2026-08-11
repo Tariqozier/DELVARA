@@ -1,11 +1,13 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
+import { contactEmails, mailtoHref } from "@/lib/contact";
 
 type LegalHoldingPageProps = {
   eyebrow: string;
   title: string;
   intro: string;
   requiredPoints: readonly string[];
-  contactNote?: string;
+  contactNote?: ReactNode;
 };
 
 /**
@@ -17,8 +19,24 @@ export function LegalHoldingPage({
   title,
   intro,
   requiredPoints,
-  contactNote = "For urgent privacy or legal questions while this page is being completed, contact partnerships@getdelvara.com.",
+  contactNote,
 }: LegalHoldingPageProps) {
+  const note =
+    contactNote ?? (
+      <>
+        For privacy or legal questions while this page is being completed,
+        contact{" "}
+        <a
+          href={mailtoHref("hello", {
+            subject: "Privacy / legal enquiry — DELVARA",
+          })}
+          className="font-medium text-delvara-ink underline-offset-2 hover:underline"
+        >
+          {contactEmails.hello}
+        </a>
+        .
+      </>
+    );
   return (
     <section className="section-pad">
       <div className="container-delvara">
@@ -47,7 +65,7 @@ export function LegalHoldingPage({
               ))}
             </ul>
             <p className="mt-6 text-sm leading-relaxed text-delvara-charcoal">
-              {contactNote}
+              {note}
             </p>
           </div>
 

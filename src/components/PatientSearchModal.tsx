@@ -27,6 +27,10 @@ import {
   MAX_ENQUIRY_TREATMENTS,
   toggleEnquiryTreatment,
 } from "@/lib/enquiryContext";
+import { contactEmails, mailtoHref } from "@/lib/contact";
+
+const SUBMIT_FAILURE_MESSAGE =
+  "We couldn't send your enquiry just yet. Your information has been kept — please try again.";
 
 type FormState = {
   category: TreatmentCategory | "";
@@ -78,6 +82,7 @@ export function PatientSearchModal() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFailed, setSubmitFailed] = useState(false);
   const [enquiryId, setEnquiryId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [categoryPrefill, setCategoryPrefill] = useState(false);
@@ -133,6 +138,7 @@ export function PatientSearchModal() {
         setForm(initialForm);
         setSubmitted(false);
         setIsSubmitting(false);
+        setSubmitFailed(false);
         setEnquiryId(null);
         setError(null);
         setCategoryPrefill(false);
@@ -157,6 +163,7 @@ export function PatientSearchModal() {
     setDirection("forward");
     setSubmitted(false);
     setIsSubmitting(false);
+    setSubmitFailed(false);
     setEnquiryId(null);
     setError(null);
     setCategoryPrefill(Boolean(draft.category));
@@ -279,6 +286,7 @@ export function PatientSearchModal() {
     if (isSubmitting) return;
 
     setError(null);
+    setSubmitFailed(false);
     setIsSubmitting(true);
 
     try {
@@ -310,17 +318,16 @@ export function PatientSearchModal() {
       } | null;
 
       if (!response.ok || !result?.success) {
-        setError(
-          result?.error ||
-            "We could not send your enquiry just now. Please try again.",
-        );
+        setSubmitFailed(true);
+        setError(result?.error || SUBMIT_FAILURE_MESSAGE);
         return;
       }
 
       setEnquiryId(result.enquiryId ?? null);
       setSubmitted(true);
     } catch {
-      setError("We could not send your enquiry just now. Please try again.");
+      setSubmitFailed(true);
+      setError(SUBMIT_FAILURE_MESSAGE);
     } finally {
       setIsSubmitting(false);
     }
@@ -875,9 +882,23 @@ export function PatientSearchModal() {
                 </div>
 
                 {error ? (
-                  <p className="mt-4 text-sm text-red-800" role="alert">
-                    {error}
-                  </p>
+                  <div className="mt-4 space-y-2" role="alert">
+                    <p className="text-sm text-red-800">{error}</p>
+                    {submitFailed ? (
+                      <p className="text-sm text-delvara-muted-text">
+                        Or email{" "}
+                        <a
+                          href={mailtoHref("enquiries", {
+                            subject: "Patient enquiry support — DELVARA",
+                          })}
+                          className="font-medium text-delvara-ink underline-offset-2 hover:underline"
+                        >
+                          {contactEmails.enquiries}
+                        </a>
+                        .
+                      </p>
+                    ) : null}
+                  </div>
                 ) : null}
               </div>
 
@@ -917,8 +938,8 @@ export function PatientSearchModal() {
                   >
                     {isSubmitting
                       ? "Sending…"
-                      : error
-                        ? "Retry"
+                      : submitFailed
+                        ? "Try again"
                         : "Submit enquiry"}
                   </button>
                 )}

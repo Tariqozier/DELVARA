@@ -12,6 +12,7 @@ import {
   dentalPartnerStandards,
   dentalVerificationSteps,
 } from "@/lib/content";
+import { dentalClinicMailto } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Dental Clinics",
@@ -165,7 +166,7 @@ export default function DentalClinicsPage() {
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="mailto:partnerships@getdelvara.com?subject=Dental%20clinic%20discussion"
+              href={dentalClinicMailto}
               className="btn btn-primary group"
             >
               Discuss your clinic

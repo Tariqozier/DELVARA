@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ClinicPathCard } from "@/components/ClinicPathCard";
 import { IconArrowRight } from "@/components/icons";
 import { clinicPaths } from "@/lib/content";
+import { clinicPartnershipMailto } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "For Clinics",
@@ -52,6 +53,15 @@ export default function ForClinicsPage() {
               Explore DELVARA Growth Studio
               <IconArrowRight className="h-4 w-4" />
             </Link>
+            <div className="mt-8">
+              <a
+                href={clinicPartnershipMailto}
+                className="btn btn-primary group"
+              >
+                Partner with DELVARA
+                <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
+            </div>
           </div>
         </div>
       </section>

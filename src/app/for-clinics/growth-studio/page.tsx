@@ -5,6 +5,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { IconArrowRight } from "@/components/icons";
 import { GrowthCapabilities } from "@/components/growth/GrowthCapabilities";
 import { GrowthFlow } from "@/components/growth/GrowthFlow";
+import { growthStudioMailto } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Growth Studio",
@@ -36,7 +37,7 @@ export default function GrowthStudioPage() {
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
-                href="mailto:partnerships@getdelvara.com?subject=Growth%20Studio%20project"
+                href={growthStudioMailto}
                 className="btn bg-white text-delvara-ink hover:bg-white/90"
               >
                 Discuss a project
@@ -125,7 +126,7 @@ export default function GrowthStudioPage() {
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
-                href="mailto:partnerships@getdelvara.com?subject=Growth%20Studio%20project"
+                href={growthStudioMailto}
                 className="btn bg-white text-delvara-ink hover:bg-white/90"
               >
                 Discuss a project

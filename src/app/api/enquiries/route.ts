@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { contactEmails } from "@/lib/contact";
 import {
   buildEnquiryPayload,
   validateEnquirySubmission,
@@ -15,6 +16,17 @@ type AppsScriptFailure = {
   success?: false;
   error?: string;
 };
+
+const FAILURE_MESSAGE =
+  "We couldn't send your enquiry just yet. Your information has been kept — please try again.";
+
+function resolveEnquiriesInbox(): string {
+  return (
+    process.env.DELVARA_ENQUIRIES_EMAIL?.trim() ||
+    process.env.DELVARA_NOTIFICATION_EMAIL?.trim() ||
+    contactEmails.enquiries
+  );
+}
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -43,11 +55,7 @@ export async function POST(request: Request) {
       "[DELVARA] Missing GOOGLE_APPS_SCRIPT_URL or ENQUIRY_WEBHOOK_SECRET",
     );
     return NextResponse.json(
-      {
-        success: false,
-        error:
-          "Enquiry service is temporarily unavailable. Please try again shortly.",
-      },
+      { success: false, error: FAILURE_MESSAGE },
       { status: 503 },
     );
   }
@@ -65,7 +73,12 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         ...payload,
-        notificationEmail: process.env.DELVARA_NOTIFICATION_EMAIL?.trim() || "",
+        notificationEmail: resolveEnquiriesInbox(),
+        enquiriesEmail: resolveEnquiriesInbox(),
+        helloEmail:
+          process.env.DELVARA_HELLO_EMAIL?.trim() || contactEmails.hello,
+        clinicsEmail:
+          process.env.DELVARA_CLINICS_EMAIL?.trim() || contactEmails.clinics,
         webhookSecret,
       }),
       signal: controller.signal,
@@ -88,11 +101,7 @@ export async function POST(request: Request) {
         body: upstreamBody,
       });
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            "We could not send your enquiry just now. Please try again.",
-        },
+        { success: false, error: FAILURE_MESSAGE },
         { status: 502 },
       );
     }
@@ -102,18 +111,10 @@ export async function POST(request: Request) {
       enquiryId: upstreamBody.enquiryId || payload.enquiryId,
     });
   } catch (error) {
-    const aborted =
-      error instanceof Error &&
-      (error.name === "AbortError" || error.name === "TimeoutError");
     console.error("[DELVARA] Enquiry forward failed", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: aborted
-          ? "The enquiry service took too long to respond. Please try again."
-          : "We could not send your enquiry just now. Please try again.",
-      },
-      { status: aborted ? 504 : 502 },
+      { success: false, error: FAILURE_MESSAGE },
+      { status: 502 },
     );
   } finally {
     clearTimeout(timeout);

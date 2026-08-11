@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { brand } from "@/lib/content";
+import { contactEmails, mailtoHref } from "@/lib/contact";
 
 const exploreLinks = [
   { href: "/treatments/aesthetics", label: "Aesthetic treatments" },
   { href: "/treatments/dental", label: "Dental treatments" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 const clinicLinks = [
@@ -21,11 +23,33 @@ const legalLinks = [
   { href: "/cookies", label: "Cookies" },
 ] as const;
 
+const contactRows = [
+  {
+    label: "General enquiries",
+    email: contactEmails.hello,
+    href: mailtoHref("hello"),
+  },
+  {
+    label: "Clinic partnerships",
+    email: contactEmails.clinics,
+    href: mailtoHref("clinics", {
+      subject: "Clinic partnership enquiry — DELVARA",
+    }),
+  },
+  {
+    label: "Patient enquiry support",
+    email: contactEmails.enquiries,
+    href: mailtoHref("enquiries", {
+      subject: "Patient enquiry support — DELVARA",
+    }),
+  },
+] as const;
+
 export function Footer() {
   return (
     <footer className="border-t border-delvara-border bg-delvara-white">
       <div className="container-delvara section-pad !pb-12 !pt-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 lg:grid-cols-[1.35fr_1fr_1fr_1.15fr]">
           <div className="max-w-sm">
             <p className="text-[1.15rem] font-semibold tracking-[0.18em] text-delvara-ink">
               {brand.name}
@@ -78,17 +102,25 @@ export function Footer() {
 
           <div>
             <h2 className="text-sm font-medium tracking-wide text-delvara-ink">
-              Legal
+              <Link
+                href="/contact"
+                className="transition-colors hover:text-delvara-charcoal"
+              >
+                Contact
+              </Link>
             </h2>
-            <ul className="mt-4 space-y-3">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-delvara-muted-text transition-colors hover:text-delvara-ink"
+            <ul className="mt-4 space-y-4">
+              {contactRows.map((row) => (
+                <li key={row.label}>
+                  <p className="text-xs tracking-wide text-delvara-muted-text">
+                    {row.label}
+                  </p>
+                  <a
+                    href={row.href}
+                    className="mt-1 inline-block text-sm text-delvara-ink transition-colors hover:text-delvara-charcoal"
                   >
-                    {link.label}
-                  </Link>
+                    {row.email}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -101,9 +133,23 @@ export function Footer() {
             does not provide medical advice, diagnosis or treatment. Enquiries
             accepted from across London.
           </p>
-          <p className="mt-5 text-sm text-delvara-muted-text">
-            © 2026 DELVARA. All rights reserved.
-          </p>
+          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-delvara-muted-text">
+              © 2026 DELVARA. All rights reserved.
+            </p>
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-delvara-muted-text transition-colors hover:text-delvara-ink"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </footer>

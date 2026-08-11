@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { IconArrowRight } from "@/components/icons";
+import { clinicPartnershipMailto } from "@/lib/contact";
 
 type ClinicPageHeroProps = {
   eyebrow: string;
@@ -70,7 +71,7 @@ export function ClinicPageHero({
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="mailto:partnerships@getdelvara.com"
+              href={clinicPartnershipMailto}
               className="btn btn-primary group"
             >
               Talk to DELVARA

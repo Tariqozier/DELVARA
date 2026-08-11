@@ -5,6 +5,7 @@ import { AestheticJourney } from "@/components/clinic/AestheticJourney";
 import { ClinicGrowthTreatments } from "@/components/clinic/ClinicGrowthTreatments";
 import { ClinicPageHero } from "@/components/clinic/ClinicPageHero";
 import { PartnerStandards } from "@/components/clinic/PartnerStandards";
+import { aestheticClinicMailto } from "@/lib/contact";
 import {
   aestheticsGrowthTreatments,
   aestheticsPartnerStandards,
@@ -176,7 +177,7 @@ export default function AestheticClinicsPage() {
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="mailto:partnerships@getdelvara.com?subject=Aesthetic%20clinic%20discussion"
+              href={aestheticClinicMailto}
               className="btn btn-primary group"
             >
               Discuss your clinic
